@@ -79,14 +79,14 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-20 bg-gray-900">
-      <div className="container mx-auto px-4">
+    <section className="py-12 md:py-20 bg-gray-900">
+      <div className="container mx-auto px-4 overflow-hidden">
         {/* Stars */}
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-6 md:mb-8">
           {[...Array(5)].map((_, i) => (
             <svg
               key={i}
-              className="w-8 h-8 text-orange-500 fill-current"
+              className="w-6 h-6 md:w-8 md:h-8 text-orange-500 fill-current"
               viewBox="0 0 24 24"
             >
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
@@ -94,15 +94,15 @@ const TestimonialsSection = () => {
           ))}
         </div>
 
-        <h2 className="text-4xl font-bold text-center text-white mb-16">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-10 md:mb-16 px-2">
           Don't take our word for it. Take theirs
         </h2>
 
-        <div className="relative max-w-4xl mx-auto">
-          {/* Navigation Arrows - absolutely positioned */}
+        <div className="relative max-w-4xl mx-auto px-2 md:px-8">
+          {/* Navigation Arrows - responsive positioning */}
           <button
             onClick={goToPrevious}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 text-white/80 hover:text-white transition-colors z-10"
+            className="absolute left-0 top-1/2 -translate-y-1/2 md:-translate-x-16 text-white/80 hover:text-white transition-colors z-10 hidden md:block"
             aria-label="Previous testimonial"
           >
             <svg 
@@ -122,7 +122,7 @@ const TestimonialsSection = () => {
           
           <button
             onClick={goToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 text-white/80 hover:text-white transition-colors z-10"
+            className="absolute right-0 top-1/2 -translate-y-1/2 md:translate-x-16 text-white/80 hover:text-white transition-colors z-10 hidden md:block"
             aria-label="Next testimonial"
           >
             <svg 
@@ -139,6 +139,49 @@ const TestimonialsSection = () => {
               />
             </svg>
           </button>
+          
+          {/* Mobile Navigation Controls */}
+          <div className="flex justify-between w-full mb-4 md:hidden">
+            <button
+              onClick={goToPrevious}
+              className="p-2 text-white/80 hover:text-white transition-colors"
+              aria-label="Previous testimonial"
+            >
+              <svg 
+                className="w-8 h-8" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M15 19l-7-7 7-7" 
+                />
+              </svg>
+            </button>
+            
+            <button
+              onClick={goToNext}
+              className="p-2 text-white/80 hover:text-white transition-colors"
+              aria-label="Next testimonial"
+            >
+              <svg 
+                className="w-8 h-8" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M9 5l7 7-7 7" 
+                />
+              </svg>
+            </button>
+          </div>
 
           {/* Testimonial Container */}
           <div className="overflow-hidden">
@@ -148,13 +191,13 @@ const TestimonialsSection = () => {
               }`}
             >
               <div className="text-center text-white">
-                <p className="text-2xl md:text-3xl font-medium mb-8 leading-relaxed">
+                <p className="text-lg md:text-2xl lg:text-3xl font-medium mb-6 md:mb-8 leading-relaxed">
                   "{testimonials[currentIndex].quote}"
                 </p>
-                <div className="font-bold text-xl">
+                <div className="font-bold text-lg md:text-xl">
                   {testimonials[currentIndex].name}
                 </div>
-                <div className="text-white/70">
+                <div className="text-sm md:text-base text-white/70">
                   {testimonials[currentIndex].role}
                 </div>
               </div>

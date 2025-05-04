@@ -18,13 +18,13 @@ const KCFusionSection = () => {
                 Register Now
               </Link>
             </div>
-            <div>
+            <div className="relative w-full max-w-[600px] mx-auto">
               <img
                 src="https://images.unsplash.com/photo-1614632537197-38a17061c2bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=987&q=80"
                 alt="KC Fusion Training"
                 width={600}
                 height={400}
-                className="rounded-lg shadow-2xl"
+                className="rounded-lg shadow-2xl w-full h-auto object-cover"
               />
             </div>
           </div>
