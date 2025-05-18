@@ -7,7 +7,7 @@ const HeroSection = () => {
       <section 
         className="min-h-screen flex items-center relative pt-20 bg-cover bg-center md:bg-fixed overflow-hidden"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1579952363873-27f3bade9f55?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')`
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/bg_3.png')`
         }}
       >
         <div className="container mx-auto px-4 w-full">

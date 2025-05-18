@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -18,25 +18,34 @@ const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
   );
 };
 
-const PricingCard = ({ title, price, period, description, isPopular }: { title: string; price: string; period?: string | null; description: string; isPopular?: boolean }) => {
+const PricingCard = ({ 
+  icon, 
+  title, 
+  price, 
+  period, 
+  description 
+}: { 
+  icon: React.ReactNode; 
+  title: string; 
+  price: string; 
+  period?: string | null; 
+  description: string; 
+}) => {
   return (
-    <div className={`border rounded-lg p-6 text-center relative hover:transform hover:-translate-y-2 transition-all duration-300 ${isPopular ? 'border-2 border-orange-500' : ''}`}>
-      {isPopular && (
-        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-bold">
-          Most Popular
+    <div className="text-center relative transition-all duration-300 hover:transform hover:-translate-y-2">
+      <div className="flex justify-center mb-4">
+        <div className="text-amber-400 w-16 h-16">
+          {icon}
         </div>
-      )}
-      <h4 className="text-xl font-bold mb-4">{title}</h4>
-      <p className="text-4xl font-bold mb-4">
-        {price}{period && <span className="text-sm text-gray-600">/{period}</span>}
-      </p>
-      <p className="text-gray-600 mb-6">{description}</p>
-      <Link
-        href="/train"
-        className="bg-orange-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-orange-600 transition"
-      >
-        Get Started
-      </Link>
+      </div>
+      <h4 className="text-2xl font-bold mb-2 text-white uppercase">{title}</h4>
+      <p className="text-gray-400 text-sm mb-6 px-6">{description}</p>
+      
+      <div className="mb-6">
+        <div className="inline-block border-2 border-amber-400 rounded-md px-4 py-2">
+          <span className="text-xl font-bold text-amber-400">{price}{period && <span className="text-sm"> per {period}</span>}</span>
+        </div>
+      </div>
     </div>
   );
 };
@@ -60,56 +69,98 @@ const TrainingSection = () => {
     }
   ];
   
-    const pricingPlans = [
+  const pricingPlans = [
     {
-      title: "Drop-In",
-      price: "$50",
-      period: "session",
-      description: "Perfect for trying out our training",
-      isPopular: false
-    },
-    {
-      title: "Monthly Unlimited",
-      price: "$175",
-      period: "month",
-      description: "Unlimited access to all sessions",
-      isPopular: true
-    },
-    {
-      title: "8-Session Pack",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+          <path d="M11.7 2.805a.75.75 0 01.6 0A60.65 60.65 0 0122.83 8.72a.75.75 0 01-.231 1.337 49.949 49.949 0 00-9.902 3.912l-.003.002-.34.18a.75.75 0 01-.707 0A50.009 50.009 0 007.5 12.174v-.224c0-.131.067-.248.172-.311a54.614 54.614 0 014.653-2.52.75.75 0 00-.65-1.352 56.129 56.129 0 00-4.78 2.589 1.858 1.858 0 00-.859 1.228 49.803 49.803 0 00-4.634-1.527.75.75 0 01-.231-1.337A60.653 60.653 0 0111.7 2.805z" />
+          <path d="M13.06 15.473a48.45 48.45 0 017.666-3.282c.134 1.414.22 2.843.255 4.285a.75.75 0 01-.46.71 47.878 47.878 0 00-8.105 4.342.75.75 0 01-.832 0 47.877 47.877 0 00-8.104-4.342.75.75 0 01-.461-.71c.035-1.442.121-2.87.255-4.286A48.4 48.4 0 016 13.18v1.27a1.5 1.5 0 00-.14 2.508c-.09.38-.222.753-.397 1.11.452.213.901.434 1.346.661a6.729 6.729 0 00.551-1.608 1.5 1.5 0 00.14-2.67v-.645a48.549 48.549 0 013.44 1.668 2.25 2.25 0 002.12 0z" />
+          <path d="M4.462 19.462c.42-.419.753-.89 1-1.394.453.213.902.434 1.347.661a6.743 6.743 0 01-1.286 1.794.75.75 0 11-1.06-1.06z" />
+        </svg>
+      ),
+      title: "Sessions",
       price: "$320",
-      period: null,
-      description: "Best value for regular training",
-      isPopular: false
+      period: "8 Sessions",
+      description: "Choose from any session at your player's level at any of our training locations. Train as often as you'd like and where it's convenient for you!"
+    },
+    {
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+          <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
+        </svg>
+      ),
+      title: "Monthly",
+      price: "$175",
+      period: "Month",
+      description: "Attend as many sessions as you'd like each month without the worry and hassle of tracking sessions. Train where and when it works for you!"
+    },
+    {
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+          <path fillRule="evenodd" d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z" clipRule="evenodd" />
+        </svg>
+      ),
+      title: "Drop In",
+      price: "$50",
+      period: "Session",
+      description: "In between plans, or just want to drop in on a session to experience the AG30 GK Academy? Start with a single session!"
     }
   ];
 
+  const parallaxRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (parallaxRef.current) {
+        const scrollPosition = window.scrollY;
+        parallaxRef.current.style.transform = `translateY(${scrollPosition * 0.4}px)`;
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  
   return (
-    <section className="py-20 bg-[radial-gradient(circle_at_100%_50%,transparent_20%,rgba(255,165,0,0.1)_21%,rgba(255,165,0,0.1)_34%,transparent_35%,transparent),linear-gradient(0deg,transparent_24%,rgba(255,165,0,0.05)_25%,rgba(255,165,0,0.05)_26%,transparent_27%,transparent_74%,rgba(255,165,0,0.05)_75%,rgba(255,165,0,0.05)_76%,transparent_77%,transparent)] bg-[length:50px_50px]">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12">Why Choose AG30?</h2>
+    <section className="py-20 relative overflow-hidden">
+      {/* Parallax Background */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        <div 
+          ref={parallaxRef}
+          className="absolute inset-0 w-full h-[130%] -top-[15%]" 
+          style={{
+            backgroundImage: 'url(/soccer.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'brightness(0.2)',
+            willChange: 'transform',
+          }}
+        />
+      </div>
+      
+      {/* Overlay gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/90 z-0"></div>
+      
+      {/* Content */}
+      <div className="container mx-auto px-4 relative z-10">
+        <h2 className="text-4xl font-bold text-center mb-12 text-white">Training & Services</h2>
+        
         <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {features.map((feature, index) => (
-            <FeatureCard key={index} {...feature} />
+          {pricingPlans.map((plan, index) => (
+            <PricingCard key={index} {...plan} />
           ))}
         </div>
-
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <h3 className="text-2xl font-bold text-center mb-8">Training Plans</h3>
-          <div className="grid md:grid-cols-3 gap-8">
-            {pricingPlans.map((plan, index) => (
-              <PricingCard key={index} {...plan} />
-            ))}
-          </div>
-          <div className="text-center mt-8">
-            <p className="text-gray-600 mb-4">Including specialized services like Tactical Edge Analysis with drone footage</p>
-            <Link
-              href="/train"
-              className="bg-orange-500 text-white px-8 py-4 rounded-full font-bold hover:bg-orange-600 transition"
-            >
-              View Training Plans
-            </Link>
-          </div>
+        
+        <div className="text-center mt-8">
+          <Link
+            href="/train"
+            className="bg-amber-400 text-black px-8 py-3 rounded-md font-bold hover:bg-amber-500 transition inline-block"
+          >
+            JOIN THE TEAM
+          </Link>
         </div>
       </div>
     </section>
