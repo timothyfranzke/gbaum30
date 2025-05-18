@@ -1,12 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface TestimonialCardProps {
   name: string;
   role: string;
   quote: string;
   initials: string;
+  avatar?: string; // Optional avatar image path
 }
 
 const TestimonialsSection = () => {
@@ -17,20 +19,23 @@ const TestimonialsSection = () => {
     {
       name: "Paulo P.",
       role: "Elite Goalkeeper",
-      quote: "AG30 transformed my game with personalized coaching. The coaches understand what it takes to perform at the highest level and push you to reach your potential.",
-      initials: "PP"
+      quote: "As a goalkeeper, I always have the feeling that I can do better everyday and improve my techniques. The environment at [AG30] helped me to develop my skills. [It's my dream] to play in the MLS and I know AG30 can help get me there!",
+      initials: "PP",
+      avatar: "/avatars/paulo.jpg" // Add path to Paulo's avatar image
     },
     {
       name: "Emily J.",
       role: "Youth Goalkeeper",
-      quote: "The supportive environment boosted my confidence. I've grown not just as a keeper but as a leader on my team. The training here is unmatched.",
-      initials: "EJ"
+      quote: "Training with [AG30] has been super beneficial for me... The training environment is second to none; it's a space where you can make mistakes and ask for advice. I've improved as a player and a person thanks to The Union!",
+      initials: "EJ",
+      avatar: "/avatars/emily.jpg" // Add path to Emily's avatar image
     },
     {
       name: "Erin B.",
       role: "Professional Keeper",
-      quote: "Tactical training here is unmatched. AG30 helped me understand the mental side of goalkeeping and gave me tools to perform under pressure.",
-      initials: "EB"
+      quote: "Training with [AG30] took my abilities to the Elite level. Their knowledge of the modern style of soccer alongside the passion they have for coaching is unprecedented. AG30 is an investment that continues to pay off in my D1 career.",
+      initials: "EB",
+      avatar: "/avatars/erin.jpg" // Add path to Erin's avatar image
     }
   ];
 
@@ -194,11 +199,33 @@ const TestimonialsSection = () => {
                 <p className="text-lg md:text-2xl lg:text-3xl font-medium mb-6 md:mb-8 leading-relaxed">
                   "{testimonials[currentIndex].quote}"
                 </p>
-                <div className="font-bold text-lg md:text-xl">
-                  {testimonials[currentIndex].name}
-                </div>
-                <div className="text-sm md:text-base text-white/70">
-                  {testimonials[currentIndex].role}
+                
+                <div className="flex flex-col items-center">
+                  {/* Avatar */}
+                  <div className="mb-4 relative">
+                    {testimonials[currentIndex].avatar ? (
+                      <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-orange-500">
+                        <Image 
+                          src={testimonials[currentIndex].avatar} 
+                          alt={`${testimonials[currentIndex].name} avatar`}
+                          width={96}
+                          height={96}
+                          className="object-cover w-full h-full"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-orange-500 flex items-center justify-center text-white text-xl font-bold">
+                        {testimonials[currentIndex].initials}
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="font-bold text-lg md:text-xl">
+                    {testimonials[currentIndex].name}
+                  </div>
+                  <div className="text-sm md:text-base text-white/70">
+                    {testimonials[currentIndex].role}
+                  </div>
                 </div>
               </div>
             </div>
