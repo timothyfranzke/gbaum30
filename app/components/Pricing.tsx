@@ -23,13 +23,15 @@ const PricingCard = ({
   title, 
   price, 
   period, 
-  description 
+  description,
+  linkUrl
 }: { 
   icon: React.ReactNode; 
   title: string; 
   price: string; 
   period?: string | null; 
   description: string; 
+  linkUrl?: string;
 }) => {
   return (
     <div className="text-center relative transition-all duration-300 hover:transform hover:-translate-y-2">
@@ -52,9 +54,17 @@ const PricingCard = ({
           <p className="text-gray-200 text-sm mb-6 px-6">{description}</p>
           
           <div className="mb-6">
-            <div className="inline-block bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full px-6 py-3">
-              <span className="text-xl font-bold text-white">{price}{period && <span className="text-sm"> per {period}</span>}</span>
-            </div>
+            {linkUrl ? (
+              <Link href={linkUrl}>
+                <div className="inline-block bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full px-6 py-3 cursor-pointer hover:shadow-lg transition-all">
+                  <span className="text-xl font-bold text-white">{price}{period && <span className="text-sm"> per {period}</span>}</span>
+                </div>
+              </Link>
+            ) : (
+              <div className="inline-block bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full px-6 py-3">
+                <span className="text-xl font-bold text-white">{price}{period && <span className="text-sm"> per {period}</span>}</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -104,7 +114,8 @@ const TrainingSection = () => {
       title: "Monthly",
       price: "$175",
       period: "Month",
-      description: "Attend as many sessions as you'd like each month without the worry and hassle of tracking sessions. Train where and when it works for you!"
+      description: "Attend as many sessions as you'd like each month without the worry and hassle of tracking sessions. Train where and when it works for you!",
+      linkUrl: "/Users/timothy/data/franzkecreative/development/gbaum30/app/components/Testimonial.tsx"
     },
     {
       icon: (
@@ -125,7 +136,8 @@ const TrainingSection = () => {
     const handleScroll = () => {
       if (parallaxRef.current) {
         const scrollPosition = window.scrollY;
-        parallaxRef.current.style.transform = `translateY(${scrollPosition * 0.4}px)`;
+        // Slower parallax effect for smooth scrolling
+        parallaxRef.current.style.transform = `translateY(${scrollPosition * 0.15}px)`;
       }
     };
     
@@ -139,22 +151,23 @@ const TrainingSection = () => {
   return (
     <section className="py-20 relative overflow-hidden">
       {/* Parallax Background */}
-      <div className="absolute inset-0 w-full h-full z-0">
+      <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
         <div 
           ref={parallaxRef}
-          className="absolute inset-0 w-full h-[130%] -top-[15%]" 
+          className="absolute inset-0 w-full h-[150%] -top-[50%]" 
           style={{
-            backgroundImage: 'url(/soccer.png)',
+            backgroundImage: 'url(/diving_bg.png)',
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'brightness(0.2)',
+            backgroundPosition: 'center 30%',
+            backgroundRepeat: 'no-repeat',
+            filter: 'brightness(0.5)',
             willChange: 'transform',
           }}
         />
       </div>
       
-      {/* Overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-black/95 z-0"></div>
+      {/* Overlay gradient - lighter version */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40 z-0"></div>
       
       {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
