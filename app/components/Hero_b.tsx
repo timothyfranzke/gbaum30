@@ -2,7 +2,14 @@
 import Link from "next/link";
 import { useState } from "react";
 
-const ServiceColumn = ({ title, description, imageSrc, link }) => {
+interface ServiceColumnProps {
+  title: string;
+  description: string;
+  imageSrc: string;
+  link: string;
+}
+
+const ServiceColumn = ({ title, description, imageSrc, link }: ServiceColumnProps) => {
   const [isHover, setIsHover] = useState(false);
   
   return (
@@ -45,8 +52,15 @@ const ServiceColumn = ({ title, description, imageSrc, link }) => {
   );
 };
 
+interface Service {
+  title: string;
+  description: string;
+  imageSrc: string;
+  link: string;
+}
+
 const HeroSection = () => {
-  const services = [
+  const services: Service[] = [
     {
       title: "Training",
       description: "Technical & tactical training designed to elevate your goalkeeping skills to elite levels.",

@@ -81,13 +81,7 @@ const HeroSection = () => {
         </div>
       </div>
       
-      {/* Decorative Elements */}
-      <div className="absolute bottom-10 right-10 hidden lg:block">
-        <div className="w-32 h-32 border-4 border-blue-900 border-opacity-20 rounded-full"></div>
-      </div>
-      <div className="absolute top-20 right-20 hidden lg:block">
-        <div className="w-16 h-16 bg-blue-900 bg-opacity-10 rounded-full"></div>
-      </div>
+     
     </section>
   );
 };
