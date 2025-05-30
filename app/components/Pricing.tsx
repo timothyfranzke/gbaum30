@@ -10,8 +10,8 @@ interface FeatureCardProps {
 
 const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
   return (
-    <div className="bg-black bg-opacity-70 border-2 border-orange-500 rounded-lg p-6 text-white transition-all duration-300 hover:transform hover:-translate-y-2 shadow-xl">
-      <div className="mb-4 text-orange-500">{icon}</div>
+    <div className="bg-black bg-opacity-70 border-2 border-[#0033A0] rounded-lg p-6 text-white transition-all duration-300 hover:transform hover:-translate-y-2 shadow-xl">
+      <div className="mb-4 text-[#1E8AFF]">{icon}</div>
       <h3 className="text-xl font-bold mb-2">{title}</h3>
       <p className="text-gray-200">{description}</p>
     </div>
@@ -35,7 +35,7 @@ const PricingCard = ({
 }) => {
   return (
     <div className="text-center relative transition-all duration-300 hover:transform hover:-translate-y-2">
-      <div className="newspaper-clip-box p-6 md:p-8 bg-black bg-opacity-70 relative transform rotate-[-1deg] border-4 border-orange-500 shadow-xl">
+      <div className="newspaper-clip-box p-6 md:p-8 bg-black bg-opacity-70 relative transform rotate-[-1deg] border-4 border-[#0033A0] shadow-xl">
         {/* Rough edges for newspaper clipping effect */}
         <div className="absolute top-0 left-0 w-full h-full">
           <div className="absolute top-[-8px] left-[15%] w-[20%] h-[8px] bg-black"></div>
@@ -46,7 +46,7 @@ const PricingCard = ({
         
         <div className="relative z-10">
           <div className="flex justify-center mb-4">
-            <div className="text-orange-500 w-16 h-16">
+            <div className="text-[#1E8AFF] w-16 h-16">
               {icon}
             </div>
           </div>
@@ -56,12 +56,12 @@ const PricingCard = ({
           <div className="mb-6">
             {linkUrl ? (
               <Link href={linkUrl}>
-                <div className="inline-block bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full px-6 py-3 cursor-pointer hover:shadow-lg transition-all">
+                <div className="inline-block bg-gradient-to-r from-[#0033A0] to-[#1E8AFF] rounded-full px-6 py-3 cursor-pointer hover:shadow-lg transition-all">
                   <span className="text-xl font-bold text-white">{price}{period && <span className="text-sm"> per {period}</span>}</span>
                 </div>
               </Link>
             ) : (
-              <div className="inline-block bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full px-6 py-3">
+              <div className="inline-block bg-gradient-to-r from-[#0033A0] to-[#1E8AFF] rounded-full px-6 py-3">
                 <span className="text-xl font-bold text-white">{price}{period && <span className="text-sm"> per {period}</span>}</span>
               </div>
             )}
@@ -166,12 +166,12 @@ const TrainingSection = () => {
         />
       </div>
       
-      {/* Overlay gradient - lighter version */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40 z-0"></div>
+      {/* Overlay gradient - blue version */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0033A0]/50 via-[#1B365D]/30 to-[#0033A0]/40 z-0"></div>
       
       {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-white">Training & Services</h2>
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-white">Training & <span className="text-[#1E8AFF]">Services</span></h2>
         <p className="text-lg text-gray-200 text-center mb-12 max-w-3xl mx-auto">Comprehensive goalkeeper training programs designed to elevate your game</p>
         
         <div className="grid md:grid-cols-3 gap-8 mb-16">
@@ -183,13 +183,13 @@ const TrainingSection = () => {
         <div className="text-center mt-12">
           <Link
             href="/train"
-            className="bg-orange-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-orange-600 transition text-center inline-block"
+            className="bg-[#0033A0] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-[#1B365D] transition text-center inline-block"
           >
             JOIN THE TEAM
           </Link>
           <Link
             href="/about#contact"
-            className="ml-4 border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-white hover:text-gray-900 transition text-center inline-block"
+            className="ml-4 border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-white hover:text-[#0033A0] transition text-center inline-block"
           >
             REQUEST INFO
           </Link>

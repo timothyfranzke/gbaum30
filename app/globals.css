@@ -22,5 +22,23 @@
 body {
   background: var(--background);
   color: var(--foreground);
+  font-family: "Roboto", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .heading-font {
   font-family: "Bebas Neue", sans-serif;
+}
+
+.newspaper-clip-box {
+  position: relative;
+  clip-path: polygon(
+    0 4px,    /* top-left */
+    15% 0,     /* top-left indent */
+    85% 0,     /* top-right indent */
+    100% 4px,  /* top-right */
+    100% calc(100% - 4px), /* bottom-right */
+    85% 100%,  /* bottom-right indent */
+    15% 100%,  /* bottom-left indent */
+    0 calc(100% - 4px)  /* bottom-left */
+  );
 }

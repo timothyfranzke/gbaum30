@@ -79,12 +79,15 @@ const DiagonalPricing = () => {
       </div>
       
       {/* Overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0033A0]/50 via-[#1B365D]/30 to-[#0033A0]/40 z-0"></div>
+      
+      {/* White opacity background */}
+      <div className="absolute inset-0 bg-white/10 backdrop-blur-sm z-0"></div>
       
       {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-white">Training & Services</h2>
-        <p className="text-lg text-gray-200 text-center mb-12 max-w-3xl mx-auto">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-white">Training & <span className="text-[#1E8AFF]">Services</span></h2>
+        <p className="text-lg text-gray-200 text-center mb-12 max-w-3xl mx-auto" style={{ fontFamily: 'Roboto, sans-serif' }}>
           Comprehensive goalkeeper training programs designed to elevate your game
         </p>
         
@@ -106,9 +109,9 @@ const DiagonalPricing = () => {
                   className={`
                     newspaper-clip-box py-3 px-6 md:px-10
                     ${activeTab === index 
-                      ? 'bg-orange-500 text-white' 
+                      ? 'bg-[#0033A0] text-white' 
                       : 'bg-black bg-opacity-70 text-white hover:bg-opacity-90'}
-                    border-2 border-orange-500 transition-all duration-300
+                    border-2 border-[#0033A0] transition-all duration-300 shadow-lg
                   `}
                 >
                   <div className="font-bold text-lg md:text-xl">{option.title}</div>
@@ -127,7 +130,7 @@ const DiagonalPricing = () => {
           </div>
           
           {/* Content Panel */}
-          <div className="newspaper-clip-box p-8 bg-black bg-opacity-70 border-4 border-orange-500 text-white relative">
+          <div className="newspaper-clip-box p-8 bg-black bg-opacity-70 border-4 border-[#0033A0] text-white relative shadow-2xl">
             {/* Rough edges for newspaper clipping effect */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
               <div className="absolute top-[-8px] left-[15%] w-[20%] h-[8px] bg-black"></div>
@@ -145,7 +148,7 @@ const DiagonalPricing = () => {
                 {pricingOptions.map((option, index) => (
                   <div key={index} className="w-full flex-shrink-0 px-4">
                     <div className="text-center mb-8">
-                      <h3 className="text-3xl font-bold text-orange-500 mb-2">{option.title}</h3>
+                      <h3 className="text-3xl font-bold text-[#1E8AFF] mb-2">{option.title}</h3>
                       <div className="text-2xl font-bold mb-1">
                         {option.price}
                         {option.period && <span className="text-sm ml-1">per {option.period}</span>}
@@ -156,7 +159,7 @@ const DiagonalPricing = () => {
                     <div className="space-y-4 mb-8">
                       {option.features.map((feature, i) => (
                         <div key={i} className="flex items-center">
-                          <svg className="w-5 h-5 text-orange-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                          <svg className="w-5 h-5 text-[#1E8AFF] mr-3" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
                           <span>{feature}</span>
@@ -167,7 +170,7 @@ const DiagonalPricing = () => {
                     <div className="text-center">
                       <Link
                         href={option.linkUrl || "/train"}
-                        className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-8 py-3 rounded-full font-bold hover:shadow-lg transition inline-block"
+                        className="bg-gradient-to-r from-[#0033A0] to-[#1E8AFF] text-white px-8 py-3 rounded-full font-bold hover:shadow-lg transition inline-block"
                       >
                         SELECT PLAN
                       </Link>
@@ -183,13 +186,13 @@ const DiagonalPricing = () => {
         <div className="text-center mt-12">
           <Link
             href="/train"
-            className="bg-orange-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-orange-600 transition text-center inline-block"
+            className="bg-[#0033A0] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-[#1B365D] transition text-center inline-block"
           >
             JOIN THE TEAM
           </Link>
           <Link
             href="/about#contact"
-            className="ml-4 border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-white hover:text-gray-900 transition text-center inline-block"
+            className="ml-4 border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-white hover:text-[#0033A0] transition text-center inline-block"
           >
             REQUEST INFO
           </Link>
