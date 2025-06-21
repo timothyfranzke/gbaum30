@@ -10,10 +10,10 @@ interface FeatureCardProps {
 
 const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
   return (
-    <div className="bg-black bg-opacity-70 border-2 border-[#0033A0] rounded-lg p-6 text-white transition-all duration-300 hover:transform hover:-translate-y-2 shadow-xl">
+    <div className="bg-white border-2 border-[#0033A0] rounded-lg p-6 text-gray-800 transition-all duration-300 hover:transform hover:-translate-y-2 shadow-xl">
       <div className="mb-4 text-[#1E8AFF]">{icon}</div>
-      <h3 className="text-xl font-bold mb-2">{title}</h3>
-      <p className="text-gray-200">{description}</p>
+      <h3 className="text-xl font-bold mb-2 text-gray-800">{title}</h3>
+      <p className="text-gray-600">{description}</p>
     </div>
   );
 };
@@ -35,13 +35,13 @@ const PricingCard = ({
 }) => {
   return (
     <div className="text-center relative transition-all duration-300 hover:transform hover:-translate-y-2">
-      <div className="newspaper-clip-box p-6 md:p-8 bg-black bg-opacity-70 relative transform rotate-[-1deg] border-4 border-[#0033A0] shadow-xl">
+      <div className="newspaper-clip-box p-6 md:p-8 bg-white relative transform rotate-[-1deg] border-4 border-[#0033A0] shadow-xl">
         {/* Rough edges for newspaper clipping effect */}
         <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-[-8px] left-[15%] w-[20%] h-[8px] bg-black"></div>
-          <div className="absolute bottom-[-8px] right-[25%] w-[15%] h-[8px] bg-black"></div>
-          <div className="absolute left-[-8px] top-[30%] h-[15%] w-[8px] bg-black"></div>
-          <div className="absolute right-[-8px] bottom-[20%] h-[20%] w-[8px] bg-black"></div>
+          <div className="absolute top-[-8px] left-[15%] w-[20%] h-[8px] bg-gray-300"></div>
+          <div className="absolute bottom-[-8px] right-[25%] w-[15%] h-[8px] bg-gray-300"></div>
+          <div className="absolute left-[-8px] top-[30%] h-[15%] w-[8px] bg-gray-300"></div>
+          <div className="absolute right-[-8px] bottom-[20%] h-[20%] w-[8px] bg-gray-300"></div>
         </div>
         
         <div className="relative z-10">
@@ -50,8 +50,8 @@ const PricingCard = ({
               {icon}
             </div>
           </div>
-          <h4 className="text-2xl font-bold mb-2 text-white uppercase">{title}</h4>
-          <p className="text-gray-200 text-sm mb-6 px-6">{description}</p>
+          <h4 className="text-2xl font-bold mb-2 text-gray-800 uppercase">{title}</h4>
+          <p className="text-gray-600 text-sm mb-6 px-6">{description}</p>
           
           <div className="mb-6">
             {linkUrl ? (
@@ -75,17 +75,17 @@ const PricingCard = ({
 const TrainingSection = () => {
   const features = [
     {
-      icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>,
+      icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>,
       title: "Expert Staff",
       description: "Over 100 years of combined experience"
     },
     {
-      icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>,
+      icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>,
       title: "Modern Training",
       description: "Relevant to today's game demands"
     },
     {
-      icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>,
+      icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>,
       title: "Career Connections",
       description: "Pathways to higher levels"
     }
@@ -129,50 +129,13 @@ const TrainingSection = () => {
       description: "In between plans, or just want to drop in on a session to experience the AG30 GK Academy? Start with a single session!"
     }
   ];
-
-  const parallaxRef = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    const handleScroll = () => {
-      if (parallaxRef.current) {
-        const scrollPosition = window.scrollY;
-        // Slower parallax effect for smooth scrolling
-        parallaxRef.current.style.transform = `translateY(${scrollPosition * 0.15}px)`;
-      }
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
   
   return (
-    <section className="py-20 relative overflow-hidden">
-      {/* Parallax Background */}
-      <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
-        <div 
-          ref={parallaxRef}
-          className="absolute inset-0 w-full h-[150%] -top-[50%]" 
-          style={{
-            backgroundImage: 'url(/diving_bg.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center 30%',
-            backgroundRepeat: 'no-repeat',
-            filter: 'brightness(0.5)',
-            willChange: 'transform',
-          }}
-        />
-      </div>
-      
-      {/* Overlay gradient - blue version */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0033A0]/50 via-[#1B365D]/30 to-[#0033A0]/40 z-0"></div>
-      
+    <section className="py-20 bg-gray-50">
       {/* Content */}
-      <div className="container mx-auto px-4 relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-white">Training & <span className="text-[#1E8AFF]">Services</span></h2>
-        <p className="text-lg text-gray-200 text-center mb-12 max-w-3xl mx-auto">Comprehensive goalkeeper training programs designed to elevate your game</p>
+      <div className="container mx-auto px-4">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gray-800">Training & <span className="text-[#1E8AFF]">Services</span></h2>
+        <p className="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">Comprehensive goalkeeper training programs designed to elevate your game</p>
         
         <div className="grid md:grid-cols-3 gap-8 mb-16">
           {pricingPlans.map((plan, index) => (
@@ -189,7 +152,7 @@ const TrainingSection = () => {
           </Link>
           <Link
             href="/about#contact"
-            className="ml-4 border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-white hover:text-[#0033A0] transition text-center inline-block"
+            className="ml-4 border-2 border-[#0033A0] text-[#0033A0] px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-[#0033A0] hover:text-white transition text-center inline-block"
           >
             REQUEST INFO
           </Link>

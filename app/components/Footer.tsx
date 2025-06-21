@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 
 const Footer = () => {
@@ -11,8 +12,19 @@ const Footer = () => {
     ];
   
     return (
-      <footer className="bg-gray-900 text-white py-16">
-        <div className="container mx-auto px-4">
+      <footer className="relative bg-gray-900 text-white py-16 overflow-hidden">
+        {/* Background image with gradients to black on all sides */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-cover bg-center bg-no-repeat w-full h-full" style={{ 
+            backgroundImage: 'url("soccer_field.jpg")',
+            backgroundSize: 'contain',
+            objectFit: 'cover'
+          }}></div>
+          <div className="absolute inset-0" style={{ 
+            background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.9) 100%), linear-gradient(to top, black 0%, transparent 50%, black 100%), linear-gradient(to right, black 0%, transparent 50%, black 100%)'
+          }}></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center mb-6">

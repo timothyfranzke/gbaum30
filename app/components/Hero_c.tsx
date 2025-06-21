@@ -23,7 +23,7 @@ const HeroSection = () => {
       </div>
       
       {/* Overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/20"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-background/30 via-transparent to-background/20"></div>
       
       {/* Background Pattern - subtle geometric overlay */}
       <div className="absolute inset-0 opacity-10 z-10">
@@ -40,12 +40,12 @@ const HeroSection = () => {
             {/* Primary Name */}
             <h1 className="leading-none mb-2" style={{ fontFamily: '"Bebas Neue", sans-serif' }}>
               <span className="block text-8xl md:text-9xl lg:text-[12rem] text-white drop-shadow-lg" style={{ letterSpacing: '0.15em' }}>
-                ANDY
+                UNION 30
               </span>
-              {/* Secondary Name */}
+              {/* Secondary Name 
               <span className="block text-6xl md:text-7xl lg:text-8xl text-white drop-shadow-md -mt-4 lg:-mt-8" style={{ letterSpacing: '0.05em' }}>
                 GREUNEBAUM
-              </span>
+              </span>*/}
             </h1>
             
             {/* Subtitle */}
@@ -59,9 +59,9 @@ const HeroSection = () => {
             <div className="mt-8">
               <Link
                 href="/shop"
-                className="inline-flex items-center bg-blue-900 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                className="inline-flex items-center btn-outline"
               >
-                Join the Team
+                Join the Union
               </Link>
             </div>
           </div>

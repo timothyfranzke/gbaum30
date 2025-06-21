@@ -11,11 +11,7 @@ const Navigation = () => {
     { href: '/', label: 'HOME' },
     { href: '/about', label: 'ABOUT' },
     { href: '/train', label: 'TRAINING' },
-    { href: '/train/schedule', label: 'SCHEDULE' },
-    { href: '/events', label: 'EVENTS' },
-    { href: '/classroom', label: 'CLASSROOM' },
-    { href: '/news', label: 'NEWS' },
-    { href: '/blog', label: 'BLOG' },
+    { href: '/news', label: 'NEWS' }
   ];
 
   // Toggle menu function
@@ -52,7 +48,7 @@ const Navigation = () => {
             <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center">
               <span className="text-white font-bold text-xl">AG</span>
             </div>
-            <span className="ml-3 text-2xl font-bold">AG30</span>
+            <span className="ml-3 text-2xl font-bold">UNION 30</span>
           </Link>
           
           {/* Desktop Navigation */}

@@ -1,13 +1,39 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #D6D2C4;
   --foreground: #171717;
+  --secondary: #1E8AFF;
+  --primary: #0033A0;
+  --sky: #B1C9E8;
+  --midnight: #1B365D;
+  --goldenrod: #FFDC00
+  --sunset: #FFA360;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-8 py-4 rounded-full font-bold hover:bg-primary/20 transition;
+  }
+  
+  .btn-secondary {
+    @apply bg-[#0033A0] text-white px-8 py-4 rounded-full font-bold hover:bg-[#1B365D] transition;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-gray-900 transition;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-secondary: var(--secondary);
+  --color-primary: var(--primary);
+  --color-sky: var(--sky);
+  --color-midnight: var(--midnight);
+  --color-goldenrod: var(--goldenrod);
+  --color-sunset: var(--sunset);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -15,7 +41,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #D6D2C4;
   }
 }
 
@@ -41,4 +67,8 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     15% 100%,  /* bottom-left indent */
     0 calc(100% - 4px)  /* bottom-left */
   );
+}
+
+.text-primary {
+  color: var(--color-primary);
 }
