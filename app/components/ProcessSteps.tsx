@@ -47,12 +47,12 @@ const ProcessSection = () => {
   return (
     <section className="py-20 relative overflow-hidden" style={{ backgroundColor: 'rgba(27, 54, 93, 0.7)' }}>
       {/* Background image positioned at bottom right */}
-      <div className="absolute bottom-[20px] right-[-115px] z-0">
+      <div className="absolute left-[20px] bottom-[6px] z-20">
         <div className="w-full h-full bg-no-repeat bg-left-bottom" style={{
           backgroundImage: 'url("bw_bg_2.png")',
           backgroundSize: 'contain',
-          width: '700px',
-          height: '700px',
+          width: '900px',
+          height: '900px',
           opacity: 0.15,
           zIndex: 20
         }}></div>
