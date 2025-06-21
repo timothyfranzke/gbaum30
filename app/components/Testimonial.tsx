@@ -84,7 +84,7 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-12 md:py-20 bg-primary h-auto">
+    <section className="py-12 md:py-20 bg-midnight h-auto">
       <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-white">Hear From the Union</h2>
         {/* add 5 white stars */}

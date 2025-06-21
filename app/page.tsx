@@ -40,7 +40,7 @@ export default function Home() {
       <DiagonalPricing />
       <Banner
         title=""
-        backgroundColorHex="#0033A0"
+        backgroundColorHex="#1B365D"
         showStars={false}
         
         />

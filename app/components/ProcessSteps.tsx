@@ -45,34 +45,53 @@ const ProcessSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-midnight">
-      <div className="container mx-auto px-4">
+    <section className="py-20 relative overflow-hidden" style={{ backgroundColor: 'rgba(27, 54, 93, 0.7)' }}>
+      {/* Background image positioned at bottom right */}
+      <div className="absolute bottom-[20px] right-[-115px] z-0">
+        <div className="w-full h-full bg-no-repeat bg-left-bottom" style={{
+          backgroundImage: 'url("bw_bg_2.png")',
+          backgroundSize: 'contain',
+          width: '700px',
+          height: '700px',
+          opacity: 0.15,
+          zIndex: 20
+        }}></div>
+      </div>
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
             Join the <span className="text-secondary">Union</span>
           </h2>
         </div>
 
-        <div className="flex flex-wrap justify-center items-start gap-4 sm:gap-6 lg:gap-8">
-          {steps.map((step, index) => (
-            <div key={index} className="flex-1 min-w-[200px] max-w-[300px] relative group">
-              {/* Icon with number overlay */}
-              <div className="relative mb-4 flex justify-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-secondary rounded-full flex items-center justify-center text-white group-hover:bg-sky transition-colors duration-300">
-                  {step.icon}
+        {/* Semi-transparent midnight colored card around processes */}
+        <div className="p-8 md:p-12 rounded-lg shadow-xl newspaper-clip-box relative mb-16" style={{ backgroundColor: 'rgba(27, 54, 93, 0.85)' }}>
+          {/* Rough edges for newspaper clipping effect */}
+          <div className="absolute top-0 left-0 w-full h-full">
+            <div className="absolute top-[-8px] left-[15%] w-[20%] h-[8px]" style={{ backgroundColor: 'rgba(27, 54, 93, 0.85)' }}></div>
+            <div className="absolute bottom-[-8px] right-[25%] w-[15%] h-[8px]" style={{ backgroundColor: 'rgba(27, 54, 93, 0.85)' }}></div>
+            <div className="absolute left-[-8px] top-[30%] h-[15%] w-[8px]" style={{ backgroundColor: 'rgba(27, 54, 93, 0.85)' }}></div>
+            <div className="absolute right-[-8px] bottom-[20%] h-[20%] w-[8px]" style={{ backgroundColor: 'rgba(27, 54, 93, 0.85)' }}></div>
+          </div>
+          
+          <div className="flex flex-wrap justify-center items-start gap-4 sm:gap-6 lg:gap-8 relative z-10">
+            {steps.map((step, index) => (
+              <div key={index} className="flex-1 min-w-[200px] max-w-[300px] relative group">
+                {/* Icon with number overlay */}
+                <div className="relative mb-4 flex justify-center">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-secondary rounded-full flex items-center justify-center text-white group-hover:bg-sky transition-colors duration-300">
+                    {step.icon}
+                  </div>
                 </div>
                 
+                {/* Content */}
+                <div className="text-center">
+                  <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 text-white">{step.title}</h3>
+                  <p className="text-sm sm:text-base text-white leading-relaxed">{step.description}</p>
+                </div>
               </div>
-              
-              {/* Content */}
-              <div className="text-center">
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 text-white">{step.title}</h3>
-                <p className="text-sm sm:text-base text-white leading-relaxed">{step.description}</p>
-              </div>
-
-              
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Call to action */}
