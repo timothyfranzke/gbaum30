@@ -45,18 +45,8 @@ const ProcessSection = () => {
   ];
 
   return (
-    <section className="py-20 relative overflow-hidden" style={{ backgroundColor: 'rgba(27, 54, 93, 0.7)' }}>
-      {/* Background image positioned at bottom right */}
-      <div className="absolute left-[20px] bottom-[6px] z-20">
-        <div className="w-full h-full bg-no-repeat bg-left-bottom" style={{
-          backgroundImage: 'url("bw_bg_2.png")',
-          backgroundSize: 'contain',
-          width: '900px',
-          height: '900px',
-          opacity: 0.15,
-          zIndex: 20
-        }}></div>
-      </div>
+    <section className="py-20 relative overflow-hidden bg-midnight">
+      
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
@@ -65,7 +55,7 @@ const ProcessSection = () => {
         </div>
 
         {/* Semi-transparent midnight colored card around processes */}
-        <div className="p-8 md:p-12 rounded-lg shadow-xl newspaper-clip-box relative mb-16" style={{ backgroundColor: 'rgba(27, 54, 93, 0.85)' }}>
+        <div className="p-8 md:p-12 rounded-lg shadow-xl newspaper-clip-box relative mb-16" style={{ backgroundColor: 'rgba(80, 114, 148, 0.85)' }}>
           {/* Rough edges for newspaper clipping effect */}
           <div className="absolute top-0 left-0 w-full h-full">
             <div className="absolute top-[-8px] left-[15%] w-[20%] h-[8px]" style={{ backgroundColor: 'rgba(27, 54, 93, 0.85)' }}></div>

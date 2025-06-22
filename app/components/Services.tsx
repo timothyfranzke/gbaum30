@@ -4,15 +4,27 @@ const ServicesSection = () => {
   return (
     <section className="py-20 relative">
       {/* Midnight background for top half */}
-      <div className="absolute top-0 left-0 w-full h-1/2 bg-[#1B365D]"></div>
+      <div className="absolute top-0 left-0 w-full h-1/2 bg-midnight"></div>
       {/* White background for bottom half */}
-      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-white"></div>
+      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-white z-1"></div>
+      
+      {/* Background image positioned to extend from bottom of midnight section past the top */}
+      <div className="absolute left-0 top-[-100px]  z-0">
+        <div className="w-full h-full bg-no-repeat bg-left-bottom " style={{
+          backgroundImage: 'url("bw_bg_2.png")',
+          backgroundSize: 'contain',
+          width: '900px',
+          height: '900px',
+          opacity: 0.35,
+          transform: 'translateY(-30%)'
+        }}></div>
+      </div>
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
-            Our <span style={{ color: '#0033A0' }}>Services</span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+            Our <span className='text-secondary'>Services</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-white max-w-3xl mx-auto">
             Comprehensive goalkeeper development through training, analysis, and mentoring
           </p>
         </div>
@@ -176,14 +188,7 @@ const ServicesSection = () => {
         {/* Call to Action */}
         <div className="text-center mt-16">
           <button 
-            style={{ backgroundColor: '#0033A0' }}
-            className="text-white px-8 py-4 rounded-full font-bold hover:shadow-lg transition-all duration-300 hover:-translate-y-1 mr-4"
-          >
-            LEARN MORE ABOUT OUR SERVICES
-          </button>
-          <button 
-            style={{ backgroundColor: '#1B365D' }}
-            className="text-white px-8 py-4 rounded-full font-bold hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+            className="btn-primary"
           >
             GET STARTED TODAY
           </button>

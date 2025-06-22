@@ -62,9 +62,19 @@ const DiagonalPricing = () => {
   };
 
   return (
-    <section className="py-20 bg-background h-auto mb-20">
-    {/* 40% tint overlay */}
-    <div className="h-auto bg-white opacity-20 z-0"></div>
+    <section className="py-20 bg-background h-auto mb-20 relative overflow-hidden">
+      {/* Background image positioned at bottom right */}
+      <div className="absolute right-0 bottom-[-100px] z-0">
+        <div className="w-full h-full bg-no-repeat bg-right-bottom" style={{
+          backgroundImage: 'url("/hands_up_2.png")',
+          backgroundSize: 'contain',
+          width: '900px',
+          height: '900px',
+          opacity: 0.35
+        }}></div>
+      </div>
+      {/* 40% tint overlay */}
+      <div className="h-auto bg-white opacity-20 z-0"></div>
       
       {/* Content */}
       <div className="container mx-auto px-4 relative z-10">

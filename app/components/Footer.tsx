@@ -15,11 +15,16 @@ const Footer = () => {
       <footer className="relative bg-gray-900 text-white py-16 overflow-hidden">
         {/* Background image with gradients to black on all sides */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-cover bg-center bg-no-repeat w-full h-full" style={{ 
-            backgroundImage: 'url("soccer_field.jpg")',
-            backgroundSize: 'contain',
-            objectFit: 'cover'
-          }}></div>
+          <div 
+            className="absolute inset-0" 
+            style={{ 
+              backgroundImage: 'url("/soccer_field.jpg")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              width: '100%',
+              height: '100%'
+            }}
+          ></div>
           <div className="absolute inset-0" style={{ 
             background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.9) 100%), linear-gradient(to top, black 0%, transparent 50%, black 100%), linear-gradient(to right, black 0%, transparent 50%, black 100%)'
           }}></div>

@@ -48,9 +48,8 @@ export default function Home() {
       <WhyAG30Section />
       <StaffShowcase />
       <KCFusionSection />
-      <TacticalEdgeSection />
+
       <DynamicMediaGrid />
-      <NewsletterSection />
       <Footer />
     </>
   );
