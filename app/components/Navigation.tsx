@@ -45,8 +45,8 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           <Link href="/" className="flex items-center">
-            <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">AG</span>
+            <div className="w-16 h-16 flex items-center justify-center">
+              <Image src="/logo_u30.png" alt="Union 30 Logo" width={72} height={72} />
             </div>
             <span className="ml-3 text-2xl font-bold">UNION 30</span>
           </Link>

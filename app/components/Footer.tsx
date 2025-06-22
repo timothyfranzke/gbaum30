@@ -33,10 +33,10 @@ const Footer = () => {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">AG</span>
+                <div className="w-16 h-16 flex items-center justify-center">
+                  <Image src="/logo_u30.png" alt="Union 30 Logo" width={72} height={72} />
                 </div>
-                <span className="ml-3 text-2xl font-bold">AG30</span>
+                <span className="ml-3 text-2xl font-bold">UNION 30</span>
               </div>
               <p className="text-gray-400">Elite goalkeeper training for all levels</p>
             </div>
@@ -70,12 +70,12 @@ const Footer = () => {
                 ))}
               </div>
               <p className="text-gray-400">
-                Email: <a href="mailto:info@ag30.com" className="hover:text-white">info@ag30.com</a>
+                Email: <a href="mailto:info@union30.com" className="hover:text-white">info@union30.com</a>
               </p>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 AG30. All rights reserved.</p>
+            <p>&copy; 2025 UNION 30. All rights reserved.</p>
           </div>
         </div>
       </footer>
