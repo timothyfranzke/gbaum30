@@ -19,6 +19,7 @@ import StaffShowcase from "./components/Staff";
 import ProcessSection from "./components/ProcessSteps";
 import DynamicMediaGrid from "./components/MediaGallery";
 import ServicesSection from "./components/Services";
+import PackagesPage from "./components/Packages";
 
 export default function Home() {
   // State to control which pricing component to display
@@ -31,13 +32,8 @@ export default function Home() {
       <Hero_c />
       <ProcessSection />
       <ServicesSection />
-      <Banner 
-       
-        backgroundColorHex="#D6D2C4"
-        showStars={false}
-        direction="bottom-to-top"
-      />
-      <DiagonalPricing />
+     
+      <PackagesPage />
       <Banner
         title=""
         backgroundColorHex="#1B365D"
@@ -45,9 +41,8 @@ export default function Home() {
         
         />
       <TestimonialsSection />
-      <WhyAG30Section />
       <StaffShowcase />
-      <KCFusionSection />
+
 
       <DynamicMediaGrid />
       <Footer />
