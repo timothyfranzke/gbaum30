@@ -9,8 +9,8 @@ const ServicesSection = () => {
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-white z-1"></div>
       
       {/* Background image positioned to extend from bottom of midnight section past the top */}
-      <div className="absolute left-0 top-[-100px]  z-0">
-        <div className="w-full h-full bg-no-repeat bg-left-bottom " style={{
+      <div className="absolute left-0 top-[-100px] z-0 overflow-x-clip max-w-full">
+        <div className="bg-no-repeat bg-left-bottom" style={{
           backgroundImage: 'url("bw_bg_2.png")',
           backgroundSize: 'contain',
           width: '900px',
