@@ -12,14 +12,13 @@ import KCFusionSection from "./components/KCFusion";
 import TacticalEdgeSection from "./components/TacticalEdge";
 import NewsletterSection from "./components/Newsletter";
 import Footer from "./components/Footer";
-import HeroA from "./components/Hero_a";
-import Hero_b from "./components/Hero_b";
 import Hero_c from "./components/Hero_c";
 import Media from "./components/Media";
 import Banner from "./components/Banner";
 import StaffShowcase from "./components/Staff";
 import ProcessSection from "./components/ProcessSteps";
 import DynamicMediaGrid from "./components/MediaGallery";
+import ServicesSection from "./components/Services";
 
 export default function Home() {
   // State to control which pricing component to display
@@ -31,6 +30,7 @@ export default function Home() {
       <Navigation />
       <Hero_c />
       <ProcessSection />
+      <ServicesSection />
       <Banner 
        
         backgroundColorHex="#D6D2C4"

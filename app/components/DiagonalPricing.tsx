@@ -68,7 +68,7 @@ const DiagonalPricing = () => {
       
       {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary">Training & <span className="text-[#1E8AFF]">Services</span></h2>
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary">Packages</h2>
         <p className="text-lg text-primary text-center mb-12 max-w-3xl mx-auto" style={{ fontFamily: 'Roboto, sans-serif' }}>
           Comprehensive goalkeeper training programs designed to elevate your game
         </p>
