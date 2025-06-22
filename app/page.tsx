@@ -34,12 +34,7 @@ export default function Home() {
       <ServicesSection />
      
       <PackagesPage />
-      <Banner
-        title=""
-        backgroundColorHex="#1B365D"
-        showStars={false}
-        
-        />
+
       <TestimonialsSection />
       <StaffShowcase />
 
