@@ -29,12 +29,12 @@ export default function RootLayout({
         <meta name="og:title" content="Union 30" />
         <meta name="og:description" content="Union 30 Goalkeeper Union" />
         <meta name="og:type" content="website" />
-        <meta name="og:url" content="https://union30.com" />
-        <meta name="og:image" content="https://union30.com/og_logo.png" />
+        <meta name="og:url" content="https://gbaum30--gbaum30-41996.us-central1.hosted.app/" />
+        <meta name="og:image" content="https://gbaum30--gbaum30-41996.us-central1.hosted.app/og_logo.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Union 30" />
         <meta name="twitter:description" content="Union 30 Goalkeeper Union" />
-        <meta name="twitter:image" content="https://union30.com/og_logo.png" />
+        <meta name="twitter:image" content="https://gbaum30--gbaum30-41996.us-central1.hosted.app/og_logo.png" />
         
         
         <link rel="preconnect" href="https://fonts.googleapis.com" />

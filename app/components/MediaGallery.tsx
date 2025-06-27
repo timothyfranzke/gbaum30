@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
 // Define interface for media items
+// modify to include a description
+
 interface MediaItem {
   id: number;
   type: 'image' | 'video';
@@ -15,7 +17,7 @@ const DynamicMediaGrid = () => {
   const mediaItems: MediaItem[] = [
     {
       id: 1,
-      type: 'image',
+      type: 'image' as const,
       src: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       alt: 'Goalkeeper in action',
       size: '2x2', // Large featured image
@@ -23,7 +25,7 @@ const DynamicMediaGrid = () => {
     },
     {
       id: 2,
-      type: 'video',
+      type: 'video' as const,
       src: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       alt: 'Training highlights',
       size: '2x1',
@@ -31,7 +33,7 @@ const DynamicMediaGrid = () => {
     },
     {
       id: 3,
-      type: 'image',
+      type: 'image' as const,
       src: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       alt: 'Goalkeeper diving',
       size: '1x1',
@@ -39,7 +41,7 @@ const DynamicMediaGrid = () => {
     },
     {
       id: 4,
-      type: 'image',
+      type: 'image' as const,
       src: 'https://images.unsplash.com/photo-1614632537197-38a17061c2bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       alt: 'Team celebration',
       size: '1x1',
@@ -47,7 +49,7 @@ const DynamicMediaGrid = () => {
     },
     {
       id: 5,
-      type: 'image',
+      type: 'image' as const,
       src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       alt: 'Goalkeeper training',
       size: '1x2',
@@ -55,7 +57,7 @@ const DynamicMediaGrid = () => {
     },
     {
       id: 6,
-      type: 'video',
+      type: 'video' as const,
       src: 'https://images.unsplash.com/photo-1526232761682-d26e85d9d605?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       alt: 'Match footage',
       size: '2x1',
@@ -63,7 +65,7 @@ const DynamicMediaGrid = () => {
     },
     {
       id: 7,
-      type: 'image',
+      type: 'image' as const,
       src: 'https://images.unsplash.com/photo-1553778263-73a83bab9b0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       alt: 'Training equipment',
       size: '1x1',
@@ -71,7 +73,7 @@ const DynamicMediaGrid = () => {
     },
     {
       id: 8,
-      type: 'image',
+      type: 'image' as const,
       src: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       alt: 'Youth training',
       size: '1x1',
