@@ -18,7 +18,7 @@ const Footer = () => {
           <div 
             className="absolute inset-0" 
             style={{ 
-              backgroundImage: 'url("/soccer_field.jpg")',
+              backgroundImage: 'url("/footer_bg.png")',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               width: '100%',

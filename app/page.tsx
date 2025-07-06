@@ -20,6 +20,7 @@ import ProcessSection from "./components/ProcessSteps";
 import DynamicMediaGrid from "./components/MediaGallery";
 import ServicesSection from "./components/Services";
 import PackagesPage from "./components/Packages";
+import CoachAvatars from "./components/Staff_2";
 
 export default function Home() {
   // State to control which pricing component to display
@@ -36,7 +37,7 @@ export default function Home() {
       <PackagesPage />
 
       <TestimonialsSection />
-      <StaffShowcase />
+      <CoachAvatars />
 
 
       <DynamicMediaGrid />
