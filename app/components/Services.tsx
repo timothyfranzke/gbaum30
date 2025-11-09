@@ -25,7 +25,7 @@ const ServicesSection = () => {
             Our <span className='text-secondary'>Services</span>
           </h2>
           <p className="text-lg text-white max-w-3xl mx-auto">
-            Comprehensive goalkeeper development through training, analysis, and mentoring
+            dsad goalkeeper development tsshrough training, analysis, and mentoring
           </p>
         </div>
 

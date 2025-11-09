@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Union 30",
   description: "Union 30 Goalkeeper Union",
+  
 };
 
 export default function RootLayout({
