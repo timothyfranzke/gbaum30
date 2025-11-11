@@ -13,7 +13,7 @@ const HeroVariant3 = () => {
   ];
 
   return (
-    <section className="min-h-screen relative overflow-hidden bg-black">
+    <section className="min-h-screen relative overflow-hidden bg-black shapedividers_com-647 md:pb-50">
       {/* Background Video/Image */}
       <div className="absolute inset-0">
         <div
