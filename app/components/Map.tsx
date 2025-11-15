@@ -32,6 +32,7 @@ const Map: React.FC<MapProps> = ({
     const [states, setStates] = useState<Array<{d: string; id: string; title: string}>>([]);
     const [loading, setLoading] = useState(true);
     const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
+    const [clickPosition, setClickPosition] = useState<{x: number, y: number} | null>(null);
 
     useEffect(() => {
         const fetchMapData = async () => {
@@ -64,14 +65,16 @@ const Map: React.FC<MapProps> = ({
         }
     };
 
-    const handlePinClick = (pin: Pin) => {
+    const handlePinClick = (pin: Pin, event: React.MouseEvent) => {
         if (pin.profile) {
             setSelectedProfile(pin.profile);
+            setClickPosition({ x: event.clientX, y: event.clientY });
         }
     };
 
     const closeProfilePopup = () => {
         setSelectedProfile(null);
+        setClickPosition(null);
     };
 
     const triggerAnimation = () => {
@@ -100,7 +103,7 @@ const Map: React.FC<MapProps> = ({
 
     // Render a pin at given position
     const renderPin = (pin: Pin) => {
-        const pinImage = pin.image || '/soccer_ball.png';
+        const pinImage = pin.image || '/soccer_ball_2.png';
         const isLogoPin = pin.image === '/logo_u30.png';
         
         // If it's the logo pin, just show the image without pin shape
@@ -108,7 +111,7 @@ const Map: React.FC<MapProps> = ({
             return (
                 <g 
                     transform={`translate(${pin.x}, ${pin.y})`}
-                    onClick={() => handlePinClick(pin)}
+                    onClick={(e: any) => handlePinClick(pin, e)}
                     style={{ cursor: pin.profile ? 'pointer' : 'default' }}
                 >
                     {/* White glow filter definition */}
@@ -143,18 +146,18 @@ const Map: React.FC<MapProps> = ({
         return (
             <g 
                 transform={`translate(${pin.x}, ${pin.y})`}
-                onClick={() => handlePinClick(pin)}
+                onClick={(e: any) => handlePinClick(pin, e)}
                 style={{ cursor: pin.profile ? 'pointer' : 'default' }}
             >
                 {/* Pin shadow */}
                 <ellipse cx="0" cy="25" rx="8" ry="3" fill="rgba(0,0,0,0.3)" />
                 
-                {/* Pin body - white */}
+                {/* Pin body - blue with white stroke */}
                 <path
                     d="M 0,-20 C -8,-20 -15,-13 -15,-5 C -15,5 0,20 0,20 C 0,20 15,5 15,-5 C 15,-13 8,-20 0,-20 Z"
-                    fill="white"
-                    stroke="#CCCCCC"
-                    strokeWidth="1"
+                    fill="#1E3C73"
+                    stroke="white"
+                    strokeWidth="2"
                 />
                 
                 {/* Circular clip for image */}
@@ -293,11 +296,36 @@ const Map: React.FC<MapProps> = ({
                 {renderPin(centralPin)}
                 
                 {/* Destination pins - rendered after paths so they appear on top */}
-                {destinations.map((dest) => (
-                    <React.Fragment key={dest.name}>
-                        {renderPin(dest)}
-                    </React.Fragment>
-                ))}
+                {destinations.map((dest, index) => {
+                    const duration = 2 + index * 0.5;
+                    return (
+                        <g 
+                            key={dest.name}
+                            transform={`translate(${dest.x}, ${dest.y})`}
+                            opacity="0"
+                        >
+                            <g transform="translate(0, 0) scale(0)">
+                                {renderPin({ ...dest, x: 0, y: 0 })}
+                                <animateTransform
+                                    attributeName="transform"
+                                    type="scale"
+                                    values="0;1.2;1"
+                                    begin={`${duration}s`}
+                                    dur="0.4s"
+                                    fill="freeze"
+                                />
+                            </g>
+                            <animate
+                                attributeName="opacity"
+                                from="0"
+                                to="1"
+                                begin={`${duration}s`}
+                                dur="0.01s"
+                                fill="freeze"
+                            />
+                        </g>
+                    );
+                })}
                 
             </svg>
             </div>
@@ -315,20 +343,41 @@ const Map: React.FC<MapProps> = ({
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        zIndex: 1000
+                        zIndex: 1000,
+                        animation: 'fadeIn 0.2s ease-out'
                     }}
                     onClick={closeProfilePopup}
                 >
+                    <style>{`
+                        @keyframes fadeIn {
+                            from { opacity: 0; }
+                            to { opacity: 1; }
+                        }
+                        @keyframes popupGrow {
+                            from {
+                                transform: translate(${clickPosition ? `${clickPosition.x - window.innerWidth / 2}px, ${clickPosition.y - window.innerHeight / 2}px` : '0, 0'}) scale(0);
+                                opacity: 0;
+                            }
+                            to {
+                                transform: translate(0, 0) scale(1);
+                                opacity: 1;
+                            }
+                        }
+                    `}</style>
                     <div 
                         style={{
-                            backgroundColor: 'white',
-                            padding: '30px',
-                            borderRadius: '12px',
+                            background: 'linear-gradient(135deg, #234c8a 0%, #1E3C73 100%)',
+                            padding: '40px',
+                            borderRadius: '16px',
                             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
                             maxWidth: '400px',
                             width: '90%',
                             textAlign: 'center',
-                            position: 'relative'
+                            position: 'relative',
+                            animation: 'popupGrow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center'
                         }}
                         onClick={(e) => e.stopPropagation()}
                     >
@@ -336,15 +385,24 @@ const Map: React.FC<MapProps> = ({
                             onClick={closeProfilePopup}
                             style={{
                                 position: 'absolute',
-                                top: '10px',
+                                top: '15px',
                                 right: '15px',
-                                background: 'none',
+                                background: 'rgba(255, 255, 255, 0.2)',
                                 border: 'none',
                                 fontSize: '24px',
                                 cursor: 'pointer',
-                                color: '#666',
-                                padding: '5px'
+                                color: 'white',
+                                padding: '5px 10px',
+                                borderRadius: '50%',
+                                width: '36px',
+                                height: '36px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                transition: 'background 0.2s'
                             }}
+                            onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)'}
+                            onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'}
                         >
                             ×
                         </button>
@@ -353,12 +411,13 @@ const Map: React.FC<MapProps> = ({
                             src={selectedProfile.image} 
                             alt={selectedProfile.name}
                             style={{
-                                width: '120px',
-                                height: '120px',
+                                width: '150px',
+                                height: '150px',
                                 borderRadius: '50%',
                                 objectFit: 'cover',
-                                marginBottom: '20px',
-                                border: '4px solid #FF4444'
+                                marginBottom: '24px',
+                                border: '4px solid white',
+                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
                             }}
                             onError={(e) => {
                                 e.currentTarget.src = '/placeholder-avatar.jpg';
@@ -366,18 +425,20 @@ const Map: React.FC<MapProps> = ({
                         />
                         
                         <h2 style={{ 
-                            margin: '0 0 10px 0', 
-                            color: '#333',
-                            fontSize: '24px',
-                            fontWeight: 'bold'
+                            margin: '0 0 12px 0', 
+                            color: 'white',
+                            fontSize: '28px',
+                            fontWeight: 'bold',
+                            textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
                         }}>
                             {selectedProfile.name}
                         </h2>
                         
                         <p style={{ 
-                            margin: '0 0 20px 0', 
-                            color: '#666',
-                            fontSize: '18px'
+                            margin: '0 0 24px 0', 
+                            color: 'rgba(255, 255, 255, 0.9)',
+                            fontSize: '18px',
+                            fontWeight: '500'
                         }}>
                             {selectedProfile.position}
                         </p>
@@ -385,17 +446,25 @@ const Map: React.FC<MapProps> = ({
                         <button
                             onClick={closeProfilePopup}
                             style={{
-                                padding: '10px 25px',
-                                backgroundColor: '#FF4444',
-                                color: 'white',
+                                padding: '12px 32px',
+                                backgroundColor: 'white',
+                                color: '#1E3C73',
                                 border: 'none',
-                                borderRadius: '6px',
+                                borderRadius: '8px',
                                 fontSize: '16px',
                                 cursor: 'pointer',
-                                fontWeight: 'bold'
+                                fontWeight: 'bold',
+                                transition: 'transform 0.2s, box-shadow 0.2s',
+                                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)'
                             }}
-                            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#CC0000'}
-                            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#FF4444'}
+                            onMouseOver={(e) => {
+                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
+                            }}
+                            onMouseOut={(e) => {
+                                e.currentTarget.style.transform = 'translateY(0)';
+                                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
+                            }}
                         >
                             Close
                         </button>
