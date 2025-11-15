@@ -18,6 +18,7 @@ interface Pin {
     x: number;
     y: number;
     profile?: Profile;
+    image?: string;
 }
 
 const Map: React.FC<MapProps> = ({
@@ -27,7 +28,7 @@ const Map: React.FC<MapProps> = ({
     style,
     onStateClick
 }) => {
-    const [animateKey, setAnimateKey] = useState(0);
+    const [animateKey, setAnimateKey] = useState(1);
     const [states, setStates] = useState<Array<{d: string; id: string; title: string}>>([]);
     const [loading, setLoading] = useState(true);
     const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
@@ -55,7 +56,7 @@ const Map: React.FC<MapProps> = ({
         { name: 'Texas', x: 700, y: 650, profile: { name: 'Player Three', position: 'Goalkeeper', image: '/player3.jpg' } }     // Placeholder; adjust to real map coords
     ];
 
-    const centralPin: Pin = { name: 'Kansas City', x: 785, y: 580 };
+    const centralPin: Pin = { name: 'Kansas City', x: 785, y: 580, image: '/logo_u30.png' };
 
     const handleClick = (stateId: string) => {
         if (onStateClick) {
@@ -78,8 +79,8 @@ const Map: React.FC<MapProps> = ({
         setAnimateKey(prev => prev + 1);
     };
 
-    const fill = 'rgba(27, 16, 178, 1)';
-    const stroke = 'rgb(255, 255, 255)';
+    
+    const stroke = 'rgb(101, 147, 203)';
     const strokeWidth = '0.81508px';
     const cursor = 'pointer';
 
@@ -98,49 +99,108 @@ const Map: React.FC<MapProps> = ({
     };
 
     // Render a pin at given position
-    const renderPin = (pin: Pin) => (
-        <g 
-            transform={`translate(${pin.x}, ${pin.y})`}
-            onClick={() => handlePinClick(pin)}
-            style={{ cursor: pin.profile ? 'pointer' : 'default' }}
-        >
-            {/* Pin shadow */}
-            <ellipse cx="0" cy="25" rx="8" ry="3" fill="rgba(0,0,0,0.3)" />
-            
-            {/* Pin body */}
-            <path
-                d="M 0,-20 C -8,-20 -15,-13 -15,-5 C -15,5 0,20 0,20 C 0,20 15,5 15,-5 C 15,-13 8,-20 0,-20 Z"
-                fill="#FF4444"
-                stroke="#CC0000"
-                strokeWidth="1"
-            />
-            
-            {/* Pin center dot */}
-            <circle cx="0" cy="-5" r="5" fill="white" />
-        </g>
-    );
+    const renderPin = (pin: Pin) => {
+        const pinImage = pin.image || '/soccer_ball.png';
+        const isLogoPin = pin.image === '/logo_u30.png';
+        
+        // If it's the logo pin, just show the image without pin shape
+        if (isLogoPin) {
+            return (
+                <g 
+                    transform={`translate(${pin.x}, ${pin.y})`}
+                    onClick={() => handlePinClick(pin)}
+                    style={{ cursor: pin.profile ? 'pointer' : 'default' }}
+                >
+                    {/* White glow filter definition */}
+                    <defs>
+                        <filter id="white-glow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+                            <feOffset dx="0" dy="0" result="offsetblur" />
+                            <feFlood floodColor="white" floodOpacity="0.8" />
+                            <feComposite in2="offsetblur" operator="in" />
+                            <feMerge>
+                                <feMergeNode />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    
+                    {/* Logo image with glow */}
+                    <image
+                        href={pinImage}
+                        x="-35"
+                        y="-40"
+                        width="60"
+                        height="80"
+                        preserveAspectRatio="xMidYMid meet"
+                        filter="url(#white-glow)"
+                    />
+                </g>
+            );
+        }
+        
+        // Regular pin with soccer ball
+        return (
+            <g 
+                transform={`translate(${pin.x}, ${pin.y})`}
+                onClick={() => handlePinClick(pin)}
+                style={{ cursor: pin.profile ? 'pointer' : 'default' }}
+            >
+                {/* Pin shadow */}
+                <ellipse cx="0" cy="25" rx="8" ry="3" fill="rgba(0,0,0,0.3)" />
+                
+                {/* Pin body - white */}
+                <path
+                    d="M 0,-20 C -8,-20 -15,-13 -15,-5 C -15,5 0,20 0,20 C 0,20 15,5 15,-5 C 15,-13 8,-20 0,-20 Z"
+                    fill="white"
+                    stroke="#CCCCCC"
+                    strokeWidth="1"
+                />
+                
+                {/* Circular clip for image */}
+                <defs>
+                    <clipPath id={`clip-${pin.name.replace(/\s+/g, '-')}`}>
+                        <circle cx="0" cy="-5" r="12" />
+                    </clipPath>
+                </defs>
+                
+                {/* Image in center */}
+                <image
+                    href={pinImage}
+                    x="-12"
+                    y="-17"
+                    width="24"
+                    height="24"
+                    clipPath={`url(#clip-${pin.name.replace(/\s+/g, '-')})`}
+                    preserveAspectRatio="xMidYMid slice"
+                />
+            </g>
+        );
+    };
 
     if (loading) {
         return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '400px' }}>Loading map...</div>;
     }
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', gap: '20px' }}>
-            <button
-                onClick={triggerAnimation}
-                style={{
-                    padding: '10px 20px',
-                    backgroundColor: '#FF4444',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '5px',
-                    cursor: 'pointer',
-                    fontSize: '16px',
-                    fontWeight: 'bold'
-                }}
-            >
-                Animate Routes
-            </button>
+        <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center', 
+            width: '100%', 
+            gap: '20px',
+            background: 'radial-gradient(circle, #234c8a 0%, #181e46 100%)',
+            padding: '20px 0'
+        }}>
+            <h2 style={{
+                fontSize: '2.5rem',
+                fontWeight: 'bold',
+                color: 'white',
+                margin: '20px 0',
+                textAlign: 'center'
+            }}>
+                See Where Our Union is Playing
+            </h2>
             <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -159,7 +219,7 @@ const Map: React.FC<MapProps> = ({
                         className="mapsvg-region"
                         onClick={() => handleClick(path.id)}
                         style={{
-                            fill,
+                            fill: 'transparent',
                             stroke,
                             strokeWidth,
                             cursor
@@ -167,41 +227,77 @@ const Map: React.FC<MapProps> = ({
                     />
                 ))}
                 
-                {/* Central pin (Kansas City) */}
+                {/* Animated curved routes from central to each destination */}
+                {animateKey > 0 && destinations.map((dest, index) => {
+                    const { d, approxLength } = getPathData(centralPin, dest);
+                    const duration = 2 + index * 0.5;
+                    return (
+                        <React.Fragment key={`${animateKey}-${dest.name}`}>
+                            <defs>
+                                {/* Mask that reveals the dotted line progressively */}
+                                <mask id={`line-mask-${dest.name.replace(/\s+/g, '-')}`}>
+                                    <path
+                                        d={d}
+                                        fill="none"
+                                        stroke="white"
+                                        strokeWidth="5"
+                                        strokeLinecap="round"
+                                        strokeDasharray={approxLength}
+                                        strokeDashoffset={approxLength}
+                                    >
+                                        <animate
+                                            attributeName="stroke-dashoffset"
+                                            from={approxLength}
+                                            to="0"
+                                            dur={`${duration}s`}
+                                            fill="freeze"
+                                            repeatCount="1"
+                                        />
+                                    </path>
+                                </mask>
+                            </defs>
+                            {/* Dotted line with mask applied */}
+                            <path
+                                d={d}
+                                fill="none"
+                                stroke="white"
+                                strokeWidth="2"
+                                strokeDasharray="5,5"
+                                strokeLinecap="round"
+                                mask={`url(#line-mask-${dest.name.replace(/\s+/g, '-')})`}
+                            />
+                            {/* Traveling solid line segment */}
+                            <path
+                                d={d}
+                                fill="none"
+                                stroke="white"
+                                strokeWidth="3"
+                                strokeDasharray={`30,${approxLength}`}
+                                strokeLinecap="round"
+                                strokeDashoffset={approxLength + 30}
+                            >
+                                <animate
+                                    attributeName="stroke-dashoffset"
+                                    from={approxLength + 30}
+                                    to="0"
+                                    dur={`${duration}s`}
+                                    fill="freeze"
+                                    repeatCount="1"
+                                />
+                            </path>
+                        </React.Fragment>
+                    );
+                })}
+                
+                {/* Central pin (Kansas City) - rendered after paths so it appears on top */}
                 {renderPin(centralPin)}
                 
-                {/* Destination pins */}
+                {/* Destination pins - rendered after paths so they appear on top */}
                 {destinations.map((dest) => (
                     <React.Fragment key={dest.name}>
                         {renderPin(dest)}
                     </React.Fragment>
                 ))}
-                
-                {/* Animated curved routes from central to each destination */}
-                {animateKey > 0 && destinations.map((dest, index) => {
-                    const { d, approxLength } = getPathData(centralPin, dest);
-                    return (
-                        <path
-                            key={`${animateKey}-${dest.name}`}
-                            d={d}
-                            fill="none"
-                            stroke="#FF4444"
-                            strokeWidth="2"
-                            strokeDasharray="5,5"
-                            strokeLinecap="round"
-                            strokeDashoffset={approxLength}  // Start fully offset (invisible)
-                        >
-                            <animate
-                                attributeName="stroke-dashoffset"
-                                from={approxLength}
-                                to="0"  // Reveal progressively
-                                dur={`${4 + index * 1}s`}  // Staggered: 1s delay per route for sequential takeoff/landing
-                                fill="freeze"
-                                repeatCount="1"
-                            />
-                        </path>
-                    );
-                })}
                 
             </svg>
             </div>
