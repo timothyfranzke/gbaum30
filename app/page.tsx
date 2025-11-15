@@ -29,6 +29,7 @@ import ServicesVariant1 from "./components/Services_variant1";
 import ServicesVariant2 from "./components/Services_variant2";
 import PricingVariant3 from "./components/Pricing_variant3";
 import InfoBannerVariant3 from "./components/InfoBanner_variant3";
+import Map from "./components/Map";
 
 export default function Home() {
   // State to control which pricing component to display
@@ -45,7 +46,7 @@ export default function Home() {
       <HeroVariant3 />
       <InfoBannerVariant3 />
       <PricingVariant3 />
-
+      <Map />
 
       <TestimonialsSection />
 
