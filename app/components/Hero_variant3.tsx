@@ -13,17 +13,17 @@ const HeroVariant3 = () => {
   ];
 
   return (
-    <section className="min-h-screen relative overflow-hidden bg-black shapedividers_com-647 md:pb-50">
+    <section className="min-h-screen relative overflow-hidden bg-black shapedividers_com-647 md:pb-50 pt-20 md:pt-24">
       {/* Background Video/Image */}
       <div className="absolute inset-0">
         <div
-          className="absolute inset-0 bg-cover bg-center scale-110 animate-slow-zoom"
+          className="absolute inset-0 bg-contain bg-center bg-no-repeat scale-110 animate-slow-zoom"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1614632537197-38a17061c2bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=987&q=80')`,
+            backgroundImage: `url('/AGDC.png')`,
           }}
         />
         {/* Dynamic Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-[#0033A0]/90 to-[#1B365D]/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-[#0033A0]/40 to-[#1B365D]/30"></div>
         
         {/* Lens Flare Circles */}
         <div className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-gradient-radial from-white/40 via-[#1E8AFF]/30 to-transparent animate-pulse"></div>

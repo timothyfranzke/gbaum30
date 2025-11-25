@@ -202,7 +202,8 @@ const Map: React.FC<MapProps> = ({
                 margin: '20px 0',
                 textAlign: 'center'
             }}>
-                See Where Our Union is Playing
+                See Where Our Union 30 is Playing
+                
             </h2>
             <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
             <svg

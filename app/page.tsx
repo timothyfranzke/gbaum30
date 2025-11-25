@@ -30,6 +30,7 @@ import ServicesVariant2 from "./components/Services_variant2";
 import PricingVariant3 from "./components/Pricing_variant3";
 import InfoBannerVariant3 from "./components/InfoBanner_variant3";
 import Map from "./components/Map";
+import InteractiveDiagram from "./components/InteractiveImage";
 
 export default function Home() {
   // State to control which pricing component to display
@@ -47,7 +48,7 @@ export default function Home() {
       <InfoBannerVariant3 />
       <PricingVariant3 />
       <Map />
-
+      <InteractiveDiagram />
       <TestimonialsSection />
 
       <Footer />
