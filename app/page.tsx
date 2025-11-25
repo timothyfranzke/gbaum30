@@ -48,7 +48,7 @@ export default function Home() {
       <InfoBannerVariant3 />
       <PricingVariant3 />
       <Map />
-      <InteractiveDiagram />
+      <InteractiveDiagram />  
       <TestimonialsSection />
 
       <Footer />

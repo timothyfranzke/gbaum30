@@ -6,36 +6,46 @@ interface Hotspot {
   y: number;
   title: string;
   content: string;
+  icon: string;
+  categories: string[];
 }
 
 const hotspotsData: Hotspot[] = [
   { 
     id: 'head', 
     x: 50, 
-    y: 10, 
-    title: '🧠 Head & Mind',
-    content: 'Mental strength and focus are crucial. A goalkeeper needs quick decision-making skills and excellent spatial awareness to read the game.'
+    y: 50, 
+    title: 'Head & Mind',
+    content: 'Mental strength and focus are crucial. A goalkeeper needs quick decision-making skills and excellent spatial awareness to read the game.',
+    icon: '🧠',
+    categories: ['Focus', 'Vision', 'Decision']
   },
   { 
     id: 'hands', 
     x: 65, 
     y: 35, 
-    title: '🧤 Gloves & Hands',
-    content: 'Professional goalkeeper gloves provide grip and protection. Strong hands and proper catching technique are essential for making saves.'
+    title: 'Hands & Ball Control',
+    content: 'Crucial for goalkeepers, mastering hand positioning, grip strength, and ball handling reduces rebounds and ensures secure possession.',
+    icon: '🧤',
+    categories: ['Grip', 'Catch', 'Throw']
   },
   { 
     id: 'stomach', 
     x: 50, 
     y: 40, 
-    title: '💪 Core Strength',
-    content: 'A strong core provides stability and power for diving saves. Core training is fundamental for goalkeeper agility and explosive movements.'
+    title: 'Core Strength',
+    content: 'A strong core provides stability and power for diving saves. Core training is fundamental for goalkeeper agility and explosive movements.',
+    icon: '💪',
+    categories: ['Power', 'Balance', 'Agility']
   },
   { 
     id: 'feet', 
     x: 45, 
     y: 85, 
-    title: '⚽ Footwork',
-    content: 'Quick feet and good positioning are vital. Modern goalkeepers need excellent ball control and distribution skills with both feet.'
+    title: 'Footwork',
+    content: 'Quick feet and good positioning are vital. Modern goalkeepers need excellent ball control and distribution skills with both feet.',
+    icon: '⚽',
+    categories: ['Speed', 'Position', 'Control']
   }
 ];
 
@@ -43,6 +53,8 @@ export const InteractiveDiagram = () => {
   const [activeDialog, setActiveDialog] = useState<Hotspot | null>(null);
   const [dialogPosition, setDialogPosition] = useState({ x: 0, y: 0 });
   const imageRef = useRef<HTMLImageElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  
   useEffect(() => {
     const handleResize = () => {
       // Image resize handling if needed in future
@@ -55,12 +67,14 @@ export const InteractiveDiagram = () => {
   }, []);
 
   const handleHotspotClick = (hotspot: Hotspot, event: React.MouseEvent<HTMLDivElement>) => {
-    console.log('Hotspot clicked:', hotspot.title); // Debug log
-    const rect = event.currentTarget.getBoundingClientRect();
-    const hotspotCenterX = rect.left + rect.width / 2 + window.scrollX;
-    const hotspotCenterY = rect.top + rect.height / 2 + window.scrollY;
+    console.log('Hotspot clicked:', hotspot.title);
+    event.stopPropagation();
     
-    console.log('Dialog position:', { x: hotspotCenterX, y: hotspotCenterY }); // Debug log
+    const rect = event.currentTarget.getBoundingClientRect();
+    const hotspotCenterX = rect.left + rect.width / 2;
+    const hotspotCenterY = rect.top + rect.height / 2;
+    
+    console.log('Dialog position:', { x: hotspotCenterX, y: hotspotCenterY });
     
     setDialogPosition({
       x: hotspotCenterX,
@@ -74,27 +88,92 @@ export const InteractiveDiagram = () => {
   };
 
   return (
-    <>
+    <section className="interactive-section">
       <style jsx>{`
+        .interactive-section {
+          width: 100%;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: radial-gradient(circle at center, #1a2332 0%, #0d1117 100%);
+          padding: 60px 40px;
+          position: relative;
+          overflow: visible;
+        }
+        
+        .content-wrapper {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          max-width: 1400px;
+          width: 100%;
+          align-items: center;
+        }
+        
+        .left-content {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 40px;
+        }
+        
+        .main-heading {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(60px, 8vw, 120px);
+          line-height: 0.9;
+          color: #ffffff;
+          margin: 0;
+          text-transform: uppercase;
+          letter-spacing: 0.02em;
+          background: linear-gradient(180deg, #ffffff 0%, rgba(100, 200, 255, 0.9) 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        
+        .subheading {
+          font-family: 'Roboto', sans-serif;
+          font-size: clamp(16px, 1.5vw, 20px);
+          color: rgba(255, 255, 255, 0.7);
+          margin-top: 20px;
+          line-height: 1.6;
+          max-width: 500px;
+        }
+        
         .container {
           position: relative;
-          display: inline-block;
-          max-width: 90vw;
-          max-height: 90vh;
-          background: radial-gradient(circle, #234c8a 0%, #181e46 100%);
-          padding: 40px;
-          border-radius: 20px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+        
+        @media (max-width: 1024px) {
+          .content-wrapper {
+            grid-template-columns: 1fr;
+            gap: 40px;
+          }
+          
+          .left-content {
+            text-align: center;
+            align-items: center;
+          }
+          
+          .main-heading {
+            font-size: clamp(48px, 10vw, 80px);
+          }
         }
         
         .image-wrapper {
           position: relative;
           display: inline-block;
           animation: float 3s ease-in-out infinite;
+          transform: scale(1.5);
         }
         
         @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
+          0%, 100% { transform: scale(1.5) translateY(0px); }
+          50% { transform: scale(1.5) translateY(-10px); }
         }
         
         .glow {
@@ -133,63 +212,86 @@ export const InteractiveDiagram = () => {
           z-index: 2;
           width: 100%;
           height: auto;
-          max-height: 80vh;
+          max-height: none;
+          min-height: 600px;
           object-fit: contain;
           pointer-events: none;
         }
         
         .hotspot {
           position: absolute;
-          width: 40px;
-          height: 40px;
+          width: 50px;
+          height: 50px;
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(100,200,255,0.7) 100%);
-          border: 2px solid #fff;
+          background: rgba(255, 255, 255, 0.1);
+          border: 3px solid rgba(100, 200, 255, 0.8);
           cursor: pointer;
           transition: all 0.3s ease;
-          animation: hotspotPulse 1.5s ease-in-out infinite;
-          box-shadow: 0 0 20px rgba(100,200,255,0.8);
-          z-index: 5;
+          animation: hotspotPulse 2s ease-in-out infinite;
+          box-shadow: 
+            0 0 20px rgba(100, 200, 255, 0.6),
+            0 0 40px rgba(100, 200, 255, 0.4),
+            inset 0 0 20px rgba(100, 200, 255, 0.2);
+          z-index: 10;
+          pointer-events: auto;
+          transform: translate(-50%, -50%) scale(0.667);
         }
         
         @keyframes hotspotPulse {
           0%, 100% { 
-            transform: translate(-50%, -50%) scale(1);
-            box-shadow: 0 0 20px rgba(100,200,255,0.8);
+            transform: translate(-50%, -50%) scale(0.667);
+            box-shadow: 
+              0 0 20px rgba(100, 200, 255, 0.6),
+              0 0 40px rgba(100, 200, 255, 0.4),
+              inset 0 0 20px rgba(100, 200, 255, 0.2);
           }
           50% { 
-            transform: translate(-50%, -50%) scale(1.2);
-            box-shadow: 0 0 30px rgba(100,200,255,1);
+            transform: translate(-50%, -50%) scale(0.767);
+            box-shadow: 
+              0 0 30px rgba(100, 200, 255, 0.8),
+              0 0 60px rgba(100, 200, 255, 0.6),
+              inset 0 0 30px rgba(100, 200, 255, 0.3);
           }
         }
         
         .hotspot:hover {
-          transform: translate(-50%, -50%) scale(1.3) !important;
-          background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,100,100,0.9) 100%);
+          transform: translate(-50%, -50%) scale(0.834) !important;
+          border-color: rgba(150, 220, 255, 1);
+          box-shadow: 
+            0 0 30px rgba(100, 200, 255, 0.9),
+            0 0 60px rgba(100, 200, 255, 0.7),
+            inset 0 0 30px rgba(100, 200, 255, 0.4);
         }
         
-        .hotspot::after {
-          content: '+';
+        .hotspot::before {
+          content: '';
           position: absolute;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          color: #333;
-          font-size: 24px;
-          font-weight: bold;
+          width: 12px;
+          height: 12px;
+          background: rgba(100, 200, 255, 0.9);
+          border-radius: 50%;
+          box-shadow: 0 0 10px rgba(100, 200, 255, 0.8);
         }
         
         .dialog {
           position: fixed;
-          background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,240,255,0.95) 100%);
-          border-radius: 15px;
-          padding: 20px;
-          box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-          z-index: 100;
-          min-width: 200px;
-          max-width: 300px;
-          animation: expandFromHotspot 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-          border: 2px solid rgba(100,200,255,0.3);
+          background: rgba(30, 45, 65, 0.95);
+          backdrop-filter: blur(10px);
+          border-radius: 20px;
+          padding: 24px;
+          box-shadow: 
+            0 10px 40px rgba(0, 0, 0, 0.5),
+            0 0 0 1px rgba(100, 200, 255, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          z-index: 1000;
+          min-width: 280px;
+          max-width: 350px;
+          animation: expandFromHotspot 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          border: 1px solid rgba(100, 200, 255, 0.3);
+          transform: translate(-50%, -50%);
           transform-origin: center center;
           pointer-events: auto;
         }
@@ -211,14 +313,14 @@ export const InteractiveDiagram = () => {
         
         .dialog-close {
           position: absolute;
-          top: 10px;
-          right: 10px;
-          width: 30px;
-          height: 30px;
+          top: 12px;
+          right: 12px;
+          width: 28px;
+          height: 28px;
           border-radius: 50%;
-          background: linear-gradient(135deg, #ff6b6b 0%, #ff4444 100%);
-          color: white;
-          border: none;
+          background: rgba(255, 255, 255, 0.1);
+          color: rgba(255, 255, 255, 0.6);
+          border: 1px solid rgba(255, 255, 255, 0.2);
           cursor: pointer;
           font-size: 18px;
           font-weight: bold;
@@ -229,39 +331,100 @@ export const InteractiveDiagram = () => {
         }
         
         .dialog-close:hover {
-          transform: scale(1.1) rotate(90deg);
-          background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+          background: rgba(255, 100, 100, 0.3);
+          color: rgba(255, 255, 255, 0.9);
+          border-color: rgba(255, 100, 100, 0.5);
+          transform: rotate(90deg);
+        }
+        
+        .dialog-header {
+          display: flex;
+          align-items: flex-start;
+          gap: 12px;
+          margin-bottom: 12px;
+        }
+        
+        .dialog-icon {
+          font-size: 32px;
+          line-height: 1;
+          flex-shrink: 0;
+        }
+        
+        .dialog-title {
+          flex: 1;
         }
         
         .dialog h3 {
-          margin: 0 0 10px 0;
-          color: #333;
-          font-size: 20px;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          margin: 0 0 8px 0;
+          color: #ffffff;
+          font-size: 22px;
+          font-weight: 700;
+          line-height: 1.2;
         }
         
         .dialog p {
-          margin: 0;
-          color: #666;
-          line-height: 1.5;
+          margin: 0 0 16px 0;
+          color: rgba(255, 255, 255, 0.8);
+          line-height: 1.6;
+          font-size: 14px;
         }
         
-        .info-icon {
-          display: inline-block;
-          margin-right: 8px;
-          animation: bounce 1s ease-in-out infinite;
+        .dialog-categories {
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+          margin-top: 16px;
+          padding-top: 16px;
+          border-top: 1px solid rgba(100, 200, 255, 0.2);
         }
         
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-5px); }
+        .category-pill {
+          padding: 6px 14px;
+          background: rgba(100, 200, 255, 0.15);
+          border: 1px solid rgba(100, 200, 255, 0.3);
+          border-radius: 20px;
+          color: rgba(100, 200, 255, 1);
+          font-size: 12px;
+          font-weight: 500;
+          transition: all 0.2s ease;
         }
+        
+        .category-pill:hover {
+          background: rgba(100, 200, 255, 0.25);
+          border-color: rgba(100, 200, 255, 0.5);
+        }
+        
+        .category-dots {
+          display: flex;
+          gap: 6px;
+          justify-content: center;
+          margin-top: 12px;
+        }
+        
+        .dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: rgba(100, 200, 255, 0.3);
+          transition: all 0.2s ease;
+        }
+        
+        .dot.active {
+          background: rgba(100, 200, 255, 1);
+          box-shadow: 0 0 8px rgba(100, 200, 255, 0.6);
+        }
+        
       `}</style>
-      <div className="container">
-        <div className="image-wrapper">
+      <div className="content-wrapper">
+        <div className="left-content">
+          <h1 className="main-heading">What We Train</h1>
+          <p className="subheading">
+            Explore the key areas of goalkeeper development. Click on any highlighted area to learn more about our specialized training techniques.
+          </p>
+        </div>
+        
+        <div className="container" ref={containerRef}>
+          <div className="image-wrapper">
           <div className="glow"></div>
           <img 
             ref={imageRef}
@@ -281,46 +444,59 @@ export const InteractiveDiagram = () => {
               onClick={(e) => handleHotspotClick(hotspot, e)}
             />
           ))}
+          </div>
         </div>
+      </div>
         
-        {activeDialog && (
+      {activeDialog && (
           <div 
             className="dialog"
             style={{
               left: `${dialogPosition.x}px`,
               top: `${dialogPosition.y}px`,
-              position: 'fixed',
-              transform: 'translate(-50%, -50%)',
-              backgroundColor: 'white',
-              border: '2px solid blue',
-              zIndex: 1000
             }}
           >
             <button className="dialog-close" onClick={closeDialog}>×</button>
-            <h3>
-              <span className="info-icon">ℹ️</span>
-              {activeDialog.title}
-            </h3>
+            <div className="dialog-header">
+              <div className="dialog-icon">{activeDialog.icon}</div>
+              <div className="dialog-title">
+                <h3>{activeDialog.title}</h3>
+              </div>
+            </div>
             <p>{activeDialog.content}</p>
+            <div className="category-dots">
+              {activeDialog.categories.map((_, index) => (
+                <div key={index} className={`dot ${index === 0 ? 'active' : ''}`} />
+              ))}
+            </div>
+            <div className="dialog-categories">
+              {activeDialog.categories.map((category, index) => (
+                <div key={index} className="category-pill">
+                  {category}
+                </div>
+              ))}
+            </div>
           </div>
         )}
-        
-        {/* Debug info */}
-        {activeDialog && (
-          <div style={{
-            position: 'fixed',
-            top: '10px',
-            left: '10px',
-            background: 'red',
-            color: 'white',
-            padding: '10px',
-            zIndex: 1001
-          }}>
-            Dialog active: {activeDialog.title}
-          </div>
-        )}
-      </div>
-    </>
+      
+      {/* Temporary debug indicator */}
+      {activeDialog && (
+        <div style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          background: 'rgba(0, 255, 0, 0.8)',
+          color: 'white',
+          padding: '10px 20px',
+          borderRadius: '8px',
+          zIndex: 9999,
+          fontSize: '14px',
+          fontWeight: 'bold'
+        }}>
+          Dialog Active: {activeDialog.title}
+        </div>
+      )}
+    </section>
   );
 };
 
