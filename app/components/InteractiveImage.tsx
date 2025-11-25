@@ -14,7 +14,7 @@ const hotspotsData: Hotspot[] = [
   { 
     id: 'head', 
     x: 50, 
-    y: 50, 
+    y: 20, 
     title: 'Head & Mind',
     content: 'Mental strength and focus are crucial. A goalkeeper needs quick decision-making skills and excellent spatial awareness to read the game.',
     icon: '🧠',
@@ -22,8 +22,8 @@ const hotspotsData: Hotspot[] = [
   },
   { 
     id: 'hands', 
-    x: 65, 
-    y: 35, 
+    x: 58, 
+    y: 45, 
     title: 'Hands & Ball Control',
     content: 'Crucial for goalkeepers, mastering hand positioning, grip strength, and ball handling reduces rebounds and ensures secure possession.',
     icon: '🧤',
@@ -31,8 +31,8 @@ const hotspotsData: Hotspot[] = [
   },
   { 
     id: 'stomach', 
-    x: 50, 
-    y: 40, 
+    x: 48, 
+    y: 43, 
     title: 'Core Strength',
     content: 'A strong core provides stability and power for diving saves. Core training is fundamental for goalkeeper agility and explosive movements.',
     icon: '💪',
@@ -41,7 +41,7 @@ const hotspotsData: Hotspot[] = [
   { 
     id: 'feet', 
     x: 45, 
-    y: 85, 
+    y: 75, 
     title: 'Footwork',
     content: 'Quick feet and good positioning are vital. Modern goalkeepers need excellent ball control and distribution skills with both feet.',
     icon: '⚽',
@@ -70,15 +70,10 @@ export const InteractiveDiagram = () => {
     console.log('Hotspot clicked:', hotspot.title);
     event.stopPropagation();
     
-    const rect = event.currentTarget.getBoundingClientRect();
-    const hotspotCenterX = rect.left + rect.width / 2;
-    const hotspotCenterY = rect.top + rect.height / 2;
-    
-    console.log('Dialog position:', { x: hotspotCenterX, y: hotspotCenterY });
-    
+    // Get click position for animation origin
     setDialogPosition({
-      x: hotspotCenterX,
-      y: hotspotCenterY
+      x: event.clientX,
+      y: event.clientY
     });
     setActiveDialog(hotspot);
   };
@@ -276,65 +271,64 @@ export const InteractiveDiagram = () => {
           box-shadow: 0 0 10px rgba(100, 200, 255, 0.8);
         }
         
-        .dialog {
+        .dialog-backdrop {
           position: fixed;
-          background: rgba(30, 45, 65, 0.95);
-          backdrop-filter: blur(10px);
-          border-radius: 20px;
-          padding: 24px;
-          box-shadow: 
-            0 10px 40px rgba(0, 0, 0, 0.5),
-            0 0 0 1px rgba(100, 200, 255, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.6);
+          display: flex;
+          justify-content: center;
+          align-items: center;
           z-index: 1000;
-          min-width: 280px;
-          max-width: 350px;
-          animation: expandFromHotspot 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-          border: 1px solid rgba(100, 200, 255, 0.3);
-          transform: translate(-50%, -50%);
-          transform-origin: center center;
-          pointer-events: auto;
+          animation: fadeIn 0.2s ease-out;
         }
         
-        @keyframes expandFromHotspot {
-          0% { 
-            transform: translate(-50%, -50%) scale(0);
-            opacity: 0;
-          }
-          60% {
-            transform: translate(-50%, -50%) scale(1.1);
-            opacity: 0.8;
-          }
-          100% { 
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
-          }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        .dialog {
+          background: linear-gradient(135deg, rgba(35, 76, 138, 0.98) 0%, rgba(30, 60, 115, 0.98) 100%);
+          backdrop-filter: blur(10px);
+          border-radius: 20px;
+          padding: 32px;
+          box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.4),
+            0 0 0 1px rgba(100, 200, 255, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15);
+          min-width: 320px;
+          max-width: 400px;
+          width: 90%;
+          position: relative;
+          pointer-events: auto;
         }
         
         .dialog-close {
           position: absolute;
-          top: 12px;
-          right: 12px;
-          width: 28px;
-          height: 28px;
+          top: 15px;
+          right: 15px;
+          width: 36px;
+          height: 36px;
           border-radius: 50%;
-          background: rgba(255, 255, 255, 0.1);
-          color: rgba(255, 255, 255, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.2);
+          background: rgba(255, 255, 255, 0.2);
+          color: white;
+          border: none;
           cursor: pointer;
-          font-size: 18px;
-          font-weight: bold;
-          transition: all 0.3s ease;
+          font-size: 24px;
+          font-weight: normal;
+          transition: all 0.2s ease;
           display: flex;
           align-items: center;
           justify-content: center;
+          line-height: 1;
         }
         
         .dialog-close:hover {
-          background: rgba(255, 100, 100, 0.3);
-          color: rgba(255, 255, 255, 0.9);
-          border-color: rgba(255, 100, 100, 0.5);
-          transform: rotate(90deg);
+          background: rgba(255, 255, 255, 0.3);
+          transform: scale(1.1);
         }
         
         .dialog-header {
@@ -355,18 +349,19 @@ export const InteractiveDiagram = () => {
         }
         
         .dialog h3 {
-          margin: 0 0 8px 0;
+          margin: 0 0 12px 0;
           color: #ffffff;
-          font-size: 22px;
+          font-size: 24px;
           font-weight: 700;
           line-height: 1.2;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .dialog p {
-          margin: 0 0 16px 0;
-          color: rgba(255, 255, 255, 0.8);
-          line-height: 1.6;
-          font-size: 14px;
+          margin: 0 0 20px 0;
+          color: rgba(255, 255, 255, 0.9);
+          line-height: 1.7;
+          font-size: 15px;
         }
         
         .dialog-categories {
@@ -379,19 +374,21 @@ export const InteractiveDiagram = () => {
         }
         
         .category-pill {
-          padding: 6px 14px;
-          background: rgba(100, 200, 255, 0.15);
-          border: 1px solid rgba(100, 200, 255, 0.3);
+          padding: 8px 16px;
+          background: rgba(255, 255, 255, 0.15);
+          border: 1px solid rgba(255, 255, 255, 0.3);
           border-radius: 20px;
-          color: rgba(100, 200, 255, 1);
-          font-size: 12px;
-          font-weight: 500;
+          color: white;
+          font-size: 13px;
+          font-weight: 600;
           transition: all 0.2s ease;
+          cursor: default;
         }
         
         .category-pill:hover {
-          background: rgba(100, 200, 255, 0.25);
-          border-color: rgba(100, 200, 255, 0.5);
+          background: rgba(255, 255, 255, 0.25);
+          transform: translateY(-1px);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
         
         .category-dots {
@@ -449,12 +446,25 @@ export const InteractiveDiagram = () => {
       </div>
         
       {activeDialog && (
+        <div className="dialog-backdrop" onClick={closeDialog}>
+          <style>{`
+            @keyframes popupGrow {
+              from {
+                transform: translate(${dialogPosition.x - window.innerWidth / 2}px, ${dialogPosition.y - window.innerHeight / 2}px) scale(0);
+                opacity: 0;
+              }
+              to {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+              }
+            }
+          `}</style>
           <div 
             className="dialog"
             style={{
-              left: `${dialogPosition.x}px`,
-              top: `${dialogPosition.y}px`,
+              animation: 'popupGrow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)'
             }}
+            onClick={(e) => e.stopPropagation()}
           >
             <button className="dialog-close" onClick={closeDialog}>×</button>
             <div className="dialog-header">
@@ -477,23 +487,6 @@ export const InteractiveDiagram = () => {
               ))}
             </div>
           </div>
-        )}
-      
-      {/* Temporary debug indicator */}
-      {activeDialog && (
-        <div style={{
-          position: 'fixed',
-          bottom: '20px',
-          right: '20px',
-          background: 'rgba(0, 255, 0, 0.8)',
-          color: 'white',
-          padding: '10px 20px',
-          borderRadius: '8px',
-          zIndex: 9999,
-          fontSize: '14px',
-          fontWeight: 'bold'
-        }}>
-          Dialog Active: {activeDialog.title}
         </div>
       )}
     </section>
