@@ -171,6 +171,28 @@ export const InteractiveDiagram = () => {
           50% { transform: scale(1.5) translateY(-10px); }
         }
         
+        @media (max-width: 1024px) {
+          .image-wrapper {
+            transform: scale(1.3);
+          }
+          
+          @keyframes float {
+            0%, 100% { transform: scale(1.3) translateY(0px); }
+            50% { transform: scale(1.3) translateY(-8px); }
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .image-wrapper {
+            transform: scale(1.1);
+          }
+          
+          @keyframes float {
+            0%, 100% { transform: scale(1.1) translateY(0px); }
+            50% { transform: scale(1.1) translateY(-6px); }
+          }
+        }
+        
         .glow {
           position: absolute;
           top: 50%;
@@ -211,6 +233,20 @@ export const InteractiveDiagram = () => {
           min-height: 600px;
           object-fit: contain;
           pointer-events: none;
+        }
+        
+        @media (max-width: 1024px) {
+          .player-image {
+            min-height: 400px;
+            max-width: 90vw;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .player-image {
+            min-height: 350px;
+            max-width: 85vw;
+          }
         }
         
         .hotspot {

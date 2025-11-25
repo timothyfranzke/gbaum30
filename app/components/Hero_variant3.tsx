@@ -17,13 +17,13 @@ const HeroVariant3 = () => {
       {/* Background Video/Image */}
       <div className="absolute inset-0">
         <div
-          className="absolute inset-0 bg-contain bg-center bg-no-repeat scale-110 animate-slow-zoom"
+          className="absolute top-20 md:top-24 bottom-0 left-0 right-0 bg-contain md:bg-contain bg-cover bg-center bg-no-repeat scale-110 animate-slow-zoom"
           style={{
             backgroundImage: `url('/AGDC.png')`,
           }}
         />
         {/* Dynamic Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-[#0033A0]/40 to-[#1B365D]/30"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-[#0033A0]/60 to-[#1B365D]/50"></div>
         
         {/* Lens Flare Circles */}
         <div className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-gradient-radial from-white/40 via-[#1E8AFF]/30 to-transparent animate-pulse"></div>
