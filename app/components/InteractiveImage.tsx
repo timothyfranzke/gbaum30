@@ -14,7 +14,7 @@ const hotspotsData: Hotspot[] = [
   { 
     id: 'head', 
     x: 50, 
-    y: 20, 
+    y: 4, 
     title: 'Head & Mind',
     content: 'Mental strength and focus are crucial. A goalkeeper needs quick decision-making skills and excellent spatial awareness to read the game.',
     icon: '🧠',
@@ -22,8 +22,8 @@ const hotspotsData: Hotspot[] = [
   },
   { 
     id: 'hands', 
-    x: 58, 
-    y: 45, 
+    x: 54, 
+    y: 40, 
     title: 'Hands & Ball Control',
     content: 'Crucial for goalkeepers, mastering hand positioning, grip strength, and ball handling reduces rebounds and ensures secure possession.',
     icon: '🧤',
@@ -32,7 +32,7 @@ const hotspotsData: Hotspot[] = [
   { 
     id: 'stomach', 
     x: 48, 
-    y: 43, 
+    y: 40, 
     title: 'Core Strength',
     content: 'A strong core provides stability and power for diving saves. Core training is fundamental for goalkeeper agility and explosive movements.',
     icon: '💪',
@@ -41,7 +41,7 @@ const hotspotsData: Hotspot[] = [
   { 
     id: 'feet', 
     x: 45, 
-    y: 75, 
+    y: 95, 
     title: 'Footwork',
     content: 'Quick feet and good positioning are vital. Modern goalkeepers need excellent ball control and distribution skills with both feet.',
     icon: '⚽',
@@ -115,7 +115,7 @@ export const InteractiveDiagram = () => {
         
         .main-heading {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(60px, 8vw, 120px);
+          font-size: clamp(80px, 20vw, 220px);
           line-height: 0.9;
           color: #ffffff;
           margin: 0;
@@ -157,41 +157,59 @@ export const InteractiveDiagram = () => {
           .main-heading {
             font-size: clamp(48px, 10vw, 80px);
           }
+          
+          .container {
+            margin: 60px 0;
+          }
+          
+          .player-image {
+            min-height: auto;
+          }
+          
+          .hotspot {
+            width: 30px;
+            height: 30px;
+            transform: translate(-50%, -50%) scale(0.5);
+          }
+          
+          @keyframes hotspotPulse {
+            0%, 100% { 
+              transform: translate(-50%, -50%) scale(0.5);
+            }
+            50% { 
+              transform: translate(-50%, -50%) scale(0.6);
+            }
+          }
+          
+          .hotspot:hover {
+            transform: translate(-50%, -50%) scale(0.65) !important;
+          }
         }
         
         .image-wrapper {
           position: relative;
           display: inline-block;
           animation: float 3s ease-in-out infinite;
-          transform: scale(1.5);
+          transform: scale(1.8);
         }
         
         @keyframes float {
-          0%, 100% { transform: scale(1.5) translateY(0px); }
-          50% { transform: scale(1.5) translateY(-10px); }
+          0%, 100% { transform: scale(1.8) translateY(0px); }
+          50% { transform: scale(1.8) translateY(-10px); }
         }
         
-        @media (max-width: 1024px) {
+
           .image-wrapper {
-            transform: scale(1.3);
+            transform: scale(2.0);
           }
           
           @keyframes float {
-            0%, 100% { transform: scale(1.3) translateY(0px); }
-            50% { transform: scale(1.3) translateY(-8px); }
+            0%, 100% { transform: scale(2.0) translateY(0px); }
+            50% { transform: scale(2.0) translateY(-8px); }
           }
-        }
         
-        @media (max-width: 768px) {
-          .image-wrapper {
-            transform: scale(1.1);
-          }
-          
-          @keyframes float {
-            0%, 100% { transform: scale(1.1) translateY(0px); }
-            50% { transform: scale(1.1) translateY(-6px); }
-          }
-        }
+        
+
         
         .glow {
           position: absolute;
@@ -230,24 +248,12 @@ export const InteractiveDiagram = () => {
           width: 100%;
           height: auto;
           max-height: none;
-          min-height: 600px;
+         
           object-fit: contain;
           pointer-events: none;
         }
         
-        @media (max-width: 1024px) {
-          .player-image {
-            min-height: 400px;
-            max-width: 90vw;
-          }
-        }
-        
-        @media (max-width: 768px) {
-          .player-image {
-            min-height: 350px;
-            max-width: 85vw;
-          }
-        }
+
         
         .hotspot {
           position: absolute;
@@ -265,19 +271,19 @@ export const InteractiveDiagram = () => {
             inset 0 0 20px rgba(100, 200, 255, 0.2);
           z-index: 10;
           pointer-events: auto;
-          transform: translate(-50%, -50%) scale(0.667);
+          transform: translate(-50%, -50%) scale(0.556);
         }
         
         @keyframes hotspotPulse {
           0%, 100% { 
-            transform: translate(-50%, -50%) scale(0.667);
+            transform: translate(-50%, -50%) scale(0.556);
             box-shadow: 
               0 0 20px rgba(100, 200, 255, 0.6),
               0 0 40px rgba(100, 200, 255, 0.4),
               inset 0 0 20px rgba(100, 200, 255, 0.2);
           }
           50% { 
-            transform: translate(-50%, -50%) scale(0.767);
+            transform: translate(-50%, -50%) scale(0.667);
             box-shadow: 
               0 0 30px rgba(100, 200, 255, 0.8),
               0 0 60px rgba(100, 200, 255, 0.6),
@@ -286,7 +292,7 @@ export const InteractiveDiagram = () => {
         }
         
         .hotspot:hover {
-          transform: translate(-50%, -50%) scale(0.834) !important;
+          transform: translate(-50%, -50%) scale(0.722) !important;
           border-color: rgba(150, 220, 255, 1);
           box-shadow: 
             0 0 30px rgba(100, 200, 255, 0.9),
@@ -450,7 +456,7 @@ export const InteractiveDiagram = () => {
       `}</style>
       <div className="content-wrapper">
         <div className="left-content">
-          <h1 className="main-heading">What We Train</h1>
+          <h1 className="main-heading">How We Train</h1>
           <p className="subheading">
             Explore the key areas of goalkeeper development. Click on any highlighted area to learn more about our specialized training techniques.
           </p>

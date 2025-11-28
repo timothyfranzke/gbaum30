@@ -22,7 +22,7 @@ interface Pin {
 }
 
 const Map: React.FC<MapProps> = ({
-    className = '',
+    className = 'shapedividers_com-8500',
     width = 1400,
     height = 800,
     style,
@@ -186,7 +186,7 @@ const Map: React.FC<MapProps> = ({
     }
 
     return (
-        <div style={{ 
+        <div className="" style={{ 
             display: 'flex', 
             flexDirection: 'column', 
             alignItems: 'center', 

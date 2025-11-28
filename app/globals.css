@@ -159,4 +159,57 @@ background-position: 50% 100%;  background-image: url('data:image/svg+xml;charse
 background-size: 155% calc(2vw + 154px);
 }
 }
+ .shapedividers_com-2046{
+    overflow:hidden;
+    position:relative;
+}
+
+.shapedividers_com-2046::before{ 
+    content:'';
+    font-family:'shape divider from ShapeDividers.com';
+    position: absolute;
+    z-index: 3;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    bottom: -0.1vw;
+    left: -0.1vw;
+    right: -0.1vw;
+    top: -0.1vw; 
+    background-size: 100% 90px;
+    background-position: 50% 100%;  
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 773.74 154.98"><path fill="%231e366a" d="M0 0H773.74L386.87 154.98Z"/></svg>'); 
+}
+
+@media (min-width:2100px){
+    .shapedividers_com-2046::before{
+        background-size: 100% calc(2vw + 90px);
+    }
+}
+
+
+
+.shapedividers_com-8500{
+overflow:hidden;
+position:relative;
+}
+.shapedividers_com-8500::before{ 
+content:'';
+font-family:'shape divider from ShapeDividers.com';
+position: absolute;
+z-index: 3;
+pointer-events: none;
+background-repeat: no-repeat;
+bottom: -0.1vw;
+left: -0.1vw;
+right: -0.1vw;
+top: -0.1vw; 
+background-size: 100% 90px;
+background-position: 50% 100%;  background-image: url('data:image/svg+xml;charset=utf8, <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 773.74 154.98"><g fill="%231e366a"><path d="M773.74 154.98H0L386.87 77.5Z"/><path d="M773.74 154.98 386.87 0 0 154.98Z" opacity=".66"/></g></svg>'); 
+}
+
+@media (min-width:2100px){
+.shapedividers_com-8500::before{
+background-size: 100% calc(2vw + 90px);
+}
+}
  
