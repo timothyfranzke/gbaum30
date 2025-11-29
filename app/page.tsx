@@ -25,6 +25,7 @@ import Hero_b from "./components/Hero_b";
 import HeroVariant1 from "./components/Hero_variant1";
 import HeroVariant2 from "./components/Hero_variant2";
 import HeroVariant3 from "./components/Hero_variant3";
+import HeroVariant4 from "./components/Hero_variant4";
 import ServicesVariant1 from "./components/Services_variant1";
 import ServicesVariant2 from "./components/Services_variant2";
 import PricingVariant3 from "./components/Pricing_variant3";

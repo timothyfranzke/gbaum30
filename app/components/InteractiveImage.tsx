@@ -143,7 +143,7 @@ export const InteractiveDiagram = () => {
           justify-content: center;
         }
         
-        @media (max-width: 1024px) {
+        @media (max-width: 768px) {
           .content-wrapper {
             grid-template-columns: 1fr;
             gap: 40px;
