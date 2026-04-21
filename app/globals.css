@@ -1,48 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --background: #D6D2C4;
-  --foreground: #171717;
-  --secondary: #1E8AFF;
-  --primary: #0033A0;
-  --sky: #B1C9E8;
-  --midnight: #1B365D;
-  --goldenrod: #FFDC00;
-  --sunset: #FFA360;
-}
-
-@layer components {
-  .btn-primary {
-    @apply bg-primary text-white px-8 py-4 rounded-full font-bold hover:bg-primary/20 transition;
-  }
-  
-  .btn-secondary {
-    @apply bg-[#0033A0] text-white px-8 py-4 rounded-full font-bold hover:bg-[#1B365D] transition;
-  }
-  
-  .btn-outline {
-    @apply border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-gray-900 transition;
-  }
+  --blue: #0033A0;
+  --blue-dark: #001F66;
+  --cream: #F4EDE0;
+  --ink: #05070E;
+  --paper: #F8F5EC;
+  --chalk: #FFFFFF;
+  --flag: #E8734A;
+  --muted: #8A8F9A;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-secondary: var(--secondary);
-  --color-primary: var(--primary);
-  --color-sky: var(--sky);
-  --color-midnight: var(--midnight);
-  --color-goldenrod: var(--goldenrod);
-  --color-sunset: var(--sunset);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #D6D2C4;
-    --foreground: #171717;
-  }
+  --color-blue: var(--blue);
+  --color-blue-dark: var(--blue-dark);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-chalk: var(--chalk);
+  --color-flag: var(--flag);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+  --font-display: "Bebas Neue", "Impact", sans-serif;
 }
 
 html, body {
@@ -54,162 +34,30 @@ html, body {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: "Roboto", sans-serif;
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--font-sans), "Inter", system-ui, sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6, .heading-font {
-  font-family: "Bebas Neue", sans-serif;
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-display);
 }
 
-.newspaper-clip-box {
-  position: relative;
-  clip-path: polygon(
-    0 4px,    /* top-left */
-    15% 0,     /* top-left indent */
-    85% 0,     /* top-right indent */
-    100% 4px,  /* top-right */
-    100% calc(100% - 4px), /* bottom-right */
-    85% 100%,  /* bottom-right indent */
-    15% 100%,  /* bottom-left indent */
-    0 calc(100% - 4px)  /* bottom-left */
-  );
+.font-mono {
+  font-family: var(--font-mono), "JetBrains Mono", ui-monospace, monospace;
 }
 
-.text-primary {
-  color: var(--color-primary);
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: rgba(244,237,224,0.2); border-radius: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* Ticker animation */
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
 }
 
-
-.shapedividers_com-8174{
-overflow:hidden;
-position:relative;
+.ticker-animate {
+  animation: ticker-scroll 20s linear infinite;
 }
-.shapedividers_com-8174::before{ 
-content:'';
-font-family:'shape divider from ShapeDividers.com';
-position: absolute;
-z-index: 3;
-pointer-events: none;
-background-repeat: no-repeat;
-bottom: -0.1vw;
-left: -0.1vw;
-right: -0.1vw;
-top: -0.1vw; 
-background-size: 100% 90px;
-background-position: 50% 0%;  background-image: url('data:image/svg+xml;charset=utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 381 77.25" preserveAspectRatio="none"><g fill="%23000000"><path d="M381 8.47L0 42.33V0h381z"/><path d="M381 33.87L0 59.27V0h381z" opacity=".33"/><path d="M381 59.27L0 77.25V0h381z" opacity=".33"/></g></svg>'); 
-}
-
-@media (min-width:2100px){
-.shapedividers_com-8174::before{
-background-size: 100% calc(2vw + 90px);
-}
-}
- 
-
-.shapedividers_com-1002{
-overflow:hidden;
-position:relative;
-}
-.shapedividers_com-1002::before{ 
-content:'';
-font-family:'shape divider from ShapeDividers.com';
-position: absolute;
-z-index: 3;
-pointer-events: none;
-background-repeat: no-repeat;
-bottom: -0.1vw;
-left: -0.1vw;
-right: -0.1vw;
-top: -0.1vw; 
-background-size: 155% 154px;
-background-position: 50% 100%;  background-image: url('data:image/svg+xml;charset=utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.278 3.52" preserveAspectRatio="none"><path d="M0 3.528S27.04 3.352 35.278 0v3.528z" opacity=".2" fill="%23152b4a"/><path d="M0 3.528S27.04 3.374 35.278.425v3.103z" opacity=".2" fill="%23152b4a"/><path d="M0 3.528S27.04 3.396 35.278.882v2.646z" fill="%23152b4a"/><path d="M0 3.527h35.278v.092H0z" fill="%23152b4a"/></svg>'); 
-}
-
-@media (min-width:2100px){
-.shapedividers_com-1002::before{
-background-size: 155% calc(2vw + 154px);
-}
-}
- 
-
-
-.shapedividers_com-647{
-overflow:hidden;
-position:relative;
-}
-.shapedividers_com-647::before{ 
-content:'';
-font-family:'shape divider from ShapeDividers.com';
-position: absolute;
-z-index: 3;
-pointer-events: none;
-background-repeat: no-repeat;
-bottom: -0.1vw;
-left: -0.1vw;
-right: -0.1vw;
-top: -0.1vw; 
-background-size: 155% 154px;
-background-position: 50% 100%;  background-image: url('data:image/svg+xml;charset=utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 381 77.25" preserveAspectRatio="none"><g fill="%23152b4a"><path d="M0 68.78l381-33.86v42.33H0z"/><path d="M0 43.38l381-25.4v59.27H0z" opacity=".33"/><path d="M0 17.98L381 0v77.25H0z" opacity=".33"/></g></svg>'); 
-}
-
-@media (min-width:2100px){
-.shapedividers_com-647::before{
-background-size: 155% calc(2vw + 154px);
-}
-}
- .shapedividers_com-2046{
-    overflow:hidden;
-    position:relative;
-}
-
-.shapedividers_com-2046::before{ 
-    content:'';
-    font-family:'shape divider from ShapeDividers.com';
-    position: absolute;
-    z-index: 3;
-    pointer-events: none;
-    background-repeat: no-repeat;
-    bottom: -0.1vw;
-    left: -0.1vw;
-    right: -0.1vw;
-    top: -0.1vw; 
-    background-size: 100% 90px;
-    background-position: 50% 100%;  
-    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 773.74 154.98"><path fill="%231e366a" d="M0 0H773.74L386.87 154.98Z"/></svg>'); 
-}
-
-@media (min-width:2100px){
-    .shapedividers_com-2046::before{
-        background-size: 100% calc(2vw + 90px);
-    }
-}
-
-
-
-.shapedividers_com-8500{
-overflow:hidden;
-position:relative;
-}
-.shapedividers_com-8500::before{ 
-content:'';
-font-family:'shape divider from ShapeDividers.com';
-position: absolute;
-z-index: 3;
-pointer-events: none;
-background-repeat: no-repeat;
-bottom: -0.1vw;
-left: -0.1vw;
-right: -0.1vw;
-top: -0.1vw; 
-background-size: 100% 90px;
-background-position: 50% 100%;  background-image: url('data:image/svg+xml;charset=utf8, <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 773.74 154.98"><g fill="%231e366a"><path d="M773.74 154.98H0L386.87 77.5Z"/><path d="M773.74 154.98 386.87 0 0 154.98Z" opacity=".66"/></g></svg>'); 
-}
-
-@media (min-width:2100px){
-.shapedividers_com-8500::before{
-background-size: 100% calc(2vw + 90px);
-}
-}
- 
