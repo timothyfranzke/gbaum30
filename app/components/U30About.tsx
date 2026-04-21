@@ -47,7 +47,7 @@ export default function U30About() {
 
         {/* Text column */}
         <div>
-          <div className="font-mono text-[11px] text-flag tracking-[2px]">FILE / 01 — THE KEEPER</div>
+          <div className="font-mono text-[11px] text-flag tracking-[2px]">THE KEEPER</div>
           <h2 className="font-display text-[clamp(56px,7vw,96px)] leading-[0.9] mt-3 tracking-tight">
             TWENTY<br/>YEARS.<br/><span className="text-blue">ONE JOB.</span>
           </h2>
@@ -58,7 +58,7 @@ export default function U30About() {
             millimeter of the position.
           </p>
           <p className="text-base leading-[1.6] mt-4 max-w-[480px]">
-            When he hung up the gloves in 2022, he had one mission: give Kentucky
+            When he hung up the gloves, he had one mission: give Kentucky
             keepers the kind of pro-level development that used to mean leaving the state.
           </p>
 

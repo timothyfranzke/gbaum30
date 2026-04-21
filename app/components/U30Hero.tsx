@@ -30,7 +30,7 @@ export default function U30Hero() {
         {/* Broadcast HUD top */}
         <div className="absolute top-6 left-20 flex gap-4 items-center font-mono text-[11px] tracking-[1.5px] uppercase">
           <span className="bg-flag text-ink px-[10px] py-1 font-bold">&#9679; LIVE</span>
-          <span>UNION30 &mdash; EST. 2022</span>
+          <span>UNION30 &mdash; EST. 2017</span>
         </div>
 
         {/* Main headline */}
@@ -49,7 +49,7 @@ export default function U30Hero() {
           <div className="flex items-center gap-5">
             <div className="w-[52px] h-[52px] bg-blue flex items-center justify-center font-display text-[28px] text-cream">01</div>
             <div>
-              <div className="font-mono text-[10px] tracking-[1.5px] text-muted">HEAD COACH</div>
+              <div className="font-mono text-[10px] tracking-[1.5px] text-muted">FOUNDER</div>
               <div className="font-display text-[22px] tracking-wide">ANDY GRUENEBAUM</div>
             </div>
           </div>

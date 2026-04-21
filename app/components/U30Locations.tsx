@@ -190,11 +190,11 @@ export default function U30Locations() {
   const [activeId, setActiveId] = useState('01');
 
   return (
-    <section className="bg-ink text-cream py-[120px] px-10">
+    <section id="locations" className="bg-ink text-cream py-[120px] px-10">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-10 flex-wrap">
         <div>
-          <div className="font-mono text-[11px] text-flag tracking-[2px] font-bold">FILE / 07 — THE GROUNDS</div>
+          <div className="font-mono text-[11px] text-flag tracking-[2px] font-bold">THE GROUNDS</div>
           <h2 className="font-display text-[clamp(56px,9vw,120px)] leading-[0.9] tracking-tight mt-2">
             UNION30&apos;S<br/><span className="text-blue">REACH.</span>
           </h2>

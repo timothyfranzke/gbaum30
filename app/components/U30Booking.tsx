@@ -38,7 +38,7 @@ export default function U30Booking() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-20 items-start">
         {/* Left info */}
         <div>
-          <div className="font-mono text-[11px] text-flag tracking-[2px]">FILE / 06 — BOOK IT</div>
+          <div className="font-mono text-[11px] text-flag tracking-[2px]">BOOK IT</div>
           <h2 className="font-display text-[clamp(72px,10vw,140px)] leading-[0.88] tracking-tight mt-2">
             GET IN<br/><span className="text-flag">THE BOX.</span>
           </h2>

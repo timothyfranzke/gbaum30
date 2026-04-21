@@ -19,7 +19,7 @@ const COACHES: Coach[] = [
   {
     num: '01', name: 'ANDY GRUENEBAUM', role: 'Founder',
     tag: 'Ex-MLS keeper · Founder · Curriculum lead',
-    bio: 'With over 15 years of professional goalkeeping experience and 8 years of coaching, Andy brings elite-level expertise to Union30. Former MLS goalkeeper with a passion for developing the next generation of shot-stoppers. When he hung up the gloves in 2022, he had one mission: give keepers the kind of pro-level development that used to mean leaving the state.',
+    bio: 'With over 15 years of professional goalkeeping experience and 8 years of coaching, Andy brings elite-level expertise to Union30. Former MLS goalkeeper with a passion for developing the next generation of shot-stoppers. When he hung up the gloves, he had one mission: give keepers the kind of pro-level development that used to mean leaving the state.',
     certifications: ['USSF "A" License', 'Goalkeeper Coaching Specialist'],
     achievements: ['19 years MLS/USL', 'Columbus Crew · Chivas USA · Sporting KC · Indy Eleven', 'UK Hall of Fame'],
   },
@@ -116,7 +116,7 @@ export default function U30Staff() {
       <section id="staff" className="text-cream">
         {/* Section header */}
         <div className="bg-blue py-[120px] px-10 pb-16">
-          <div className="font-mono text-[11px] text-flag tracking-[2px]">FILE / 03 — THE CREW</div>
+          <div className="font-mono text-[11px] text-flag tracking-[2px]">THE CREW</div>
           <h2 className="font-display text-[clamp(64px,9vw,120px)] leading-[0.9] tracking-tight mt-2">
             THE CREW.
           </h2>
@@ -131,7 +131,7 @@ export default function U30Staff() {
           >
             <div className="max-w-[1400px] mx-auto px-10 py-20 grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-12 items-center">
               {/* Photo side */}
-              <div className={`relative aspect-[4/5] overflow-hidden ${i % 2 === 1 ? 'md:order-2' : ''}`}>
+              <div className={`relative aspect-[4/5] overflow-hidden max-w-[300px] ${i % 2 === 1 ? 'md:order-2' : ''}`}>
                 {/* Faded U30 logo behind */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="font-display text-[200px] text-cream/[0.03] select-none">U30</div>

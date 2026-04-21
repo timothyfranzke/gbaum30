@@ -110,11 +110,11 @@ export default function U30HowWeTrain() {
   const active = TRAIN_AREAS.find(a => a.id === activeId)!;
 
   return (
-    <section className="bg-blue text-cream py-[120px] px-10 relative">
+    <section id="training" className="bg-blue text-cream py-[120px] px-10 relative">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-10 flex-wrap">
         <div>
-          <div className="font-mono text-[11px] text-flag tracking-[2px] font-bold">FILE / 08 — THE CURRICULUM</div>
+          <div className="font-mono text-[11px] text-flag tracking-[2px] font-bold">THE CURRICULUM</div>
           <h2 className="font-display text-[clamp(56px,9vw,120px)] leading-[0.9] tracking-tight mt-2">
             UNION30<br/>GOALKEEPER<br/><span className="text-flag">ATTRIBUTES.</span>
           </h2>

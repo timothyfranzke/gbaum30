@@ -66,7 +66,7 @@ export default function U30Programs({ prices }: { prices: PlanPrices }) {
     <section id="programs" className="bg-ink text-cream py-[120px] px-10">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-8">
         <div>
-          <div className="font-mono text-[11px] text-flag tracking-[2px]">FILE / 02 — THE OFFERINGS</div>
+          <div className="font-mono text-[11px] text-flag tracking-[2px]">THE OFFERINGS</div>
           <h2 className="font-display text-[clamp(64px,9vw,120px)] leading-[0.9] tracking-tight mt-2">
             JOIN THE<br/><span className="text-blue">UNION.</span>
           </h2>
