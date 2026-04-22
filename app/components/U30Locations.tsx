@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import U30VideoPlayer from './U30VideoPlayer';
 
 interface Location {
@@ -11,13 +11,21 @@ interface Location {
   pos: { x: number; y: number };
   tags: string[];
   videoUrl?: string;
+  isHQ?: boolean;
+}
+
+interface StateData {
+  d: string;
+  id: string;
+  title: string;
 }
 
 const LOCATIONS: Location[] = [
   {
-    id: '01', name: 'LEXINGTON', city: 'Lexington', state: 'KY',
-    pos: { x: 66, y: 50 },
+    id: '01', name: 'OVERLAND PARK', city: 'Overland Park', state: 'KS',
+    pos: { x: 50, y: 46 },
     tags: ['HQ', 'In-Person Training'],
+    isHQ: true,
   },
   {
     id: '02', name: 'COLUMBUS', city: 'Columbus', state: 'OH',
@@ -57,16 +65,7 @@ const LOCATIONS: Location[] = [
   },
 ];
 
-function USMap({ onPhoenixClick }: { onPhoenixClick: () => void }) {
-  const [states, setStates] = useState<{ d: string; id: string; title: string }[]>([]);
-
-  useEffect(() => {
-    fetch('/api/map')
-      .then(res => res.json())
-      .then(data => setStates(data.states))
-      .catch(() => {});
-  }, []);
-
+function USMap({ states, onPhoenixClick }: { states: StateData[]; onPhoenixClick: () => void }) {
   const locationStateIds = LOCATIONS.map(l => `US-${l.state}`);
 
   return (
@@ -106,25 +105,55 @@ function USMap({ onPhoenixClick }: { onPhoenixClick: () => void }) {
       {/* Location pins */}
       {LOCATIONS.map(loc => {
         const isPhoenix = loc.id === '08';
-        return isPhoenix ? (
-          <button
-            key={loc.id}
-            onClick={onPhoenixClick}
-            className="absolute group"
-            style={{ left: `${loc.pos.x}%`, top: `${loc.pos.y}%`, transform: 'translate(-50%, -100%)' }}
-          >
-            <div className="flex gap-1.5 items-center mb-1">
-              <div className="font-mono text-[9px] tracking-[1.5px] font-bold px-1.5 py-0.5 whitespace-nowrap border transition-all bg-flag text-ink border-flag">
-                {loc.city}, {loc.state}
+        const isHQ = !!loc.isHQ;
+
+        if (isHQ) {
+          return (
+            <div
+              key={loc.id}
+              className="absolute"
+              style={{ left: `${loc.pos.x}%`, top: `${loc.pos.y}%`, transform: 'translate(-50%, -100%)' }}
+            >
+              <div className="flex gap-1.5 items-center mb-1">
+                <div className="font-mono text-[9px] tracking-[1.5px] font-bold px-1.5 py-0.5 whitespace-nowrap border bg-cream text-ink border-cream">
+                  &#9733; HQ — {loc.city}, {loc.state}
+                </div>
+              </div>
+              <div className="flex justify-center">
+                <div className="relative">
+                  <div className="absolute inset-0 rotate-45 bg-cream/20 animate-ping" />
+                  <div className="relative w-9 h-9 flex items-center justify-center font-display text-sm rotate-45 border-2 border-cream bg-cream text-ink shadow-[0_0_0_8px_rgba(244,237,224,0.2)]">
+                    <span className="-rotate-45 text-[11px] font-bold">{loc.id}</span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="flex justify-center">
-              <div className="w-7 h-7 flex items-center justify-center font-display text-sm rotate-45 border-2 border-cream transition-all bg-flag text-ink shadow-[0_0_0_6px_rgba(232,115,74,0.25)]">
-                <span className="-rotate-45 text-[10px] font-bold">{loc.id}</span>
+          );
+        }
+
+        if (isPhoenix) {
+          return (
+            <button
+              key={loc.id}
+              onClick={onPhoenixClick}
+              className="absolute group"
+              style={{ left: `${loc.pos.x}%`, top: `${loc.pos.y}%`, transform: 'translate(-50%, -100%)' }}
+            >
+              <div className="flex gap-1.5 items-center mb-1">
+                <div className="font-mono text-[9px] tracking-[1.5px] font-bold px-1.5 py-0.5 whitespace-nowrap border transition-all bg-flag text-ink border-flag">
+                  {loc.city}, {loc.state}
+                </div>
               </div>
-            </div>
-          </button>
-        ) : (
+              <div className="flex justify-center">
+                <div className="w-7 h-7 flex items-center justify-center font-display text-sm rotate-45 border-2 border-cream transition-all bg-flag text-ink shadow-[0_0_0_6px_rgba(232,115,74,0.25)]">
+                  <span className="-rotate-45 text-[10px] font-bold">{loc.id}</span>
+                </div>
+              </div>
+            </button>
+          );
+        }
+
+        return (
           <div
             key={loc.id}
             className="absolute"
@@ -162,47 +191,99 @@ function USMap({ onPhoenixClick }: { onPhoenixClick: () => void }) {
   );
 }
 
-function LocationCard({ loc, onVideoClick }: { loc: Location; onVideoClick?: () => void }) {
+function StateSvg({ stateData, isPhoenix, isHQ }: { stateData?: StateData; isPhoenix: boolean; isHQ: boolean }) {
+  const pathRef = useRef<SVGPathElement>(null);
+  const [viewBox, setViewBox] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (pathRef.current) {
+      const b = pathRef.current.getBBox();
+      const pad = 5;
+      setViewBox(`${b.x - pad} ${b.y - pad} ${b.width + pad * 2} ${b.height + pad * 2}`);
+    }
+  }, [stateData?.d]);
+
+  if (!stateData) return null;
+
+  const isSpecial = isPhoenix || isHQ;
+
+  return (
+    <svg
+      viewBox={viewBox || '0 0 1200 800'}
+      className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] pointer-events-none transition-opacity ${!viewBox ? 'opacity-0' : ''}`}
+      preserveAspectRatio="xMidYMid meet"
+    >
+      <path
+        ref={pathRef}
+        d={stateData.d}
+        fill={isSpecial ? (isHQ ? 'rgba(0,51,160,0.1)' : 'rgba(5,7,14,0.15)') : 'none'}
+        stroke={isSpecial ? (isHQ ? 'rgba(0,51,160,0.2)' : 'rgba(5,7,14,0.25)') : 'rgba(244,237,224,0.15)'}
+        strokeWidth={isSpecial ? '1' : '1.5'}
+      />
+    </svg>
+  );
+}
+
+function LocationCard({ loc, stateData, onVideoClick }: { loc: Location; stateData?: StateData; onVideoClick?: () => void }) {
   const isPhoenix = !!loc.videoUrl;
+  const isHQ = !!loc.isHQ;
   return (
     <div
-      className={`text-left w-full p-4 border transition-all ${
-        isPhoenix
-          ? 'bg-flag text-ink border-flag cursor-pointer hover:bg-cream'
-          : 'bg-transparent text-cream border-cream/[0.18]'
+      className={`relative text-left w-full p-4 border transition-all overflow-hidden ${
+        isHQ
+          ? 'bg-cream text-ink border-cream'
+          : isPhoenix
+            ? 'bg-flag text-ink border-flag cursor-pointer hover:bg-cream'
+            : 'bg-transparent text-cream border-cream/[0.18]'
       }`}
       onClick={isPhoenix ? onVideoClick : undefined}
       role={isPhoenix ? 'button' : undefined}
       tabIndex={isPhoenix ? 0 : undefined}
       onKeyDown={isPhoenix ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onVideoClick?.(); } } : undefined}
     >
-      <div className="flex justify-between items-baseline">
-        <div className="flex items-baseline gap-2">
-          <span className={`font-display text-2xl leading-none ${isPhoenix ? 'text-ink' : 'text-flag'}`}>{loc.id}</span>
-          <span className="font-display text-lg leading-none tracking-[0.5px]">{loc.name}</span>
+      {/* State SVG background */}
+      <StateSvg stateData={stateData} isPhoenix={isPhoenix} isHQ={isHQ} />
+
+      <div className="relative z-10">
+        <div className="flex justify-between items-baseline">
+          <div className="flex items-baseline gap-2">
+            <span className={`font-display text-2xl leading-none ${isHQ ? 'text-blue' : isPhoenix ? 'text-ink' : 'text-flag'}`}>{loc.id}</span>
+            <span className="font-display text-lg leading-none tracking-[0.5px]">{loc.name}</span>
+          </div>
         </div>
-      </div>
-      <div className="font-mono text-[11px] tracking-wider mt-1 opacity-80">
-        {loc.city}, {loc.state}
-      </div>
-      <div className="mt-2 flex gap-1.5 flex-wrap">
-        {loc.tags.map(t => (
-          <span key={t} className={`px-[6px] py-[2px] border font-mono text-[9px] tracking-wider uppercase font-semibold ${
-            isPhoenix ? 'border-ink' : 'border-cream'
-          }`}>{t}</span>
-        ))}
-      </div>
-      {isPhoenix && (
-        <div className="font-mono text-[10px] tracking-wider mt-2 font-bold text-ink">
-          &#9654; WATCH FACILITY TOUR
+        <div className="font-mono text-[11px] tracking-wider mt-1 opacity-80">
+          {loc.city}, {loc.state}
         </div>
-      )}
+        <div className="mt-2 flex gap-1.5 flex-wrap">
+          {loc.tags.map(t => (
+            <span key={t} className={`px-[6px] py-[2px] border font-mono text-[9px] tracking-wider uppercase font-semibold ${
+              isHQ ? 'border-ink' : isPhoenix ? 'border-ink' : 'border-cream'
+            }`}>{t}</span>
+          ))}
+        </div>
+        {isPhoenix && (
+          <div className="font-mono text-[10px] tracking-wider mt-2 font-bold text-ink">
+            &#9654; WATCH GAME ANALYSIS
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
 export default function U30Locations() {
   const [showVideo, setShowVideo] = useState(false);
+  const [states, setStates] = useState<StateData[]>([]);
+
+  useEffect(() => {
+    fetch('/api/map')
+      .then(res => res.json())
+      .then(data => setStates(data.states))
+      .catch(() => {});
+  }, []);
+
+  // Build a lookup from state abbreviation to state SVG data
+  const stateMap = new Map(states.map(s => [s.id, s]));
 
   return (
     <section id="locations" className="bg-ink text-cream py-[120px] px-10">
@@ -221,15 +302,16 @@ export default function U30Locations() {
 
       {/* Desktop: full-width map */}
       <div className="hidden md:block">
-        <USMap onPhoenixClick={() => setShowVideo(true)} />
+        <USMap states={states} onPhoenixClick={() => setShowVideo(true)} />
       </div>
 
-      {/* Mobile: location cards */}
+      {/* Mobile: location cards with state SVG */}
       <div className="grid grid-cols-2 gap-3 md:hidden">
         {LOCATIONS.map(loc => (
           <LocationCard
             key={loc.id}
             loc={loc}
+            stateData={stateMap.get(`US-${loc.state}`)}
             onVideoClick={loc.videoUrl ? () => setShowVideo(true) : undefined}
           />
         ))}
@@ -241,7 +323,7 @@ export default function U30Locations() {
           &#9679; 8 LOCATIONS AND GROWING
         </div>
         <div className="flex gap-6 font-mono text-[11px] tracking-wider text-muted uppercase flex-wrap justify-center">
-          <span>KY</span><span>OH</span><span>AL</span><span>FL</span><span>IA</span><span>NE</span><span>OK</span><span>AZ</span>
+          <span>KS</span><span>OH</span><span>AL</span><span>FL</span><span>IA</span><span>NE</span><span>OK</span><span>AZ</span>
         </div>
         <a href="#booking" className="bg-flag text-ink px-5 py-3 font-mono text-[11px] tracking-[1.5px] uppercase font-bold cursor-pointer hover:bg-cream transition-colors text-center">
           Get Started &rarr;
