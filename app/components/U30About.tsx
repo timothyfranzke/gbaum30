@@ -45,12 +45,12 @@ export default function U30About({ aboutMedia }: { aboutMedia?: AboutMedia }) {
   };
 
   const career = [
-    ['2004–09', 'COLUMBUS CREW'],
-    ['2010–12', 'CHIVAS USA'],
-    ['2013–18', 'SPORTING KC'],
-    ['2019–22', 'INDY ELEVEN'],
-    ['—', 'USSF "A" LICENSE'],
-    ['—', 'UK HALL OF FAME'],
+    ['2006–13', 'COLUMBUS CREW'],
+    ['2014', 'SPORTING KC'],
+    ['2008', 'MLS CUP CHAMPION'],
+    ['2010', 'COMEBACK PLAYER OF THE YEAR'],
+    ['2012', 'DEFENDER & MVP OF THE YEAR'],
+    ['—', 'BVN HALL OF FAME'],
   ];
 
   return (
@@ -73,19 +73,22 @@ export default function U30About({ aboutMedia }: { aboutMedia?: AboutMedia }) {
 
         {/* Text column */}
         <div>
-          <div className="font-mono text-[11px] text-flag tracking-[2px]">THE KEEPER</div>
+          <div className="font-mono text-[11px] text-flag tracking-[2px]">FOUNDER</div>
           <h2 className="font-display text-[clamp(56px,7vw,96px)] leading-[0.9] mt-3 tracking-tight">
             TWENTY<br/>YEARS.<br/><span className="text-blue">ONE JOB.</span>
           </h2>
-          <p className="text-base leading-[1.6] mt-8 max-w-[480px]">
-            Andy came up through the University of Kentucky in the early 2000s,
-            earned a pro contract with the Columbus Crew, and spent the next two
-            decades in the MLS, NASL, and USL — stopping shots and learning every
-            millimeter of the position.
+          <div className="font-mono text-[11px] tracking-[1.5px] text-flag uppercase mt-4">Andy Gruenebaum</div>
+          <p className="text-base leading-[1.6] mt-6 max-w-[480px]">
+            Andy was born and raised right here in Kansas City. He was an NSCAA All-American
+            while helping Blue Valley North High School win the state title in 2000. He was
+            honored to be a member of the Blue Valley North Hall of Fame. His dream has always
+            been to play for his hometown team. He accomplished this dream, and now it is his
+            mission to give back to THIS community that has given him so much.
           </p>
           <p className="text-base leading-[1.6] mt-4 max-w-[480px]">
-            When he hung up the gloves, he had one mission: give Kentucky
-            keepers the kind of pro-level development that used to mean leaving the state.
+            Andy had the privilege of playing in MLS for 9 years. He was honored to win MLS Cup
+            in 2008 with the Columbus Crew, as well as earning Comeback Player of the Year in
+            2010 (Hip Surgery), Defender of the Year in 2012, and Most Valuable Player in 2012.
           </p>
 
           {/* Career timeline */}
