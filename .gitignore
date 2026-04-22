@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/public/original.mp4
+
+# firebase
+firebase-service-account.json
+*-firebase-adminsdk-*.json

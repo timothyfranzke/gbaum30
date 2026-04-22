@@ -1,0 +1,505 @@
+// Direction B — Stadium / Broadcast Graphic
+// Full-bleed action imagery, tickertape motifs, stacked typography, chalk accents
+
+const B_COLORS = {
+  blue: '#0033A0',
+  blueDark: '#001F66',
+  cream: '#F4EDE0',
+  ink: '#05070E',
+  paper: '#F8F5EC',
+  chalk: '#FFFFFF',
+  flag: '#E8734A',
+  muted: '#8A8F9A',
+};
+
+const B_FONT_DISPLAY = '"Bebas Neue", "Oswald", "Impact", sans-serif';
+const B_FONT_BODY = '"Inter", system-ui, sans-serif';
+const B_FONT_MONO = '"JetBrains Mono", ui-monospace, monospace';
+
+function BPlaceholder({ label, ratio = '16/9', bg = '#0A1428', style = {} }) {
+  const id = 'bp-' + Math.random().toString(36).slice(2, 7);
+  return (
+    <div style={{ position: 'relative', width: '100%', aspectRatio: ratio, background: bg, overflow: 'hidden', ...style }}>
+      <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0 }}>
+        <defs>
+          <pattern id={id} width="10" height="10" patternUnits="userSpaceOnUse">
+            <rect width="10" height="10" fill={bg} />
+            <circle cx="5" cy="5" r="0.8" fill="rgba(255,255,255,0.08)" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill={`url(#${id})`} />
+      </svg>
+      <div style={{
+        position: 'absolute', inset: 0, padding: 16, display: 'flex', alignItems: 'flex-end',
+        fontFamily: B_FONT_MONO, fontSize: 10, color: 'rgba(255,255,255,0.5)',
+        letterSpacing: 1, textTransform: 'uppercase',
+      }}>◳ {label}</div>
+    </div>
+  );
+}
+
+// Ticker
+function BTicker({ items, bg = B_COLORS.flag, fg = B_COLORS.ink }) {
+  return (
+    <div style={{ background: bg, color: fg, padding: '10px 0', overflow: 'hidden', borderTop: `1px solid ${B_COLORS.ink}`, borderBottom: `1px solid ${B_COLORS.ink}` }}>
+      <div style={{
+        display: 'flex', gap: 40, whiteSpace: 'nowrap',
+        fontFamily: B_FONT_MONO, fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase',
+        fontWeight: 700,
+      }}>
+        {[...items, ...items, ...items].map((t, i) => (
+          <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 40 }}>
+            {t}<span style={{ opacity: 0.5 }}>◆</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ────────────── NAV ──────────────
+function BNav() {
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      padding: '16px 40px', background: B_COLORS.cream, color: B_COLORS.ink,
+      borderBottom: `2px solid ${B_COLORS.ink}`,
+      position: 'sticky', top: 0, zIndex: 10,
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div style={{
+          width: 36, height: 36, background: B_COLORS.blue, color: B_COLORS.cream,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontFamily: B_FONT_DISPLAY, fontSize: 20, fontWeight: 700,
+        }}>U30</div>
+        <div style={{ fontFamily: B_FONT_DISPLAY, fontSize: 22, letterSpacing: 1 }}>UNION 30</div>
+      </div>
+      <nav style={{ display: 'flex', gap: 24, fontFamily: B_FONT_MONO, fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', fontWeight: 600 }}>
+        <span>Matchbook</span><span>Camps</span><span>Crew</span><span>Film</span>
+      </nav>
+      <button style={{
+        background: B_COLORS.ink, color: B_COLORS.cream, border: 'none',
+        padding: '10px 18px', fontFamily: B_FONT_MONO, fontSize: 11,
+        letterSpacing: 1, textTransform: 'uppercase', fontWeight: 700, cursor: 'pointer',
+      }}>Book →</button>
+    </div>
+  );
+}
+
+// ────────────── HERO — full bleed action ──────────────
+function BHero() {
+  return (
+    <section style={{ position: 'relative', background: B_COLORS.ink, color: B_COLORS.cream }}>
+      <div style={{ position: 'relative', height: 760, overflow: 'hidden' }}>
+        <BPlaceholder label="Action: full-bleed Andy, mid-dive, floodlights" ratio="auto" bg="#001033" style={{ height: '100%', aspectRatio: 'auto' }} />
+        {/* Gradient overlay */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(180deg, rgba(5,7,14,0.4) 0%, rgba(5,7,14,0.1) 50%, rgba(5,7,14,0.95) 100%)',
+        }} />
+        {/* Corner frame marks */}
+        {[[20,20,'tl'],[20,20,'tr'],[20,20,'bl'],[20,20,'br']].map(([a,b,p],i) => {
+          const pos = {tl:{top:24,left:24},tr:{top:24,right:24},bl:{bottom:160,left:24},br:{bottom:160,right:24}}[p];
+          return <div key={i} style={{ position:'absolute', ...pos, width:28, height:28, border:`2px solid ${B_COLORS.flag}`, borderRight: p.includes('l')?undefined:'none', borderBottom: p.includes('t')?undefined:'none', borderLeft: p.includes('r')?undefined:'none', borderTop: p.includes('b')?undefined:'none' }} />;
+        })}
+        {/* Broadcast HUD top */}
+        <div style={{
+          position: 'absolute', top: 24, left: 80,
+          display: 'flex', gap: 16, alignItems: 'center',
+          fontFamily: B_FONT_MONO, fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase',
+        }}>
+          <span style={{ background: B_COLORS.flag, color: B_COLORS.ink, padding: '4px 10px', fontWeight: 700 }}>● LIVE</span>
+          <span>UNION 30 — EST. 2022</span>
+        </div>
+        {/* Centered massive type */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
+          padding: '0 40px 180px',
+        }}>
+          <div style={{
+            fontFamily: B_FONT_DISPLAY, fontSize: 260, lineHeight: 0.82,
+            letterSpacing: -2, color: B_COLORS.cream,
+          }}>
+            BE THE<br/>
+            <span style={{ color: B_COLORS.flag }}>WALL.</span>
+          </div>
+          <div style={{
+            fontFamily: B_FONT_BODY, fontSize: 18, marginTop: 24, maxWidth: 520,
+            color: 'rgba(244,237,224,0.85)', lineHeight: 1.45,
+          }}>
+            Goalkeeping is a craft. Andy Gruenebaum spent 19 years in the MLS
+            perfecting it. Now he's teaching it — in Kentucky, to anyone brave
+            enough to wear the #1.
+          </div>
+        </div>
+        {/* Bottom scoreboard */}
+        <div style={{
+          position: 'absolute', bottom: 0, left: 0, right: 0,
+          background: B_COLORS.ink,
+          borderTop: `2px solid ${B_COLORS.flag}`,
+          padding: '20px 40px',
+          display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: 40, alignItems: 'center',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+            <div style={{ width: 52, height: 52, background: B_COLORS.blue, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: B_FONT_DISPLAY, fontSize: 28, color: B_COLORS.cream }}>01</div>
+            <div>
+              <div style={{ fontFamily: B_FONT_MONO, fontSize: 10, letterSpacing: 1.5, color: B_COLORS.muted }}>HEAD COACH</div>
+              <div style={{ fontFamily: B_FONT_DISPLAY, fontSize: 22, letterSpacing: 1 }}>ANDY GRUENEBAUM</div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: 32, justifyContent: 'center', fontFamily: B_FONT_DISPLAY }}>
+            {[['19','YRS'],['240','STARTS'],['800','KEEPERS']].map(([n,l]) => (
+              <div key={l} style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 36, lineHeight: 1, color: B_COLORS.flag }}>{n}</div>
+                <div style={{ fontFamily: B_FONT_MONO, fontSize: 9, color: B_COLORS.muted, letterSpacing: 1.5, marginTop: 4 }}>{l}</div>
+              </div>
+            ))}
+          </div>
+          <button style={{
+            background: B_COLORS.flag, color: B_COLORS.ink, border: 'none',
+            padding: '16px 28px', fontFamily: B_FONT_MONO, fontSize: 12,
+            letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 700, cursor: 'pointer',
+          }}>Book Training →</button>
+        </div>
+      </div>
+      <BTicker items={['Spring Clinics Open','Summer Camp — June 15', 'New: College ID Film Package', 'Saturday Showcase — May 4']} />
+    </section>
+  );
+}
+
+// ────────────── ABOUT ──────────────
+function BAbout() {
+  return (
+    <section style={{ background: B_COLORS.paper, color: B_COLORS.ink, padding: '120px 40px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'start' }}>
+        <div>
+          <BPlaceholder label="Andy in kit / portrait (b&w)" ratio="4/5" bg="#001033" />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 8 }}>
+            <BPlaceholder label="MLS '14" ratio="1/1" bg="#0033A0" />
+            <BPlaceholder label="UK '02" ratio="1/1" bg="#05070E" />
+          </div>
+        </div>
+        <div>
+          <div style={{ fontFamily: B_FONT_MONO, fontSize: 11, color: B_COLORS.flag, letterSpacing: 2 }}>FILE / 01 — THE KEEPER</div>
+          <div style={{ fontFamily: B_FONT_DISPLAY, fontSize: 96, lineHeight: 0.9, marginTop: 12, letterSpacing: -1 }}>
+            TWENTY<br/>YEARS.<br/><span style={{ color: B_COLORS.blue }}>ONE JOB.</span>
+          </div>
+          <div style={{ fontFamily: B_FONT_BODY, fontSize: 16, lineHeight: 1.6, marginTop: 32, maxWidth: 480 }}>
+            Andy came up through the University of Kentucky in the early 2000s,
+            earned a pro contract with the Columbus Crew, and spent the next two
+            decades in the MLS, NASL, and USL — stopping shots and learning every
+            millimeter of the position.
+            <br/><br/>
+            When he hung up the gloves in 2022, he had one mission: give Kentucky
+            keepers the kind of pro-level development that used to mean leaving the state.
+          </div>
+          <div style={{ marginTop: 40, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, fontFamily: B_FONT_MONO, fontSize: 12 }}>
+            {[
+              ['2004–09', 'COLUMBUS CREW'],
+              ['2010–12', 'CHIVAS USA'],
+              ['2013–18', 'SPORTING KC'],
+              ['2019–22', 'INDY ELEVEN'],
+              ['—', 'USSF "A" LICENSE'],
+              ['—', 'UK HALL OF FAME'],
+            ].map(([y,c],i) => (
+              <div key={i} style={{ display: 'flex', gap: 12, padding: '14px 0', borderTop: `1px solid ${B_COLORS.ink}` }}>
+                <span style={{ color: B_COLORS.flag, fontWeight: 700 }}>{y}</span>
+                <span style={{ fontWeight: 600, letterSpacing: 0.5 }}>{c}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ────────────── PROGRAMS ──────────────
+function BProgramRow({ idx, name, tag, price, unit, desc, items, featured }) {
+  return (
+    <div style={{
+      display: 'grid', gridTemplateColumns: '60px 1.2fr 2fr 1fr 160px', gap: 24, alignItems: 'center',
+      padding: '32px 24px', background: featured ? B_COLORS.flag : 'transparent',
+      color: featured ? B_COLORS.ink : B_COLORS.cream,
+      borderTop: `1px solid ${featured ? B_COLORS.ink : 'rgba(244,237,224,0.2)'}`,
+    }}>
+      <div style={{ fontFamily: B_FONT_DISPLAY, fontSize: 56, lineHeight: 1, opacity: 0.4 }}>{String(idx).padStart(2,'0')}</div>
+      <div>
+        <div style={{ fontFamily: B_FONT_MONO, fontSize: 10, letterSpacing: 1.5, opacity: 0.7, marginBottom: 6 }}>{tag}</div>
+        <div style={{ fontFamily: B_FONT_DISPLAY, fontSize: 40, lineHeight: 0.9, letterSpacing: 0.5 }}>{name}</div>
+      </div>
+      <div style={{ fontFamily: B_FONT_BODY, fontSize: 13.5, lineHeight: 1.55, opacity: 0.9 }}>
+        {desc}
+        <div style={{ marginTop: 12, display: 'flex', gap: 14, flexWrap: 'wrap', fontFamily: B_FONT_MONO, fontSize: 10, letterSpacing: 1 }}>
+          {items.map(i => <span key={i} style={{ padding: '4px 8px', border: `1px solid ${featured ? B_COLORS.ink : B_COLORS.cream}`, textTransform: 'uppercase' }}>{i}</span>)}
+        </div>
+      </div>
+      <div>
+        <div style={{ fontFamily: B_FONT_DISPLAY, fontSize: 48, lineHeight: 1 }}>${price}</div>
+        <div style={{ fontFamily: B_FONT_MONO, fontSize: 10, letterSpacing: 1, opacity: 0.7 }}>PER {unit.toUpperCase()}</div>
+      </div>
+      <button style={{
+        background: featured ? B_COLORS.ink : B_COLORS.flag,
+        color: featured ? B_COLORS.cream : B_COLORS.ink,
+        border: 'none', padding: '16px 20px', fontFamily: B_FONT_MONO, fontSize: 11,
+        letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 700, cursor: 'pointer',
+      }}>Reserve →</button>
+    </div>
+  );
+}
+
+function BPrograms() {
+  return (
+    <section style={{ background: B_COLORS.ink, color: B_COLORS.cream, padding: '120px 40px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40 }}>
+        <div>
+          <div style={{ fontFamily: B_FONT_MONO, fontSize: 11, color: B_COLORS.flag, letterSpacing: 2 }}>FILE / 02 — THE OFFERINGS</div>
+          <div style={{ fontFamily: B_FONT_DISPLAY, fontSize: 120, lineHeight: 0.9, letterSpacing: -1, marginTop: 8 }}>
+            PICK YOUR<br/><span style={{ color: B_COLORS.blue }}>REPS.</span>
+          </div>
+        </div>
+        <div style={{ fontFamily: B_FONT_BODY, fontSize: 14, maxWidth: 320, color: B_COLORS.muted, lineHeight: 1.55 }}>
+          Three ways to train. Every program ends with film & a drill card.
+        </div>
+      </div>
+      <div>
+        <BProgramRow idx={1} name="PRIVATE" tag="1:1 · 60 MIN" price={110} unit="session" desc="Diagnostic-led private training. You name the problem, Andy prescribes the reps, you leave with a drill card." items={['Film review', 'Drill card', 'Lex or Louisville']} />
+        <BProgramRow idx={2} name="CLINIC" tag="SMALL GROUP · 90 MIN" price={40} unit="week" desc="Small-group technical work on the same field, same night, every week. 4:1 keeper-to-coach ratio." items={['Tuesdays', 'Thursdays', 'Ages 9–18']} featured />
+        <BProgramRow idx={3} name="CAMP" tag="4-DAY RESIDENTIAL" price={395} unit="week" desc="Breakfast, film, field, lift, repeat. Guest pro keepers. Jersey + gloves included in tuition." items={['June', 'July', 'August', 'Overnight optional']} />
+      </div>
+    </section>
+  );
+}
+
+// ────────────── STAFF ──────────────
+function BCoach({ num, name, role, tag, placeholder }) {
+  return (
+    <div style={{ position: 'relative', background: B_COLORS.paper, color: B_COLORS.ink }}>
+      <BPlaceholder label={placeholder} ratio="3/4" bg="#001033" />
+      <div style={{ padding: '18px 18px 22px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+          <div style={{ fontFamily: B_FONT_DISPLAY, fontSize: 28, letterSpacing: 0.5 }}>{name}</div>
+          <div style={{ fontFamily: B_FONT_MONO, fontSize: 10, color: B_COLORS.muted, letterSpacing: 1 }}>#{num}</div>
+        </div>
+        <div style={{ fontFamily: B_FONT_MONO, fontSize: 11, letterSpacing: 1.5, color: B_COLORS.flag, textTransform: 'uppercase', marginTop: 4 }}>{role}</div>
+        <div style={{ fontFamily: B_FONT_BODY, fontSize: 12.5, color: '#444', marginTop: 12, lineHeight: 1.5 }}>{tag}</div>
+      </div>
+    </div>
+  );
+}
+
+function BStaff() {
+  return (
+    <section style={{ background: B_COLORS.blue, color: B_COLORS.cream, padding: '120px 40px' }}>
+      <div style={{ marginBottom: 48 }}>
+        <div style={{ fontFamily: B_FONT_MONO, fontSize: 11, color: B_COLORS.flag, letterSpacing: 2 }}>FILE / 03 — THE CREW</div>
+        <div style={{ fontFamily: B_FONT_DISPLAY, fontSize: 120, lineHeight: 0.9, letterSpacing: -1, marginTop: 8 }}>
+          THE CREW.
+        </div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}>
+        <BCoach num="01" name="ANDY G." role="Head Coach" tag="Ex-MLS keeper · Founder · Curriculum lead" placeholder="Coach 01" />
+        <BCoach num="07" name="MARTA V." role="Assistant" tag="Former D1 at Louisville · Ages 8–12" placeholder="Coach 02" />
+        <BCoach num="19" name="DERRICK S." role="Strength & Conditioning" tag="GK-specific mobility, power, landing" placeholder="Coach 03" />
+        <BCoach num="24" name="JAMIE O." role="Film & Analysis" tag="Cuts your week in 10 minutes flat" placeholder="Coach 04" />
+      </div>
+    </section>
+  );
+}
+
+// ────────────── TESTIMONIALS ──────────────
+function BTestimonials() {
+  const quotes = [
+    { n: '+0.4', m: 'GA/90', q: "Six months with Andy and my son stopped flinching on shots. That's not technique — that's nerve he didn't have before.", who: "Parent, U14" },
+    { n: '×3',   m: 'COMMITS', q: "I got a college offer because of the film Andy cut for me. He sees the game nobody else does.", who: "Player, 2025 commit" },
+    { n: '100%', m: 'RETURN', q: "He doesn't talk to kids like they're kids. He talks to them like keepers. My daughter left camp a different player.", who: "Parent, U16" },
+  ];
+  return (
+    <section style={{ background: B_COLORS.paper, color: B_COLORS.ink, padding: '120px 40px' }}>
+      <div style={{ marginBottom: 48 }}>
+        <div style={{ fontFamily: B_FONT_MONO, fontSize: 11, color: B_COLORS.flag, letterSpacing: 2 }}>FILE / 04 — WORD FROM THE FIELD</div>
+        <div style={{ fontFamily: B_FONT_DISPLAY, fontSize: 120, lineHeight: 0.9, letterSpacing: -1, marginTop: 8 }}>
+          THEY SAID IT.
+        </div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+        {quotes.map((t, i) => (
+          <div key={i} style={{ background: B_COLORS.ink, color: B_COLORS.cream, padding: 28, position: 'relative', display: 'flex', flexDirection: 'column', minHeight: 340 }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+              <div style={{ fontFamily: B_FONT_DISPLAY, fontSize: 64, lineHeight: 0.9, color: B_COLORS.flag }}>{t.n}</div>
+              <div style={{ fontFamily: B_FONT_MONO, fontSize: 10, color: B_COLORS.muted, letterSpacing: 1 }}>{t.m}</div>
+            </div>
+            <div style={{ fontFamily: B_FONT_BODY, fontSize: 17, lineHeight: 1.45, marginTop: 16, flex: 1 }}>"{t.q}"</div>
+            <div style={{ fontFamily: B_FONT_MONO, fontSize: 10, letterSpacing: 1.5, color: B_COLORS.flag, textTransform: 'uppercase', marginTop: 20, paddingTop: 16, borderTop: `1px solid rgba(244,237,224,0.2)` }}>
+              — {t.who}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ────────────── GALLERY ──────────────
+function BGallery() {
+  return (
+    <section style={{ background: B_COLORS.ink, color: B_COLORS.cream, padding: '120px 40px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 48 }}>
+        <div>
+          <div style={{ fontFamily: B_FONT_MONO, fontSize: 11, color: B_COLORS.flag, letterSpacing: 2 }}>FILE / 05 — THE REEL</div>
+          <div style={{ fontFamily: B_FONT_DISPLAY, fontSize: 120, lineHeight: 0.9, letterSpacing: -1, marginTop: 8 }}>
+            FOOTAGE.
+          </div>
+        </div>
+        <div style={{ fontFamily: B_FONT_MONO, fontSize: 11, color: B_COLORS.muted, letterSpacing: 1 }}>124 PHOTOS · 18 FILMS</div>
+      </div>
+      <div style={{ display: 'grid', gap: 8, gridTemplateColumns: 'repeat(4, 1fr)', gridAutoRows: 180 }}>
+        <div style={{ gridColumn: 'span 2', gridRow: 'span 2' }}><BPlaceholder label="Andy — dive save '17" ratio="1/1" bg="#001033" /></div>
+        <div><BPlaceholder label="Gloves" ratio="1/1" bg="#E8734A" /></div>
+        <div><BPlaceholder label="Net / evening" ratio="1/1" bg="#05070E" /></div>
+        <div style={{ gridColumn: 'span 1' }}><BPlaceholder label="Camp huddle" ratio="1/1" bg="#0033A0" /></div>
+        <div style={{ gridColumn: 'span 1' }}><BPlaceholder label="Young keeper" ratio="1/1" bg="#001033" /></div>
+        <div style={{ gridColumn: 'span 2', gridRow: 'span 2' }}><BPlaceholder label="Camp '25 team photo" ratio="1/1" bg="#001033" /></div>
+        <div style={{ gridColumn: 'span 2' }}><BPlaceholder label="Film session in the barn" ratio="2/1" bg="#0033A0" /></div>
+      </div>
+    </section>
+  );
+}
+
+// ────────────── BOOKING ──────────────
+function BBooking({ form, setForm }) {
+  const labelStyle = {
+    display: 'block', fontFamily: B_FONT_MONO, fontSize: 10,
+    letterSpacing: 1.5, textTransform: 'uppercase', color: B_COLORS.muted, marginBottom: 8, fontWeight: 700,
+  };
+  const inputStyle = {
+    width: '100%', padding: '14px 14px', background: 'transparent',
+    border: 'none', borderBottom: `2px solid ${B_COLORS.cream}`,
+    fontFamily: B_FONT_BODY, fontSize: 16, color: B_COLORS.cream, outline: 'none', boxSizing: 'border-box',
+  };
+  const chip = (active, children, onClick, key) => (
+    <label key={key} onClick={onClick} style={{
+      padding: '12px 16px', background: active ? B_COLORS.flag : 'transparent',
+      color: active ? B_COLORS.ink : B_COLORS.cream,
+      border: `2px solid ${active ? B_COLORS.flag : B_COLORS.cream}`,
+      fontFamily: B_FONT_MONO, fontSize: 11, letterSpacing: 1, textTransform: 'uppercase',
+      cursor: 'pointer', fontWeight: active ? 700 : 500,
+    }}>{children}</label>
+  );
+  return (
+    <section style={{ background: B_COLORS.blueDark, color: B_COLORS.cream, padding: '120px 40px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.3fr', gap: 80, alignItems: 'start' }}>
+        <div>
+          <div style={{ fontFamily: B_FONT_MONO, fontSize: 11, color: B_COLORS.flag, letterSpacing: 2 }}>FILE / 06 — BOOK IT</div>
+          <div style={{ fontFamily: B_FONT_DISPLAY, fontSize: 140, lineHeight: 0.88, letterSpacing: -2, marginTop: 8 }}>
+            GET IN<br/><span style={{ color: B_COLORS.flag }}>THE BOX.</span>
+          </div>
+          <div style={{ fontFamily: B_FONT_BODY, fontSize: 16, lineHeight: 1.55, marginTop: 32, maxWidth: 400, opacity: 0.8 }}>
+            One form. One coach reads it. You'll hear back from Andy within 24
+            hours with a session time and an invoice.
+          </div>
+          <div style={{ marginTop: 48, display: 'grid', gap: 10, fontFamily: B_FONT_MONO, fontSize: 12, letterSpacing: 0.5 }}>
+            <div>▸ andy@gruenebaum.keeper</div>
+            <div>▸ (859) 555-0117</div>
+            <div>▸ Lexington · Louisville, KY</div>
+          </div>
+        </div>
+
+        <form onSubmit={(e) => { e.preventDefault(); setForm({ ...form, submitted: true }); }}>
+          <label style={labelStyle}>Program</label>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 32 }}>
+            {['PRIVATE','CLINIC','CAMP'].map(p => chip(form.program === p, p, () => setForm({ ...form, program: p }), p))}
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28 }}>
+            <div>
+              <label style={labelStyle}>Parent</label>
+              <input style={inputStyle} placeholder="Sarah Miller" value={form.parent} onChange={e => setForm({ ...form, parent: e.target.value })} />
+            </div>
+            <div>
+              <label style={labelStyle}>Email</label>
+              <input style={inputStyle} placeholder="sarah@email.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
+            </div>
+            <div>
+              <label style={labelStyle}>Player Name</label>
+              <input style={inputStyle} placeholder="Jordan Miller" value={form.player} onChange={e => setForm({ ...form, player: e.target.value })} />
+            </div>
+            <div>
+              <label style={labelStyle}>Age</label>
+              <input style={inputStyle} placeholder="14" value={form.age} onChange={e => setForm({ ...form, age: e.target.value })} />
+            </div>
+          </div>
+
+          <div style={{ marginTop: 32 }}>
+            <label style={labelStyle}>Experience</label>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {['NEW','1-2 YRS','3-5 YRS','CLUB'].map(p => chip(form.exp === p, p, () => setForm({ ...form, exp: p }), p))}
+            </div>
+          </div>
+
+          <div style={{ marginTop: 32 }}>
+            <label style={labelStyle}>What do you want to work on?</label>
+            <textarea style={{ ...inputStyle, minHeight: 80, resize: 'vertical', borderBottom: `2px solid ${B_COLORS.cream}`, fontFamily: B_FONT_BODY }}
+              placeholder="Coming off her line on crosses, and dealing with low drives to the near post..."
+              value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} />
+          </div>
+
+          <div style={{ marginTop: 40, display: 'flex', alignItems: 'center', gap: 24 }}>
+            <button type="submit" style={{
+              background: B_COLORS.flag, color: B_COLORS.ink, border: 'none',
+              padding: '20px 36px', fontFamily: B_FONT_DISPLAY, fontSize: 20, letterSpacing: 2, cursor: 'pointer',
+            }}>SEND IT →</button>
+            {form.submitted && (
+              <div style={{ fontFamily: B_FONT_MONO, fontSize: 11, color: B_COLORS.flag, letterSpacing: 1 }}>
+                ✓ RECEIVED. ANDY REPLIES WITHIN 24H.
+              </div>
+            )}
+          </div>
+        </form>
+      </div>
+    </section>
+  );
+}
+
+// ────────────── FOOTER ──────────────
+function BFooter() {
+  return (
+    <footer style={{ background: B_COLORS.ink, color: B_COLORS.cream }}>
+      <BTicker items={['UNION 30','EST. 2022','LEXINGTON · LOUISVILLE','#1 MATTERS']} bg={B_COLORS.blue} fg={B_COLORS.cream} />
+      <div style={{
+        fontFamily: B_FONT_DISPLAY, fontSize: 260, lineHeight: 0.85,
+        letterSpacing: -3, textAlign: 'center', padding: '60px 20px 20px',
+      }}>
+        BE<br/><span style={{ color: B_COLORS.flag }}>THE WALL.</span>
+      </div>
+      <div style={{ padding: '30px 40px', borderTop: `1px solid rgba(244,237,224,0.15)`, display: 'flex', justifyContent: 'space-between', fontFamily: B_FONT_MONO, fontSize: 10, letterSpacing: 1.5, textTransform: 'uppercase', color: B_COLORS.muted }}>
+        <span>© 2026 Andy Gruenebaum</span>
+        <span>Not affiliated with UK</span>
+        <span>IG · YT · X</span>
+      </div>
+    </footer>
+  );
+}
+
+function DirectionB() {
+  const [form, setForm] = React.useState({
+    program: 'CLINIC', parent: '', email: '', player: '', age: '',
+    exp: '1-2 YRS', notes: '', submitted: false,
+  });
+  return (
+    <div style={{ background: B_COLORS.ink, fontFamily: B_FONT_BODY }}>
+      <BNav />
+      <BHero />
+      <BAbout />
+      <BPrograms />
+      <BStaff />
+      <BTestimonials />
+      <BGallery />
+      <BBooking form={form} setForm={setForm} />
+      <BFooter />
+    </div>
+  );
+}
+
+window.DirectionB = DirectionB;

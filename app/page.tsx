@@ -1,58 +1,40 @@
-'use client';
+import U30Nav from "./components/U30Nav";
+import U30Hero from "./components/U30Hero";
+import U30About from "./components/U30About";
+import U30Programs from "./components/U30Programs";
+import U30Locations from "./components/U30Locations";
+import U30HowWeTrain from "./components/U30HowWeTrain";
+import U30Staff from "./components/U30Staff";
+import U30Testimonials from "./components/U30Testimonials";
+import U30Gallery from "./components/U30Gallery";
+import U30Booking from "./components/U30Booking";
+import U30Footer from "./components/U30Footer";
+import { fetchAllPrices } from "@/app/lib/pushpress";
+import { fetchStaff, fetchPlans, fetchGallery } from "@/app/lib/firestore";
 
-import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-import Navigation from "./components/Navigation";
-import HeroSection from "./components/Hero";
-import WhyAG30Section from "./components/WhyAG30";
-import TestimonialsSection from "./components/Testimonial";
-import TrainingSection from "./components/Pricing";
-import DiagonalPricing from "./components/DiagonalPricing";
-import KCFusionSection from "./components/KCFusion";
-import TacticalEdgeSection from "./components/TacticalEdge";
-import NewsletterSection from "./components/Newsletter";
-import Footer from "./components/Footer";
-import Hero_c from "./components/Hero_c";
-import Media from "./components/Media";
-import Banner from "./components/Banner";
-import StaffShowcase from "./components/Staff";
-import ProcessSection from "./components/ProcessSteps";
-import DynamicMediaGrid from "./components/MediaGallery";
-import ServicesSection from "./components/Services";
-import PackagesPage from "./components/Packages";
-import CoachAvatars from "./components/Staff_2";
-import Hero_b from "./components/Hero_b";
-import HeroVariant1 from "./components/Hero_variant1";
-import HeroVariant2 from "./components/Hero_variant2";
-import HeroVariant3 from "./components/Hero_variant3";
-import HeroVariant4 from "./components/Hero_variant4";
-import ServicesVariant1 from "./components/Services_variant1";
-import ServicesVariant2 from "./components/Services_variant2";
-import PricingVariant3 from "./components/Pricing_variant3";
-import InfoBannerVariant3 from "./components/InfoBanner_variant3";
-import Map from "./components/Map";
-import InteractiveDiagram from "./components/InteractiveImage";
+export const revalidate = 3600;
 
-export default function Home() {
-  // State to control which pricing component to display
-  const [showDiagonalPricing, setShowDiagonalPricing] = useState(true);
-  // State to control which hero variant to display
-  const [activeHero, setActiveHero] = useState(1);
-  
-  // No longer need scroll tracking
+export default async function Home() {
+  const [prices, staff, plans, gallery] = await Promise.all([
+    fetchAllPrices(),
+    fetchStaff(),
+    fetchPlans(),
+    fetchGallery(),
+  ]);
 
   return (
-    <>
-      <Navigation />
-      
-      <HeroVariant3 />
-      <InfoBannerVariant3 />
-      <PricingVariant3 />
-      <Map />
-      <InteractiveDiagram />  
-      <TestimonialsSection />
-
-      <Footer />
-    </>
+    <div className="bg-ink font-sans">
+      <U30Nav />
+      <U30Hero />
+      <U30About />
+      <U30Programs plans={plans} prices={prices} />
+      <U30Locations />
+      <U30HowWeTrain />
+      <U30Staff staff={staff} />
+      <U30Testimonials />
+      <U30Gallery gallery={gallery} />
+      <U30Booking />
+      <U30Footer />
+    </div>
   );
 }
