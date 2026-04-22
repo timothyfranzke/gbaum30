@@ -67,7 +67,7 @@ export default function U30Programs({ plans, prices }: { plans: PlanDoc[]; price
   const sessionPacks = plans.filter(p => p.type === 'pack');
 
   return (
-    <section id="programs" className="bg-ink text-cream py-[120px] px-10">
+    <section id="programs" className="bg-ink text-cream py-16 md:py-[120px] px-10">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-8">
         <div>
           <div className="font-mono text-[11px] text-flag tracking-[2px]">THE OFFERINGS</div>

@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+import Image from 'next/image';
 import type { GalleryDoc } from '@/app/lib/types';
 import U30VideoPlayer from './U30VideoPlayer';
 import U30ImageViewer from './U30ImageViewer';
@@ -12,8 +14,28 @@ function getSpanClass(index: number): string {
 }
 
 export default function U30Gallery({ gallery }: { gallery: GalleryDoc[] }) {
+  const [viewerIndex, setViewerIndex] = useState<number | null>(null);
   const photoCount = gallery.filter(g => g.mediaType === 'image').length;
   const filmCount = gallery.filter(g => g.mediaType === 'video').length;
+
+  // Build list of image-only indices for prev/next navigation
+  const imageIndices = gallery
+    .map((item, i) => (item.mediaType === 'image' ? i : -1))
+    .filter(i => i !== -1);
+
+  const currentImagePos = viewerIndex !== null ? imageIndices.indexOf(viewerIndex) : -1;
+
+  const goNext = () => {
+    if (currentImagePos === -1) return;
+    const nextPos = (currentImagePos + 1) % imageIndices.length;
+    setViewerIndex(imageIndices[nextPos]);
+  };
+
+  const goPrev = () => {
+    if (currentImagePos === -1) return;
+    const prevPos = (currentImagePos - 1 + imageIndices.length) % imageIndices.length;
+    setViewerIndex(imageIndices[prevPos]);
+  };
 
   return (
     <section id="gallery" className="bg-ink text-cream py-[120px] px-10">
@@ -39,15 +61,42 @@ export default function U30Gallery({ gallery }: { gallery: GalleryDoc[] }) {
                 alt={item.caption || 'Video'}
               />
             ) : (
-              <U30ImageViewer
-                src={item.fileUrl}
-                alt={item.caption || ''}
-                caption={item.caption || ''}
-              />
+              <button
+                onClick={() => setViewerIndex(i)}
+                className="relative w-full h-full overflow-hidden group cursor-pointer"
+                aria-label={item.caption || 'View image'}
+              >
+                <Image
+                  src={item.fileUrl}
+                  alt={item.caption || ''}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-ink/20 group-hover:bg-ink/0 transition-colors" />
+                {item.caption && (
+                  <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="font-mono text-[10px] tracking-wider text-cream">{item.caption}</span>
+                  </div>
+                )}
+              </button>
             )}
           </div>
         ))}
       </div>
+
+      {/* Single shared image viewer — controlled mode */}
+      {viewerIndex !== null && (
+        <U30ImageViewer
+          key={viewerIndex}
+          src={gallery[viewerIndex].fileUrl}
+          alt={gallery[viewerIndex].caption || ''}
+          caption={gallery[viewerIndex].caption || ''}
+          isOpen={true}
+          onClose={() => setViewerIndex(null)}
+          onPrev={imageIndices.length > 1 ? goPrev : undefined}
+          onNext={imageIndices.length > 1 ? goNext : undefined}
+        />
+      )}
     </section>
   );
 }

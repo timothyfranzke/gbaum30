@@ -20,7 +20,7 @@ export default function U30Nav() {
   };
 
   return (
-    <nav className="flex items-center justify-between px-10 py-4 bg-cream text-ink border-b-2 border-ink sticky top-0 z-50">
+    <nav aria-label="Main navigation" className="flex items-center justify-between px-10 py-4 bg-cream text-ink border-b-2 border-ink sticky top-0 z-50">
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 bg-blue text-cream flex items-center justify-center font-display text-xl font-bold">
           U30
@@ -40,8 +40,8 @@ export default function U30Nav() {
         ))}
       </div>
       <a
-        href="#booking"
-        onClick={(e) => scrollTo(e, '#booking')}
+        href="#programs"
+        onClick={(e) => scrollTo(e, '#programs')}
         className="bg-ink text-cream border-none px-[18px] py-[10px] font-mono text-[11px] tracking-wider uppercase font-bold cursor-pointer hover:bg-flag hover:text-ink transition-colors"
       >
         Book &rarr;

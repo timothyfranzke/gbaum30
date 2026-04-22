@@ -34,7 +34,7 @@ export default function U30Booking() {
   );
 
   return (
-    <section id="booking" className="bg-blue-dark text-cream py-[120px] px-10">
+    <section id="booking" aria-label="Book a session" className="bg-blue-dark text-cream py-[120px] px-10">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-20 items-start">
         {/* Left info */}
         <div>

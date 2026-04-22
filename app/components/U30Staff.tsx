@@ -105,7 +105,7 @@ export default function U30Staff({ staff }: { staff: StaffDoc[] }) {
 
       <section id="staff" className="text-cream">
         {/* Section header */}
-        <div className="bg-blue py-[120px] px-10 pb-16">
+        <div className="bg-blue py-16 md:py-[120px] px-10 pb-16">
           <div className="font-mono text-[11px] text-flag tracking-[2px]">THE CREW</div>
           <h2 className="font-display text-[clamp(64px,9vw,120px)] leading-[0.9] tracking-tight mt-2">
             THE CREW.

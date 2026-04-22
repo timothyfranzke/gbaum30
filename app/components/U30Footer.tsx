@@ -4,7 +4,7 @@ import U30Ticker from './U30Ticker';
 
 export default function U30Footer() {
   return (
-    <footer className="bg-ink text-cream">
+    <footer aria-label="Site footer" className="bg-ink text-cream">
       <U30Ticker items={['UNION 30', 'EST. 2017', 'LEXINGTON · LOUISVILLE', '#1 MATTERS']} bg="bg-blue" fg="text-cream" />
       <div className="font-display text-[clamp(100px,18vw,260px)] leading-[0.85] tracking-tight text-center px-5 pt-[60px] pb-5">
         BE<br/><span className="text-flag">THE WALL.</span>

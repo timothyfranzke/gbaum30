@@ -97,7 +97,7 @@ function HotSpot({ area, active, onHover }: { area: TrainArea; active: boolean; 
           {area.icon && <span className="mr-1">{area.icon}</span>}
           {area.name}
         </div>
-        <div className="font-mono text-[clamp(9px,0.8vw,10px)] tracking-wider text-muted font-medium mt-0.5">
+        <div className="font-mono text-[clamp(8px,0.8vw,10px)] tracking-wider text-muted font-medium mt-0.5">
           {area.subtitle}
         </div>
       </div>
@@ -110,7 +110,7 @@ export default function U30HowWeTrain() {
   const active = TRAIN_AREAS.find(a => a.id === activeId)!;
 
   return (
-    <section id="training" className="bg-blue text-cream py-[120px] px-10 relative">
+    <section id="training" className="bg-blue text-cream py-16 md:py-[120px] px-10 relative">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-10 flex-wrap">
         <div>
@@ -126,7 +126,7 @@ export default function U30HowWeTrain() {
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12 items-stretch">
         {/* Body diagram with player image */}
-        <div className="relative bg-[#000B26] border border-cream/[0.18] min-h-[500px] lg:min-h-[680px] overflow-hidden">
+        <div className="relative bg-[#000B26] border border-cream/[0.18] min-h-[400px] sm:min-h-[500px] lg:min-h-[680px] overflow-hidden">
           {/* Grid background */}
           <svg width="100%" height="100%" className="absolute inset-0">
             <defs>

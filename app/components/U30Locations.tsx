@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import U30VideoPlayer from './U30VideoPlayer';
 
 interface Location {
   id: string;
@@ -9,7 +10,7 @@ interface Location {
   state: string;
   pos: { x: number; y: number };
   tags: string[];
-  link?: string;
+  videoUrl?: string;
 }
 
 const LOCATIONS: Location[] = [
@@ -52,11 +53,11 @@ const LOCATIONS: Location[] = [
     id: '08', name: 'PHOENIX', city: 'Phoenix', state: 'AZ',
     pos: { x: 22, y: 62 },
     tags: ['Mentorship', 'Zoom'],
-    link: '#',
+    videoUrl: '/phoenix-facility.mp4',
   },
 ];
 
-function USMap({ activeId, setActive }: { activeId: string; setActive: (id: string) => void }) {
+function USMap({ onPhoenixClick }: { onPhoenixClick: () => void }) {
   const [states, setStates] = useState<{ d: string; id: string; title: string }[]>([]);
 
   useEffect(() => {
@@ -70,7 +71,7 @@ function USMap({ activeId, setActive }: { activeId: string; setActive: (id: stri
   const locationStateIds = LOCATIONS.map(l => `US-${l.state}`);
 
   return (
-    <div className="relative bg-[#000B26] aspect-[16/10] overflow-hidden border border-cream/[0.18]">
+    <div className="relative bg-[#001540] aspect-[4/3] md:aspect-[16/10] overflow-hidden border border-cream/[0.18]">
       {/* Grid pattern */}
       <svg width="100%" height="100%" className="absolute inset-0">
         <defs>
@@ -95,7 +96,7 @@ function USMap({ activeId, setActive }: { activeId: string; setActive: (id: stri
               <path
                 key={state.id}
                 d={state.d}
-                fill={isActive ? 'rgba(0,51,160,0.4)' : 'rgba(0,51,160,0.15)'}
+                fill={isActive ? 'rgba(0,51,160,0.6)' : 'rgba(0,51,160,0.3)'}
                 stroke={isActive ? 'rgba(0,51,160,0.8)' : 'rgba(0,51,160,0.35)'}
                 strokeWidth="0.8"
               />
@@ -105,31 +106,42 @@ function USMap({ activeId, setActive }: { activeId: string; setActive: (id: stri
 
       {/* Location pins */}
       {LOCATIONS.map(loc => {
-        const active = loc.id === activeId;
-        return (
+        const isPhoenix = loc.id === '08';
+        return isPhoenix ? (
           <button
             key={loc.id}
-            onClick={() => setActive(loc.id)}
+            onClick={onPhoenixClick}
             className="absolute group"
             style={{ left: `${loc.pos.x}%`, top: `${loc.pos.y}%`, transform: 'translate(-50%, -100%)' }}
           >
             <div className="flex gap-1.5 items-center mb-1">
-              <div className={`font-mono text-[9px] tracking-[1.5px] font-bold px-1.5 py-0.5 whitespace-nowrap border transition-all ${
-                active
-                  ? 'bg-flag text-ink border-flag'
-                  : 'bg-ink/80 text-cream border-cream/[0.18] group-hover:border-flag'
-              }`}>
+              <div className="font-mono text-[9px] tracking-[1.5px] font-bold px-1.5 py-0.5 whitespace-nowrap border transition-all bg-flag text-ink border-flag">
                 {loc.city}, {loc.state}
               </div>
             </div>
             <div className="flex justify-center">
-              <div className={`w-7 h-7 flex items-center justify-center font-display text-sm rotate-45 border-2 border-cream transition-all ${
-                active ? 'bg-flag text-ink shadow-[0_0_0_6px_rgba(232,115,74,0.25)]' : 'bg-blue text-cream'
-              }`}>
+              <div className="w-7 h-7 flex items-center justify-center font-display text-sm rotate-45 border-2 border-cream transition-all bg-flag text-ink shadow-[0_0_0_6px_rgba(232,115,74,0.25)]">
                 <span className="-rotate-45 text-[10px] font-bold">{loc.id}</span>
               </div>
             </div>
           </button>
+        ) : (
+          <div
+            key={loc.id}
+            className="absolute"
+            style={{ left: `${loc.pos.x}%`, top: `${loc.pos.y}%`, transform: 'translate(-50%, -100%)' }}
+          >
+            <div className="flex gap-1.5 items-center mb-1">
+              <div className="font-mono text-[9px] tracking-[1.5px] font-bold px-1.5 py-0.5 whitespace-nowrap border bg-ink/80 text-cream border-cream/[0.18]">
+                {loc.city}, {loc.state}
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <div className="w-7 h-7 flex items-center justify-center font-display text-sm rotate-45 border-2 border-cream bg-blue text-cream">
+                <span className="-rotate-45 text-[10px] font-bold">{loc.id}</span>
+              </div>
+            </div>
+          </div>
         );
       })}
 
@@ -151,43 +163,8 @@ function USMap({ activeId, setActive }: { activeId: string; setActive: (id: stri
   );
 }
 
-function LocationCard({ loc, active, onSelect }: { loc: Location; active: boolean; onSelect: () => void }) {
-  return (
-    <button
-      onClick={onSelect}
-      className={`text-left w-full p-4 border cursor-pointer transition-all ${
-        active
-          ? 'bg-flag text-ink border-flag'
-          : 'bg-transparent text-cream border-cream/[0.18] hover:border-flag/50'
-      }`}
-    >
-      <div className="flex justify-between items-baseline">
-        <div className="flex items-baseline gap-2">
-          <span className={`font-display text-2xl leading-none ${active ? 'text-ink' : 'text-flag'}`}>{loc.id}</span>
-          <span className="font-display text-lg leading-none tracking-[0.5px]">{loc.name}</span>
-        </div>
-      </div>
-      <div className="font-mono text-[11px] tracking-wider mt-1 opacity-80">
-        {loc.city}, {loc.state}
-      </div>
-      <div className="mt-2 flex gap-1.5 flex-wrap">
-        {loc.tags.map(t => (
-          <span key={t} className={`px-[6px] py-[2px] border font-mono text-[9px] tracking-wider uppercase font-semibold ${
-            active ? 'border-ink' : 'border-cream'
-          }`}>{t}</span>
-        ))}
-      </div>
-      {loc.link && (
-        <div className={`font-mono text-[10px] tracking-wider mt-2 font-bold ${active ? 'text-ink' : 'text-flag'}`}>
-          &#9656; VIEW MENTORSHIP EXAMPLE
-        </div>
-      )}
-    </button>
-  );
-}
-
 export default function U30Locations() {
-  const [activeId, setActiveId] = useState('01');
+  const [showVideo, setShowVideo] = useState(false);
 
   return (
     <section id="locations" className="bg-ink text-cream py-[120px] px-10">
@@ -204,23 +181,11 @@ export default function U30Locations() {
         </div>
       </div>
 
-      {/* Map + Cards grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-6 items-stretch">
-        <USMap activeId={activeId} setActive={setActiveId} />
-        <div className="grid grid-cols-2 gap-3 content-start">
-          {LOCATIONS.map(loc => (
-            <LocationCard
-              key={loc.id}
-              loc={loc}
-              active={loc.id === activeId}
-              onSelect={() => setActiveId(loc.id)}
-            />
-          ))}
-        </div>
-      </div>
+      {/* Full-width map */}
+      <USMap onPhoenixClick={() => setShowVideo(true)} />
 
       {/* Bottom status bar */}
-      <div className="mt-8 bg-[#000B26] border border-cream/[0.18] px-7 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="mt-8 bg-[#001540] border border-cream/[0.18] px-7 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="font-mono text-[10px] tracking-[1.5px] text-flag font-bold">
           &#9679; 8 LOCATIONS AND GROWING
         </div>
@@ -231,6 +196,29 @@ export default function U30Locations() {
           Get Started &rarr;
         </a>
       </div>
+
+      {/* Phoenix video player modal */}
+      {showVideo && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-ink/90 backdrop-blur-sm"
+          onClick={() => setShowVideo(false)}
+        >
+          <div className="relative w-full max-w-4xl mx-4 aspect-video" onClick={e => e.stopPropagation()}>
+            <button
+              onClick={() => setShowVideo(false)}
+              className="absolute -top-10 right-0 font-mono text-flag text-sm tracking-[1.5px] font-bold hover:text-cream transition-colors cursor-pointer z-10"
+              aria-label="Close video"
+            >
+              &#10005; CLOSE
+            </button>
+            <U30VideoPlayer
+              thumbnail="/phoenix-facility.jpg"
+              video="/phoenix-facility.mp4"
+              alt="Phoenix facility tour"
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }

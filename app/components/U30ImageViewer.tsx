@@ -9,32 +9,49 @@ interface U30ImageViewerProps {
   src: string;
   alt?: string;
   caption?: string;
+  /** Controlled mode: when true, modal is shown immediately (no thumbnail rendered) */
+  isOpen?: boolean;
+  /** Controlled mode: called when user closes the modal */
+  onClose?: () => void;
+  onPrev?: () => void;
+  onNext?: () => void;
 }
 
-export default function U30ImageViewer({ src, alt = '', caption }: U30ImageViewerProps) {
-  const [state, setState] = useState<ModalState>('closed');
+export default function U30ImageViewer({ src, alt = '', caption, isOpen: controlledOpen, onClose, onPrev, onNext }: U30ImageViewerProps) {
+  const isControlled = controlledOpen !== undefined;
+  const [internalState, setInternalState] = useState<ModalState>('closed');
   const modalRef = useRef<HTMLDivElement>(null);
+  const touchRef = useRef<number | null>(null);
+
+  // In controlled mode, derive state from prop
+  const state: ModalState = isControlled ? (controlledOpen ? 'open' : 'closed') : internalState;
 
   const open = useCallback(() => {
-    setState('loading');
-    // Small delay to let corners animate, then reveal
-    setTimeout(() => setState('open'), 100);
-  }, []);
+    if (isControlled) return;
+    setInternalState('loading');
+    setTimeout(() => setInternalState('open'), 100);
+  }, [isControlled]);
 
   const close = useCallback(() => {
-    setState('closing');
-    setTimeout(() => setState('closed'), 500);
-  }, []);
+    if (isControlled) {
+      onClose?.();
+      return;
+    }
+    setInternalState('closing');
+    setTimeout(() => setInternalState('closed'), 500);
+  }, [isControlled, onClose]);
 
-  // Escape key
+  // Escape key + arrow keys
   useEffect(() => {
     if (state === 'closed') return;
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft' && onPrev) { e.preventDefault(); onPrev(); }
+      if (e.key === 'ArrowRight' && onNext) { e.preventDefault(); onNext(); }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [state, close]);
+  }, [state, close, onPrev, onNext]);
 
   // Lock body scroll
   useEffect(() => {
@@ -59,25 +76,27 @@ export default function U30ImageViewer({ src, alt = '', caption }: U30ImageViewe
 
   return (
     <>
-      {/* Thumbnail */}
-      <button
-        onClick={open}
-        className="relative w-full h-full overflow-hidden group cursor-pointer"
-        aria-label={alt || 'View image'}
-      >
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-ink/20 group-hover:bg-ink/0 transition-colors" />
-        {caption && (
-          <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-            <span className="font-mono text-[10px] tracking-wider text-cream">{caption}</span>
-          </div>
-        )}
-      </button>
+      {/* Thumbnail — only render in standalone (uncontrolled) mode */}
+      {!isControlled && (
+        <button
+          onClick={open}
+          className="relative w-full h-full overflow-hidden group cursor-pointer"
+          aria-label={alt || 'View image'}
+        >
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-ink/20 group-hover:bg-ink/0 transition-colors" />
+          {caption && (
+            <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="font-mono text-[10px] tracking-wider text-cream">{caption}</span>
+            </div>
+          )}
+        </button>
+      )}
 
       {/* Modal */}
       {isOpen && (
@@ -87,6 +106,18 @@ export default function U30ImageViewer({ src, alt = '', caption }: U30ImageViewe
           className="fixed inset-0 z-50 outline-none"
           role="dialog"
           aria-modal="true"
+          onTouchStart={(e) => {
+            touchRef.current = e.touches[0].clientX;
+          }}
+          onTouchEnd={(e) => {
+            if (touchRef.current === null) return;
+            const deltaX = e.changedTouches[0].clientX - touchRef.current;
+            touchRef.current = null;
+            if (Math.abs(deltaX) > 50) {
+              if (deltaX < 0 && onNext) onNext();
+              else if (deltaX > 0 && onPrev) onPrev();
+            }
+          }}
         >
           {/* Backdrop */}
           <div
@@ -104,6 +135,30 @@ export default function U30ImageViewer({ src, alt = '', caption }: U30ImageViewe
           >
             &#10005; CLOSE
           </button>
+
+          {/* Prev/Next arrows */}
+          {onPrev && (
+            <button
+              onClick={onPrev}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center text-cream/60 hover:text-flag transition-colors cursor-pointer"
+              aria-label="Previous image"
+            >
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+          )}
+          {onNext && (
+            <button
+              onClick={onNext}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center text-cream/60 hover:text-flag transition-colors cursor-pointer"
+              aria-label="Next image"
+            >
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          )}
 
           {/* Corner marks */}
           <div className="absolute inset-0 pointer-events-none">

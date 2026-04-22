@@ -6,14 +6,14 @@ import U30Ticker from './U30Ticker';
 export default function U30Hero() {
   return (
     <section className="relative bg-ink text-cream">
-      <div className="relative h-[760px] overflow-hidden">
+      <div className="relative h-[85vh] md:h-[760px] overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0">
           <Image
             src="/AGDC_bg.png"
             alt="Goalkeeper diving save"
             fill
-            className="object-contain object-right lg:object-right object-center"
+            className="object-cover object-right lg:object-right object-center"
             priority
           />
         </div>
@@ -34,7 +34,7 @@ export default function U30Hero() {
         </div>
 
         {/* Main headline */}
-        <div className="absolute inset-0 flex flex-col justify-end px-10 pb-[180px]">
+        <div className="absolute inset-0 flex flex-col justify-end px-10 pb-[140px] md:pb-[180px]">
           <h1 className="font-display text-[clamp(80px,10vw,140px)] leading-[0.85] tracking-tight text-cream">
             COMPLETE<br/>GOALKEEPER<br/>
             <span className="text-flag">DEVELOPMENT.</span>

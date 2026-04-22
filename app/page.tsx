@@ -25,15 +25,17 @@ export default async function Home() {
   return (
     <div className="bg-ink font-sans">
       <U30Nav />
-      <U30Hero />
-      <U30About />
-      <U30Programs plans={plans} prices={prices} />
-      <U30Locations />
-      <U30HowWeTrain />
-      <U30Staff staff={staff} />
-      <U30Testimonials />
-      <U30Gallery gallery={gallery} />
-      <U30Booking />
+      <main>
+        <U30Hero />
+        <U30About />
+        <U30Programs plans={plans} prices={prices} />
+        <U30Locations />
+        <U30HowWeTrain />
+        <U30Staff staff={staff} />
+        <U30Testimonials />
+        <U30Gallery gallery={gallery} />
+        <U30Booking />
+      </main>
       <U30Footer />
     </div>
   );

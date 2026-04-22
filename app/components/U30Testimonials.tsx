@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 const quotes = [
   {
@@ -32,6 +32,7 @@ const quotes = [
 export default function U30Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const touchRef = useRef<number | null>(null);
 
   const goTo = useCallback((index: number) => {
     if (isAnimating || index === currentIndex) return;
@@ -72,10 +73,10 @@ export default function U30Testimonials() {
 
       {/* Carousel */}
       <div className="relative max-w-4xl mx-auto">
-        {/* Prev / Next arrows — desktop */}
+        {/* Prev / Next arrows — desktop only */}
         <button
           onClick={goPrev}
-          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 hidden md:flex items-center justify-center w-12 h-12 text-ink/40 hover:text-flag transition-colors cursor-pointer"
+          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 hidden md:flex items-center justify-center w-12 h-12 text-ink/60 hover:text-flag transition-colors cursor-pointer"
           aria-label="Previous testimonial"
         >
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,7 +85,7 @@ export default function U30Testimonials() {
         </button>
         <button
           onClick={goNext}
-          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 hidden md:flex items-center justify-center w-12 h-12 text-ink/40 hover:text-flag transition-colors cursor-pointer"
+          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 hidden md:flex items-center justify-center w-12 h-12 text-ink/60 hover:text-flag transition-colors cursor-pointer"
           aria-label="Next testimonial"
         >
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,24 +93,24 @@ export default function U30Testimonials() {
           </svg>
         </button>
 
-        {/* Mobile arrows */}
-        <div className="flex justify-between mb-6 md:hidden">
-          <button onClick={goPrev} className="p-2 text-ink/40 hover:text-flag transition-colors cursor-pointer" aria-label="Previous">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button onClick={goNext} className="p-2 text-ink/40 hover:text-flag transition-colors cursor-pointer" aria-label="Next">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Testimonial card — fade/scale animation */}
-        <div className={`bg-ink text-cream p-10 md:p-14 transition-all duration-400 ${
-          isAnimating ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-        }`}>
+        {/* Testimonial card — fade/scale animation + swipe */}
+        <div
+          className={`bg-ink text-cream p-10 md:p-14 transition-all duration-400 ${
+            isAnimating ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+          }`}
+          onTouchStart={(e) => {
+            touchRef.current = e.touches[0].clientX;
+          }}
+          onTouchEnd={(e) => {
+            if (touchRef.current === null) return;
+            const deltaX = e.changedTouches[0].clientX - touchRef.current;
+            touchRef.current = null;
+            if (Math.abs(deltaX) > 50) {
+              if (deltaX < 0) goNext();
+              else goPrev();
+            }
+          }}
+        >
           {/* Stat badge */}
           <div className="flex items-baseline gap-3 mb-8">
             <div className="font-display text-[72px] md:text-[96px] leading-[0.85] text-flag">{t.n}</div>
