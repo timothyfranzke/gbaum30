@@ -67,11 +67,10 @@ function USMap({ onPhoenixClick }: { onPhoenixClick: () => void }) {
       .catch(() => {});
   }, []);
 
-  // State IDs where locations exist
   const locationStateIds = LOCATIONS.map(l => `US-${l.state}`);
 
   return (
-    <div className="relative bg-[#001540] aspect-[4/3] md:aspect-[16/10] overflow-hidden border border-cream/[0.18]">
+    <div className="relative bg-[#001540] aspect-[16/10] overflow-hidden border border-cream/[0.18]">
       {/* Grid pattern */}
       <svg width="100%" height="100%" className="absolute inset-0">
         <defs>
@@ -163,6 +162,45 @@ function USMap({ onPhoenixClick }: { onPhoenixClick: () => void }) {
   );
 }
 
+function LocationCard({ loc, onVideoClick }: { loc: Location; onVideoClick?: () => void }) {
+  const isPhoenix = !!loc.videoUrl;
+  return (
+    <div
+      className={`text-left w-full p-4 border transition-all ${
+        isPhoenix
+          ? 'bg-flag text-ink border-flag cursor-pointer hover:bg-cream'
+          : 'bg-transparent text-cream border-cream/[0.18]'
+      }`}
+      onClick={isPhoenix ? onVideoClick : undefined}
+      role={isPhoenix ? 'button' : undefined}
+      tabIndex={isPhoenix ? 0 : undefined}
+      onKeyDown={isPhoenix ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onVideoClick?.(); } } : undefined}
+    >
+      <div className="flex justify-between items-baseline">
+        <div className="flex items-baseline gap-2">
+          <span className={`font-display text-2xl leading-none ${isPhoenix ? 'text-ink' : 'text-flag'}`}>{loc.id}</span>
+          <span className="font-display text-lg leading-none tracking-[0.5px]">{loc.name}</span>
+        </div>
+      </div>
+      <div className="font-mono text-[11px] tracking-wider mt-1 opacity-80">
+        {loc.city}, {loc.state}
+      </div>
+      <div className="mt-2 flex gap-1.5 flex-wrap">
+        {loc.tags.map(t => (
+          <span key={t} className={`px-[6px] py-[2px] border font-mono text-[9px] tracking-wider uppercase font-semibold ${
+            isPhoenix ? 'border-ink' : 'border-cream'
+          }`}>{t}</span>
+        ))}
+      </div>
+      {isPhoenix && (
+        <div className="font-mono text-[10px] tracking-wider mt-2 font-bold text-ink">
+          &#9654; WATCH FACILITY TOUR
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function U30Locations() {
   const [showVideo, setShowVideo] = useState(false);
 
@@ -181,8 +219,21 @@ export default function U30Locations() {
         </div>
       </div>
 
-      {/* Full-width map */}
-      <USMap onPhoenixClick={() => setShowVideo(true)} />
+      {/* Desktop: full-width map */}
+      <div className="hidden md:block">
+        <USMap onPhoenixClick={() => setShowVideo(true)} />
+      </div>
+
+      {/* Mobile: location cards */}
+      <div className="grid grid-cols-2 gap-3 md:hidden">
+        {LOCATIONS.map(loc => (
+          <LocationCard
+            key={loc.id}
+            loc={loc}
+            onVideoClick={loc.videoUrl ? () => setShowVideo(true) : undefined}
+          />
+        ))}
+      </div>
 
       {/* Bottom status bar */}
       <div className="mt-8 bg-[#001540] border border-cream/[0.18] px-7 py-5 flex flex-col md:flex-row justify-between items-center gap-4">

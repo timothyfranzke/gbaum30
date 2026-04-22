@@ -27,8 +27,8 @@ const TRAIN_AREAS: TrainArea[] = [
   {
     id: 'belly', num: '02', name: 'BELLY',
     subtitle: 'Competitive Fire',
-    pos: { x: 48, y: 48 },
-    labelPos: { x: 14, y: 48 },
+    pos: { x: 46, y: 38 },
+    labelPos: { x: 14, y: 38 },
     desc: 'That fire in the belly — the competitive drive that makes you want to win every rep, every drill, every session. We cultivate an environment where competitiveness is the standard.',
     attributes: ['Competitiveness', 'Drive', 'Intensity'],
     icon: '\uD83D\uDD25',
@@ -36,8 +36,8 @@ const TRAIN_AREAS: TrainArea[] = [
   {
     id: 'hands', num: '03', name: 'HANDS',
     subtitle: 'Technical Handling',
-    pos: { x: 54, y: 35 },
-    labelPos: { x: 82, y: 35 },
+    pos: { x: 59, y: 38 },
+    labelPos: { x: 82, y: 38 },
     desc: 'Mastering hand positioning, grip strength, and shot selection. Knowing when to catch, when to parry, and when to tip — and executing it clean under pressure.',
     attributes: ['Technical Handling', 'Save Selection'],
   },
@@ -124,9 +124,9 @@ export default function U30HowWeTrain() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12 items-stretch">
+      <div className="grid grid-cols-1 xl:grid-cols-[1fr_380px] gap-12 items-stretch">
         {/* Body diagram with player image */}
-        <div className="relative bg-[#000B26] border border-cream/[0.18] min-h-[400px] sm:min-h-[500px] lg:min-h-[680px] overflow-hidden">
+        <div className="relative bg-[#000B26] border border-cream/[0.18] aspect-[3/4] xl:aspect-auto xl:min-h-[680px] overflow-hidden">
           {/* Grid background */}
           <svg width="100%" height="100%" className="absolute inset-0">
             <defs>
@@ -139,23 +139,26 @@ export default function U30HowWeTrain() {
             <line x1="0" y1="50%" x2="100%" y2="50%" stroke="rgba(232,115,74,0.15)" strokeWidth="1" strokeDasharray="4 6" />
           </svg>
 
-          {/* Player image */}
-          <div className="absolute inset-0 lg:inset-[5%]">
-            <Image
-              src="/player.png"
-              alt="Goalkeeper stance"
-              fill
-              className="object-contain"
-            />
+          {/* Player + hotspots wrapper — inset so both share the same coordinate space */}
+          <div className="absolute inset-[5%]">
+            {/* Player image */}
+            <div className="absolute inset-0">
+              <Image
+                src="/player.png"
+                alt="Goalkeeper stance"
+                fill
+                className="object-cover xl:object-contain"
+              />
+            </div>
+
+            {/* Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-[radial-gradient(ellipse_at_center,rgba(0,51,160,0.4)_0%,rgba(0,31,102,0.3)_30%,transparent_70%)] blur-[20px]" />
+
+            {/* Hotspots */}
+            {TRAIN_AREAS.map(a => (
+              <HotSpot key={a.id} area={a} active={a.id === activeId} onHover={setActiveId} />
+            ))}
           </div>
-
-          {/* Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-[radial-gradient(ellipse_at_center,rgba(0,51,160,0.4)_0%,rgba(0,31,102,0.3)_30%,transparent_70%)] blur-[20px]" />
-
-          {/* Hotspots */}
-          {TRAIN_AREAS.map(a => (
-            <HotSpot key={a.id} area={a} active={a.id === activeId} onHover={setActiveId} />
-          ))}
 
           {/* HUD text */}
           <div className="absolute top-4 left-6 font-mono text-[10px] tracking-[1.5px] text-flag font-bold flex gap-3.5">

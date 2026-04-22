@@ -2,8 +2,48 @@
 
 import Image from 'next/image';
 import U30VideoPlayer from './U30VideoPlayer';
+import type { GalleryDoc } from '@/app/lib/types';
 
-export default function U30About() {
+interface AboutMedia {
+  main: GalleryDoc | null;
+  left: GalleryDoc | null;
+  right: GalleryDoc | null;
+}
+
+// Fallback hardcoded media when no gallery items are tagged
+const FALLBACK: AboutMedia = {
+  main: { id: 'fb-main', fileUrl: '/Andy+Gruenebaum+Newcastle+United+v+Columbus+ysekvkZy-USl.jpg', caption: '', mediaType: 'video', sortOrder: 0, visible: true },
+  left: { id: 'fb-left', fileUrl: '/hands_up.jpg', caption: 'MLS career', mediaType: 'image', sortOrder: 0, visible: true },
+  right: { id: 'fb-right', fileUrl: '/goalkeeper.jpeg', caption: '', mediaType: 'video', sortOrder: 0, visible: true },
+};
+
+function MediaSlot({ item, fallbackVideo }: { item: GalleryDoc; fallbackVideo?: string }) {
+  if (item.mediaType === 'video') {
+    return (
+      <U30VideoPlayer
+        thumbnail={item.fileUrl}
+        video={fallbackVideo || item.fileUrl}
+        alt={item.caption || 'Video'}
+      />
+    );
+  }
+  return (
+    <Image
+      src={item.fileUrl}
+      alt={item.caption || ''}
+      fill
+      className="object-cover"
+    />
+  );
+}
+
+export default function U30About({ aboutMedia }: { aboutMedia?: AboutMedia }) {
+  const media = {
+    main: aboutMedia?.main || FALLBACK.main!,
+    left: aboutMedia?.left || FALLBACK.left!,
+    right: aboutMedia?.right || FALLBACK.right!,
+  };
+
   const career = [
     ['2004–09', 'COLUMBUS CREW'],
     ['2010–12', 'CHIVAS USA'],
@@ -19,27 +59,14 @@ export default function U30About() {
         {/* Image column */}
         <div className="flex flex-col">
           <div className="relative flex-1 min-h-[300px] bg-[#001033] overflow-hidden">
-            <U30VideoPlayer
-              thumbnail="/Andy+Gruenebaum+Newcastle+United+v+Columbus+ysekvkZy-USl.jpg"
-              video="/bg.mp4"
-              alt="Andy Gruenebaum highlights"
-            />
+            <MediaSlot item={media.main} fallbackVideo="/bg.mp4" />
           </div>
           <div className="grid grid-cols-2 gap-2 mt-2">
             <div className="relative aspect-square bg-blue overflow-hidden">
-              <Image
-                src="/hands_up.jpg"
-                alt="MLS career"
-                fill
-                className="object-cover"
-              />
+              <MediaSlot item={media.left} />
             </div>
             <div className="relative aspect-square bg-ink overflow-hidden">
-              <U30VideoPlayer
-                thumbnail="/goalkeeper.jpeg"
-                video="/bg.mp4"
-                alt="Watch film session"
-              />
+              <MediaSlot item={media.right} fallbackVideo="/bg.mp4" />
             </div>
           </div>
         </div>

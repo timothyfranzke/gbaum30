@@ -26,6 +26,8 @@ export interface PlanDoc {
   sortOrder: number;
 }
 
+export type AboutSlot = 'main' | 'left' | 'right';
+
 export interface GalleryDoc {
   id: string;
   fileUrl: string;
@@ -33,4 +35,5 @@ export interface GalleryDoc {
   mediaType: 'image' | 'video';
   sortOrder: number;
   visible: boolean;
+  aboutSlot?: AboutSlot | null;
 }

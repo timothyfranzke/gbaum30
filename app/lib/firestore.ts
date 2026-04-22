@@ -2,7 +2,7 @@ import { FALLBACK_STAFF } from '@/app/config/staff';
 import { PLANS } from '@/app/config/plans';
 import { FALLBACK_GALLERY } from '@/app/config/gallery';
 import { adminDb } from './firebase-admin';
-import type { StaffDoc, PlanDoc, GalleryDoc } from './types';
+import type { StaffDoc, PlanDoc, GalleryDoc, AboutSlot } from './types';
 
 export async function fetchStaff(): Promise<StaffDoc[]> {
   try {
@@ -41,6 +41,23 @@ export async function fetchGallery(): Promise<GalleryDoc[]> {
     console.warn('Failed to fetch gallery from Firestore, using fallback:', e);
     return FALLBACK_GALLERY;
   }
+}
+
+export async function fetchAboutMedia(): Promise<Record<AboutSlot, GalleryDoc | null>> {
+  const result: Record<AboutSlot, GalleryDoc | null> = { main: null, left: null, right: null };
+  try {
+    const db = adminDb;
+    const snapshot = await db.collection('gallery')
+      .where('aboutSlot', 'in', ['main', 'left', 'right'])
+      .get();
+    for (const doc of snapshot.docs) {
+      const item = { id: doc.id, ...doc.data() } as GalleryDoc;
+      if (item.aboutSlot) result[item.aboutSlot] = item;
+    }
+  } catch (e) {
+    console.warn('Failed to fetch about media:', e);
+  }
+  return result;
 }
 
 function fallbackPlans(): PlanDoc[] {

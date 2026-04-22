@@ -13,7 +13,7 @@ export default function U30Hero() {
             src="/AGDC_bg.png"
             alt="Goalkeeper diving save"
             fill
-            className="object-cover object-right lg:object-right object-center"
+            className="object-cover object-center lg:object-right"
             priority
           />
         </div>
