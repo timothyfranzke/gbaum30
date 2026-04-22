@@ -13,8 +13,19 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Union 30 — Gruenebaum Keeper Collective",
+  title: "Union 30 — Complete Goalkeeper Development",
   description: "Goalkeeping is a craft. Andy Gruenebaum spent 19 years in the MLS perfecting it. Now he's teaching it.",
+  openGraph: {
+    title: "Union 30 — Complete Goalkeeper Development",
+    description: "Built on community. Sharpened by competition. Grown through reps, mistakes, and shared passion.",
+    type: "website",
+    siteName: "Union 30",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Union 30 — Complete Goalkeeper Development",
+    description: "Built on community. Sharpened by competition. Grown through reps, mistakes, and shared passion.",
+  },
 };
 
 export default function RootLayout({
@@ -26,15 +37,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-        <meta name="og:title" content="Union 30" />
-        <meta name="og:description" content="Union 30 Goalkeeper Union" />
-        <meta name="og:type" content="website" />
-        <meta name="og:url" content="https://gbaum30--gbaum30-41996.us-central1.hosted.app/" />
-        <meta name="og:image" content="https://gbaum30--gbaum30-41996.us-central1.hosted.app/og_logo.png" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Union 30" />
-        <meta name="twitter:description" content="Union 30 Goalkeeper Union" />
-        <meta name="twitter:image" content="https://gbaum30--gbaum30-41996.us-central1.hosted.app/og_logo.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
