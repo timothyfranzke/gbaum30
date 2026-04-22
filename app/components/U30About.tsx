@@ -15,15 +15,14 @@ export default function U30About() {
 
   return (
     <section id="about" className="bg-paper text-ink py-[120px] px-10">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch">
         {/* Image column */}
-        <div>
-          <div className="relative aspect-[4/5] bg-[#001033] overflow-hidden">
-            <Image
-              src="/Andy+Gruenebaum+Newcastle+United+v+Columbus+ysekvkZy-USl.jpg"
-              alt="Andy Gruenebaum in kit"
-              fill
-              className="object-cover grayscale"
+        <div className="flex flex-col">
+          <div className="relative flex-1 min-h-[300px] bg-[#001033] overflow-hidden">
+            <U30VideoPlayer
+              thumbnail="/Andy+Gruenebaum+Newcastle+United+v+Columbus+ysekvkZy-USl.jpg"
+              video="/bg.mp4"
+              alt="Andy Gruenebaum highlights"
             />
           </div>
           <div className="grid grid-cols-2 gap-2 mt-2">

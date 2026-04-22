@@ -3,47 +3,28 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 
-function isVideoUrl(url: string): boolean {
-  return /\.(mp4|webm|ogg|mov)(\?|$)/i.test(url);
-}
+type ModalState = 'closed' | 'loading' | 'open' | 'closing';
 
-type ModalState = 'closed' | 'loading' | 'playing' | 'closing';
-
-interface U30VideoPlayerProps {
-  thumbnail: string;
-  video: string;
+interface U30ImageViewerProps {
+  src: string;
   alt?: string;
-  poster?: string;
+  caption?: string;
 }
 
-export default function U30VideoPlayer({ thumbnail, video, alt = 'Play video', poster }: U30VideoPlayerProps) {
+export default function U30ImageViewer({ src, alt = '', caption }: U30ImageViewerProps) {
   const [state, setState] = useState<ModalState>('closed');
-  const videoRef = useRef<HTMLVideoElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
 
   const open = useCallback(() => {
     setState('loading');
+    // Small delay to let corners animate, then reveal
+    setTimeout(() => setState('open'), 100);
   }, []);
 
   const close = useCallback(() => {
     setState('closing');
-    if (videoRef.current) {
-      videoRef.current.pause();
-    }
-    setTimeout(() => {
-      setState('closed');
-      if (videoRef.current) {
-        videoRef.current.currentTime = 0;
-      }
-    }, 500);
+    setTimeout(() => setState('closed'), 500);
   }, []);
-
-  const onCanPlay = useCallback(() => {
-    if (state === 'loading') {
-      setState('playing');
-      videoRef.current?.play();
-    }
-  }, [state]);
 
   // Escape key
   useEffect(() => {
@@ -55,7 +36,7 @@ export default function U30VideoPlayer({ thumbnail, video, alt = 'Play video', p
     return () => window.removeEventListener('keydown', handler);
   }, [state, close]);
 
-  // Lock body scroll when open
+  // Lock body scroll
   useEffect(() => {
     if (state !== 'closed') {
       document.body.style.overflow = 'hidden';
@@ -65,48 +46,37 @@ export default function U30VideoPlayer({ thumbnail, video, alt = 'Play video', p
     return () => { document.body.style.overflow = ''; };
   }, [state]);
 
-  // Focus trap
+  // Focus
   useEffect(() => {
-    if (state === 'loading' || state === 'playing') {
+    if (state === 'loading' || state === 'open') {
       modalRef.current?.focus();
     }
   }, [state]);
 
   const isOpen = state !== 'closed';
-  const isFramed = state === 'playing';
+  const isFramed = state === 'open';
   const isClosing = state === 'closing';
 
   return (
     <>
-      {/* Thumbnail with play button */}
+      {/* Thumbnail */}
       <button
         onClick={open}
         className="relative w-full h-full overflow-hidden group cursor-pointer"
-        aria-label={alt}
+        aria-label={alt || 'View image'}
       >
-        {isVideoUrl(thumbnail) ? (
-          <video
-            src={thumbnail}
-            muted
-            loop
-            playsInline
-            autoPlay
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        ) : (
-          <Image
-            src={thumbnail}
-            alt={alt}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        )}
-        <div className="absolute inset-0 bg-ink/30 group-hover:bg-ink/10 transition-colors" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-16 h-16 rotate-45 border-2 border-flag bg-ink/60 flex items-center justify-center group-hover:bg-flag/20 transition-colors">
-            <span className="-rotate-45 text-flag text-2xl ml-1">&#9654;</span>
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-ink/20 group-hover:bg-ink/0 transition-colors" />
+        {caption && (
+          <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+            <span className="font-mono text-[10px] tracking-wider text-cream">{caption}</span>
           </div>
-        </div>
+        )}
       </button>
 
       {/* Modal */}
@@ -130,14 +100,13 @@ export default function U30VideoPlayer({ thumbnail, video, alt = 'Play video', p
           <button
             onClick={close}
             className="absolute top-6 right-6 z-10 font-mono text-flag text-sm tracking-[1.5px] font-bold hover:text-cream transition-colors cursor-pointer"
-            aria-label="Close video"
+            aria-label="Close image"
           >
             &#10005; CLOSE
           </button>
 
           {/* Corner marks */}
           <div className="absolute inset-0 pointer-events-none">
-            {/* Top-left */}
             <div
               className="absolute w-7 h-7 border-t-2 border-l-2 border-flag transition-all duration-500"
               style={{
@@ -148,7 +117,6 @@ export default function U30VideoPlayer({ thumbnail, video, alt = 'Play video', p
                 transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
               }}
             />
-            {/* Top-right */}
             <div
               className="absolute w-7 h-7 border-t-2 border-r-2 border-flag transition-all duration-500"
               style={{
@@ -159,7 +127,6 @@ export default function U30VideoPlayer({ thumbnail, video, alt = 'Play video', p
                 transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
               }}
             />
-            {/* Bottom-left */}
             <div
               className="absolute w-7 h-7 border-b-2 border-l-2 border-flag transition-all duration-500"
               style={{
@@ -170,7 +137,6 @@ export default function U30VideoPlayer({ thumbnail, video, alt = 'Play video', p
                 transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
               }}
             />
-            {/* Bottom-right */}
             <div
               className="absolute w-7 h-7 border-b-2 border-r-2 border-flag transition-all duration-500"
               style={{
@@ -181,29 +147,25 @@ export default function U30VideoPlayer({ thumbnail, video, alt = 'Play video', p
                 transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
               }}
             />
-
-            {/* Loading pulse */}
-            {state === 'loading' && (
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <div className="w-3 h-3 bg-flag rounded-full animate-pulse" />
-              </div>
-            )}
           </div>
 
-          {/* Video container */}
-          <div className="absolute inset-[8%] flex items-center justify-center">
-            <video
-              ref={videoRef}
-              src={video}
-              poster={poster || thumbnail}
-              onCanPlay={onCanPlay}
-              controls
-              playsInline
-              preload="auto"
-              className={`max-w-full max-h-full transition-opacity duration-400 ${
-                isFramed ? 'opacity-100' : 'opacity-0'
-              }`}
-            />
+          {/* Image container */}
+          <div className="absolute inset-[8%] flex flex-col items-center justify-center">
+            <div className={`relative max-w-full max-h-full flex-1 w-full transition-opacity duration-400 ${
+              isFramed ? 'opacity-100' : 'opacity-0'
+            }`}>
+              <Image
+                src={src}
+                alt={alt}
+                fill
+                className="object-contain"
+              />
+            </div>
+            {caption && isFramed && (
+              <div className="mt-4 font-mono text-[11px] tracking-wider text-cream/70 text-center">
+                {caption}
+              </div>
+            )}
           </div>
         </div>
       )}

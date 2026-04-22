@@ -10,21 +10,29 @@ import U30Gallery from "./components/U30Gallery";
 import U30Booking from "./components/U30Booking";
 import U30Footer from "./components/U30Footer";
 import { fetchAllPrices } from "@/app/lib/pushpress";
+import { fetchStaff, fetchPlans, fetchGallery } from "@/app/lib/firestore";
+
+export const revalidate = 3600;
 
 export default async function Home() {
-  const prices = await fetchAllPrices();
+  const [prices, staff, plans, gallery] = await Promise.all([
+    fetchAllPrices(),
+    fetchStaff(),
+    fetchPlans(),
+    fetchGallery(),
+  ]);
 
   return (
     <div className="bg-ink font-sans">
       <U30Nav />
       <U30Hero />
       <U30About />
-      <U30Programs prices={prices} />
+      <U30Programs plans={plans} prices={prices} />
       <U30Locations />
       <U30HowWeTrain />
-      <U30Staff />
+      <U30Staff staff={staff} />
       <U30Testimonials />
-      <U30Gallery />
+      <U30Gallery gallery={gallery} />
       <U30Booking />
       <U30Footer />
     </div>

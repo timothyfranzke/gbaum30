@@ -1,8 +1,20 @@
 'use client';
 
-import Image from 'next/image';
+import type { GalleryDoc } from '@/app/lib/types';
+import U30VideoPlayer from './U30VideoPlayer';
+import U30ImageViewer from './U30ImageViewer';
 
-export default function U30Gallery() {
+// Grid spanning pattern: items at index 0 and 5 get col-span-2 row-span-2, item at index 6 gets col-span-2
+function getSpanClass(index: number): string {
+  if (index === 0 || index === 5) return 'col-span-2 row-span-2';
+  if (index === 6) return 'col-span-2';
+  return '';
+}
+
+export default function U30Gallery({ gallery }: { gallery: GalleryDoc[] }) {
+  const photoCount = gallery.filter(g => g.mediaType === 'image').length;
+  const filmCount = gallery.filter(g => g.mediaType === 'video').length;
+
   return (
     <section id="gallery" className="bg-ink text-cream py-[120px] px-10">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-8">
@@ -12,31 +24,29 @@ export default function U30Gallery() {
             FOOTAGE.
           </h2>
         </div>
-        <div className="font-mono text-[11px] text-muted tracking-wider">124 PHOTOS &middot; 18 FILMS</div>
+        <div className="font-mono text-[11px] text-muted tracking-wider">
+          {photoCount} PHOTOS{filmCount > 0 ? ` \u00B7 ${filmCount} FILMS` : ''}
+        </div>
       </div>
 
       <div className="grid gap-2 grid-cols-4 auto-rows-[180px]">
-        <div className="col-span-2 row-span-2 relative overflow-hidden">
-          <Image src="/diving_bg.png" alt="Andy — dive save" fill className="object-cover" />
-        </div>
-        <div className="relative overflow-hidden bg-flag">
-          <Image src="/hands_up_2.png" alt="Gloves" fill className="object-cover" />
-        </div>
-        <div className="relative overflow-hidden bg-ink">
-          <Image src="/soccer_net_bg.jpg" alt="Net / evening" fill className="object-cover" />
-        </div>
-        <div className="relative overflow-hidden">
-          <Image src="/soccer.jpeg" alt="Camp huddle" fill className="object-cover" />
-        </div>
-        <div className="relative overflow-hidden">
-          <Image src="/goalkeeper.jpeg" alt="Young keeper" fill className="object-cover" />
-        </div>
-        <div className="col-span-2 row-span-2 relative overflow-hidden">
-          <Image src="/hands_up.jpg" alt="Camp team photo" fill className="object-cover" />
-        </div>
-        <div className="col-span-2 relative overflow-hidden">
-          <Image src="/soccer_field.jpg" alt="Film session" fill className="object-cover" />
-        </div>
+        {gallery.map((item, i) => (
+          <div key={item.id} className={`${getSpanClass(i)} relative overflow-hidden`}>
+            {item.mediaType === 'video' ? (
+              <U30VideoPlayer
+                thumbnail={item.fileUrl}
+                video={item.fileUrl}
+                alt={item.caption || 'Video'}
+              />
+            ) : (
+              <U30ImageViewer
+                src={item.fileUrl}
+                alt={item.caption || ''}
+                caption={item.caption || ''}
+              />
+            )}
+          </div>
+        ))}
       </div>
     </section>
   );

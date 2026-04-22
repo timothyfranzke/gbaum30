@@ -1,4 +1,5 @@
-import { MONTHLY_PLANS, SESSION_PACKS, type PlanConfig, type PlanPrices } from '@/app/config/plans';
+import type { PlanDoc } from '@/app/lib/types';
+import type { PlanPrices } from '@/app/config/plans';
 
 interface ProgramRowProps {
   idx: number;
@@ -56,12 +57,15 @@ function StackedLabel({ top, bottom }: { top: string; bottom: string }) {
   );
 }
 
-function displayPrice(plan: PlanConfig, prices: PlanPrices): string {
-  const amount = prices[plan.id] ?? plan.fallbackPrice;
+function displayPrice(plan: PlanDoc, prices: PlanPrices): string {
+  const amount = prices[plan.pushpressId] ?? plan.fallbackPrice;
   return `$${amount}`;
 }
 
-export default function U30Programs({ prices }: { prices: PlanPrices }) {
+export default function U30Programs({ plans, prices }: { plans: PlanDoc[]; prices: PlanPrices }) {
+  const monthlyPlans = plans.filter(p => p.type === 'monthly');
+  const sessionPacks = plans.filter(p => p.type === 'pack');
+
   return (
     <section id="programs" className="bg-ink text-cream py-[120px] px-10">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-8">
@@ -79,7 +83,7 @@ export default function U30Programs({ prices }: { prices: PlanPrices }) {
       </div>
 
       <div>
-        {MONTHLY_PLANS.map((plan, i) => (
+        {monthlyPlans.map((plan, i) => (
           <ProgramRow
             key={plan.id}
             idx={i + 1}
@@ -99,7 +103,7 @@ export default function U30Programs({ prices }: { prices: PlanPrices }) {
       <div className="mt-16 pt-16 border-t border-cream/20">
         <div className="font-mono text-[11px] text-flag tracking-[2px] mb-8">SESSION PACKS</div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {SESSION_PACKS.map((pack) => (
+          {sessionPacks.map((pack) => (
             <div key={pack.id} className="border border-cream/20 p-8">
               <div className="font-display text-[32px] tracking-[0.5px]">{pack.name}</div>
               <div className="font-mono text-[10px] tracking-[1.5px] text-muted mt-1 mb-4">{pack.tag}</div>

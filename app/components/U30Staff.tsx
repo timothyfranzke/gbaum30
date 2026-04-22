@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import type { StaffDoc } from '@/app/lib/types';
 
 interface Coach {
   num: string;
@@ -14,29 +15,6 @@ interface Coach {
   image?: string;
   quote?: string;
 }
-
-const COACHES: Coach[] = [
-  {
-    num: '01', name: 'ANDY GRUENEBAUM', role: 'Founder',
-    tag: 'Ex-MLS keeper · Founder · Curriculum lead',
-    bio: 'With over 15 years of professional goalkeeping experience and 8 years of coaching, Andy brings elite-level expertise to Union30. Former MLS goalkeeper with a passion for developing the next generation of shot-stoppers. When he hung up the gloves, he had one mission: give keepers the kind of pro-level development that used to mean leaving the state.',
-    certifications: ['USSF "A" License', 'Goalkeeper Coaching Specialist'],
-    achievements: ['19 years MLS/USL', 'Columbus Crew · Chivas USA · Sporting KC · Indy Eleven', 'UK Hall of Fame'],
-  },
-  {
-    num: '02', name: 'MADDIE DOBYNS', role: 'Goalkeeper Coach',
-    tag: 'NCAA D1 coaching · Former Kansas GK · NWSL development',
-    bio: 'A native of Kansas City, Mo., Dobyns played at Kansas from 2013-2017 appearing in 60 matches and serving as the Jayhawks\' primary starter for her final three seasons. She helped KU reach the second round of the NCAA Tournament in 2016 and left the program ranked second in goals against average (1.06), third in shutouts (14) and fourth in wins (29).',
-    certifications: ['NCAA D1 Coaching Experience', 'Cincinnati · Kentucky · Iowa State · Kansas State'],
-    achievements: [
-      'Coached Jordan Silkowitz — 18th overall NWSL Draft pick (KC Current)',
-      'Silkowitz: first player ever drafted from Iowa State, now starter for Bay FC',
-      'Silkowitz: regular US Women\'s National Team call-up',
-    ],
-    image: '/00d74623-maddiedobyns202313_abc-scaled.webp',
-    quote: "I'm so excited to be joining Andy at Union 30. We have known each other for a long time and have always talked about doing something big together, so it is pretty cool to finally make it happen. What he has built is different from any other GK environment and you can see that in everything he does. With his experience, reputation, and how much he cares about continuing to build it, I could not pass up the chance to be part of it. Pumped to be back home and get to work.",
-  },
-];
 
 const BG_COLORS = ['bg-ink', 'bg-blue'];
 
@@ -97,8 +75,20 @@ function CoachModal({ coach, onClose }: { coach: Coach; onClose: () => void }) {
   );
 }
 
-export default function U30Staff() {
+export default function U30Staff({ staff }: { staff: StaffDoc[] }) {
   const [selectedCoach, setSelectedCoach] = useState<Coach | null>(null);
+
+  const coaches: Coach[] = staff.map((s, i) => ({
+    num: String(i + 1).padStart(2, '0'),
+    name: s.name,
+    role: s.role,
+    tag: s.tag,
+    bio: s.bio,
+    certifications: s.certifications,
+    achievements: s.achievements,
+    image: s.imageUrl,
+    quote: s.quote,
+  }));
 
   return (
     <>
@@ -123,7 +113,7 @@ export default function U30Staff() {
         </div>
 
         {/* Scrollable vertical coach sections */}
-        {COACHES.map((coach, i) => (
+        {coaches.map((coach, i) => (
           <div
             key={coach.num}
             className={`${BG_COLORS[i % BG_COLORS.length]} text-cream cursor-pointer group`}
