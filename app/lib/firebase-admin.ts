@@ -11,9 +11,9 @@ function getAdminApp(): App {
     return _app;
   }
 
-  const json = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+  const json = process.env.NEXT_FIREBASE_SERVICE_ACCOUNT_JSON;
   if (!json) {
-    throw new Error('FIREBASE_SERVICE_ACCOUNT_JSON env var is not set');
+    throw new Error('NEXT_FIREBASE_SERVICE_ACCOUNT_JSON env var is not set');
   }
 
   _app = initializeApp({
