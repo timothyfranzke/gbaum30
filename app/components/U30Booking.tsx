@@ -47,7 +47,7 @@ export default function U30Booking() {
           </p>
           <div className="mt-12 grid gap-2.5 font-mono text-xs tracking-[0.5px]">
             <div>&#9656; info@union30.com</div>
-            <div>&#9656; Lexington &middot; Louisville, KY</div>
+            <div>&#9656; Overland Park &middot; KS</div>
           </div>
 
           {/* Process steps */}
