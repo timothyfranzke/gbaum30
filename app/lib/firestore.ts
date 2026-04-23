@@ -2,7 +2,7 @@ import { FALLBACK_STAFF } from '@/app/config/staff';
 import { PLANS } from '@/app/config/plans';
 import { FALLBACK_GALLERY } from '@/app/config/gallery';
 import { adminDb } from './firebase-admin';
-import type { StaffDoc, PlanDoc, GalleryDoc, AboutSlot } from './types';
+import type { StaffDoc, PlanDoc, GalleryDoc, AboutSlot, AnnouncementDoc } from './types';
 
 export async function fetchStaff(): Promise<StaffDoc[]> {
   try {
@@ -58,6 +58,26 @@ export async function fetchAboutMedia(): Promise<Record<AboutSlot, GalleryDoc | 
     console.warn('Failed to fetch about media:', e);
   }
   return result;
+}
+
+export async function fetchActiveAnnouncement(): Promise<AnnouncementDoc | null> {
+  try {
+    const db = adminDb;
+    const snapshot = await db.collection('announcements').where('enabled', '==', true).get();
+    if (snapshot.empty) return null;
+
+    const today = new Date().toISOString().split('T')[0];
+    for (const doc of snapshot.docs) {
+      const data = doc.data() as Omit<AnnouncementDoc, 'id'>;
+      if (data.startDate > today) continue;
+      if (data.endDate && data.endDate < today) continue;
+      return { id: doc.id, ...data };
+    }
+    return null;
+  } catch (e) {
+    console.warn('Failed to fetch announcement:', e);
+    return null;
+  }
 }
 
 function fallbackPlans(): PlanDoc[] {

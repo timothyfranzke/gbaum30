@@ -68,8 +68,8 @@ export default async function Image() {
             left: 32,
             width: 36,
             height: 36,
-            borderTop: '3px solid #E8734A',
-            borderLeft: '3px solid #E8734A',
+            borderTop: '3px solid #FEDD00',
+            borderLeft: '3px solid #FEDD00',
             display: 'flex',
           }}
         />
@@ -81,8 +81,8 @@ export default async function Image() {
             right: 32,
             width: 36,
             height: 36,
-            borderTop: '3px solid #E8734A',
-            borderRight: '3px solid #E8734A',
+            borderTop: '3px solid #FEDD00',
+            borderRight: '3px solid #FEDD00',
             display: 'flex',
           }}
         />
@@ -94,8 +94,8 @@ export default async function Image() {
             left: 32,
             width: 36,
             height: 36,
-            borderBottom: '3px solid #E8734A',
-            borderLeft: '3px solid #E8734A',
+            borderBottom: '3px solid #FEDD00',
+            borderLeft: '3px solid #FEDD00',
             display: 'flex',
           }}
         />
@@ -107,8 +107,8 @@ export default async function Image() {
             right: 32,
             width: 36,
             height: 36,
-            borderBottom: '3px solid #E8734A',
-            borderRight: '3px solid #E8734A',
+            borderBottom: '3px solid #FEDD00',
+            borderRight: '3px solid #FEDD00',
             display: 'flex',
           }}
         />
@@ -126,7 +126,7 @@ export default async function Image() {
         >
           <div
             style={{
-              background: '#E8734A',
+              background: '#FEDD00',
               color: '#05070E',
               padding: '4px 10px',
               fontSize: 13,
@@ -196,7 +196,7 @@ export default async function Image() {
           >
             <span>COMPLETE</span>
             <span>GOALKEEPER</span>
-            <span style={{ color: '#E8734A' }}>DEVELOPMENT.</span>
+            <span style={{ color: '#FEDD00' }}>DEVELOPMENT.</span>
           </div>
 
           {/* Subtitle */}
@@ -229,7 +229,7 @@ export default async function Image() {
             style={{
               fontSize: 12,
               letterSpacing: 2,
-              color: '#E8734A',
+              color: '#FEDD00',
               fontFamily: 'monospace',
               fontWeight: 700,
               display: 'flex',

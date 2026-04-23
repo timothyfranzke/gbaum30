@@ -63,6 +63,26 @@ const LOCATIONS: Location[] = [
     tags: ['Mentorship', 'Zoom'],
     videoUrl: '/phoenix-facility.mp4',
   },
+  {
+    id: '09', name: 'LOS ANGELES', city: 'Los Angeles', state: 'CA',
+    pos: { x: 11, y: 62 },
+    tags: ['Game Film Analysis'],
+  },
+  {
+    id: '10', name: 'SAN DIEGO', city: 'San Diego', state: 'CA',
+    pos: { x: 13, y: 66 },
+    tags: ['Game Film Analysis'],
+  },
+  {
+    id: '11', name: 'SAN FRANCISCO', city: 'San Francisco', state: 'CA',
+    pos: { x: 7, y: 48 },
+    tags: ['Game Film Analysis'],
+  },
+  {
+    id: '12', name: 'ST. LOUIS', city: 'St. Louis', state: 'MO',
+    pos: { x: 58, y: 49 },
+    tags: ['Game Film Analysis'],
+  },
 ];
 
 function USMap({ states, onPhoenixClick }: { states: StateData[]; onPhoenixClick: () => void }) {
@@ -145,7 +165,7 @@ function USMap({ states, onPhoenixClick }: { states: StateData[]; onPhoenixClick
                 </div>
               </div>
               <div className="flex justify-center">
-                <div className="w-7 h-7 flex items-center justify-center font-display text-sm rotate-45 border-2 border-cream transition-all bg-flag text-ink shadow-[0_0_0_6px_rgba(232,115,74,0.25)]">
+                <div className="w-7 h-7 flex items-center justify-center font-display text-sm rotate-45 border-2 border-cream transition-all bg-flag text-ink shadow-[0_0_0_6px_rgba(254,221,0,0.25)]">
                   <span className="-rotate-45 text-[10px] font-bold">{loc.id}</span>
                 </div>
               </div>
@@ -320,10 +340,10 @@ export default function U30Locations() {
       {/* Bottom status bar */}
       <div className="mt-8 bg-[#001540] border border-cream/[0.18] px-7 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="font-mono text-[10px] tracking-[1.5px] text-flag font-bold">
-          &#9679; 8 LOCATIONS AND GROWING
+          &#9679; 12 LOCATIONS AND GROWING
         </div>
         <div className="flex gap-6 font-mono text-[11px] tracking-wider text-muted uppercase flex-wrap justify-center">
-          <span>KS</span><span>OH</span><span>AL</span><span>FL</span><span>IA</span><span>NE</span><span>OK</span><span>AZ</span>
+          <span>KS</span><span>OH</span><span>AL</span><span>FL</span><span>IA</span><span>NE</span><span>OK</span><span>AZ</span><span>CA</span><span>MO</span>
         </div>
         <a href="#booking" className="bg-flag text-ink px-5 py-3 font-mono text-[11px] tracking-[1.5px] uppercase font-bold cursor-pointer hover:bg-cream transition-colors text-center">
           Get Started &rarr;

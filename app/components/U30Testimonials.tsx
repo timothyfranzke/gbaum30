@@ -65,7 +65,7 @@ export default function U30Testimonials() {
     <section id="testimonials" className="bg-paper text-ink py-[120px] px-10">
       {/* Header */}
       <div className="mb-16">
-        <div className="font-mono text-[11px] text-flag tracking-[2px]">WORD FROM THE FIELD</div>
+        <div className="font-mono text-[11px] text-flag tracking-[2px] bg-ink inline-block px-2 py-1">WORD FROM THE FIELD</div>
         <h2 className="font-display text-[clamp(64px,9vw,120px)] leading-[0.9] tracking-tight mt-2">
           THEY SAID IT.
         </h2>

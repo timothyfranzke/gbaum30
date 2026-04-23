@@ -73,11 +73,11 @@ export default function U30About({ aboutMedia }: { aboutMedia?: AboutMedia }) {
 
         {/* Text column */}
         <div>
-          <div className="font-mono text-[11px] text-flag tracking-[2px]">FOUNDER</div>
+          <div className="font-mono text-[11px] text-flag tracking-[2px] bg-ink inline-block px-2 py-1">FOUNDER</div>
           <h2 className="font-display text-[clamp(56px,7vw,96px)] leading-[0.9] mt-3 tracking-tight">
             TWENTY<br/>YEARS.<br/><span className="text-blue">ONE JOB.</span>
           </h2>
-          <div className="font-mono text-[11px] tracking-[1.5px] text-flag uppercase mt-4">Andy Gruenebaum</div>
+          <div className="font-mono text-[11px] tracking-[1.5px] text-flag uppercase mt-4 bg-ink inline-block px-2 py-1">Andy Gruenebaum</div>
           <p className="text-base leading-[1.6] mt-6 max-w-[480px]">
             Andy was born and raised right here in Kansas City. He was an NSCAA All-American
             while helping Blue Valley North High School win the state title in 2000. He was
@@ -95,7 +95,7 @@ export default function U30About({ aboutMedia }: { aboutMedia?: AboutMedia }) {
           <div className="mt-10 grid grid-cols-2 gap-4 font-mono text-xs">
             {career.map(([year, club], i) => (
               <div key={i} className="flex gap-3 py-[14px] border-t border-ink">
-                <span className="text-flag font-bold">{year}</span>
+                <span className="text-flag font-bold bg-ink px-1.5 py-0.5">{year}</span>
                 <span className="font-semibold tracking-[0.5px]">{club}</span>
               </div>
             ))}

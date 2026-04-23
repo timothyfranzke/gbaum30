@@ -61,7 +61,7 @@ function HotSpot({ area, active, onHover }: { area: TrainArea; active: boolean; 
         onClick={() => onHover(area.id)}
         className={`absolute z-10 w-8 h-8 rounded-full border-2 border-flag flex items-center justify-center font-mono text-[11px] font-bold cursor-pointer transition-all ${
           active
-            ? 'bg-flag text-ink shadow-[0_0_0_8px_rgba(232,115,74,0.2)]'
+            ? 'bg-flag text-ink shadow-[0_0_0_8px_rgba(254,221,0,0.2)]'
             : 'bg-flag/20 text-flag hover:bg-flag/40'
         }`}
         style={{ left: `${area.pos.x}%`, top: `${area.pos.y}%`, transform: 'translate(-50%, -50%)' }}
@@ -74,7 +74,7 @@ function HotSpot({ area, active, onHover }: { area: TrainArea; active: boolean; 
         <line
           x1={`${area.pos.x}%`} y1={`${area.pos.y}%`}
           x2={`${area.labelPos.x}%`} y2={`${area.labelPos.y}%`}
-          stroke={active ? '#E8734A' : 'rgba(244,237,224,0.18)'}
+          stroke={active ? '#FEDD00' : 'rgba(244,237,224,0.18)'}
           strokeWidth="1"
           strokeDasharray={active ? '0' : '3 3'}
         />
@@ -135,8 +135,8 @@ export default function U30HowWeTrain() {
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#u30-gg)" />
-            <line x1="50%" y1="0" x2="50%" y2="100%" stroke="rgba(232,115,74,0.15)" strokeWidth="1" strokeDasharray="4 6" />
-            <line x1="0" y1="50%" x2="100%" y2="50%" stroke="rgba(232,115,74,0.15)" strokeWidth="1" strokeDasharray="4 6" />
+            <line x1="50%" y1="0" x2="50%" y2="100%" stroke="rgba(254,221,0,0.15)" strokeWidth="1" strokeDasharray="4 6" />
+            <line x1="0" y1="50%" x2="100%" y2="50%" stroke="rgba(254,221,0,0.15)" strokeWidth="1" strokeDasharray="4 6" />
           </svg>
 
           {/* Player + hotspots wrapper — inset so both share the same coordinate space */}
