@@ -5,7 +5,12 @@ const PROXY_URL = 'https://us-central1-franzke-creative.cloudfunctions.net/sendE
 
 export async function POST(request: Request) {
   try {
-    const { parent, email, player, age, program, exp, notes } = await request.json();
+    const { parent, email, player, age, program, exp, notes, website } = await request.json();
+
+    // Honeypot — if filled, silently succeed without doing anything
+    if (website) {
+      return NextResponse.json({ success: true, message: 'Message sent!' });
+    }
 
     if (!parent || !email || !player || !notes) {
       return NextResponse.json(

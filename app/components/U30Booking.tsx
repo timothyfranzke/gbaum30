@@ -11,6 +11,7 @@ export default function U30Booking() {
     age: '',
     exp: '1-2 YRS',
     notes: '',
+    website: '',
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
@@ -86,6 +87,18 @@ export default function U30Booking() {
 
         {/* Form */}
         <form onSubmit={handleSubmit}>
+          {/* Honeypot — hidden from real users, bots will fill it */}
+          <div className="absolute opacity-0 pointer-events-none" aria-hidden="true" tabIndex={-1}>
+            <label htmlFor="website">Website</label>
+            <input
+              type="text"
+              id="website"
+              name="website"
+              autoComplete="off"
+              value={form.website}
+              onChange={e => setForm({ ...form, website: e.target.value })}
+            />
+          </div>
           <label className="block font-mono text-[10px] tracking-[1.5px] uppercase text-muted mb-2 font-bold">Program</label>
           <div className="flex gap-2 flex-wrap mb-8">
             {['PRIVATE', 'CLINIC', 'CAMP'].map(p => (
