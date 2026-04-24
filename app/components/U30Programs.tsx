@@ -18,7 +18,7 @@ function ProgramRow({ idx, name, tag, price, unit, desc, items, featured, href =
     <div className={`grid grid-cols-1 md:grid-cols-[60px_1.2fr_2fr_1fr_160px] gap-6 items-center px-6 py-8 border-t ${
       featured ? 'bg-flag text-ink border-ink' : 'bg-transparent text-cream border-cream/20'
     }`}>
-      <div className="font-display text-[56px] leading-none opacity-40 hidden md:block">
+      <div className="font-display text-[56px] leading-none opacity-60 hidden md:block">
         {String(idx).padStart(2, '0')}
       </div>
       <div>
@@ -72,7 +72,7 @@ export default function U30Programs({ plans, prices }: { plans: PlanDoc[]; price
         <div>
           <div className="font-mono text-[11px] text-flag tracking-[2px]">THE OFFERINGS</div>
           <h2 className="font-display text-[clamp(64px,9vw,120px)] leading-[0.9] tracking-tight mt-2">
-            JOIN THE<br/><span className="text-blue">UNION.</span>
+            JOIN THE<br/><span className="text-blue-heading">UNION.</span>
           </h2>
         </div>
         <div className="flex gap-8">

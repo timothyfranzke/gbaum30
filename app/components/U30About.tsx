@@ -75,7 +75,7 @@ export default function U30About({ aboutMedia }: { aboutMedia?: AboutMedia }) {
         <div>
           <div className="font-mono text-[11px] text-flag tracking-[2px] bg-ink inline-block px-2 py-1">FOUNDER</div>
           <h2 className="font-display text-[clamp(56px,7vw,96px)] leading-[0.9] mt-3 tracking-tight">
-            TWENTY<br/>YEARS.<br/><span className="text-blue">ONE JOB.</span>
+            TWENTY<br/>YEARS.<br/><span className="text-blue-heading">ONE JOB.</span>
           </h2>
           <div className="font-mono text-[11px] tracking-[1.5px] text-flag uppercase mt-4 bg-ink inline-block px-2 py-1">Andy Gruenebaum</div>
           <p className="text-base leading-[1.6] mt-6 max-w-[480px]">

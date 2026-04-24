@@ -312,7 +312,7 @@ export default function U30Locations() {
         <div>
           <div className="font-mono text-[11px] text-flag tracking-[2px] font-bold">THE GROUNDS</div>
           <h2 className="font-display text-[clamp(56px,9vw,120px)] leading-[0.9] tracking-tight mt-2">
-            UNION30&apos;S<br/><span className="text-blue">REACH.</span>
+            UNION30&apos;S<br/><span className="text-blue-heading">REACH.</span>
           </h2>
         </div>
         <div className="text-sm max-w-[400px] text-cream/70 leading-[1.55]">

@@ -218,6 +218,7 @@ export default function U30HowWeTrain() {
               <button
                 key={a.id}
                 onClick={() => setActiveId(a.id)}
+                aria-label={`Show ${a.name} training zone`}
                 className={`flex-1 h-1 cursor-pointer transition-colors ${
                   a.id === activeId ? 'bg-flag' : 'bg-cream/[0.18] hover:bg-cream/30'
                 }`}

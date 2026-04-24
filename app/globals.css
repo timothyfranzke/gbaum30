@@ -2,6 +2,7 @@
 
 :root {
   --blue: #0033A0;
+  --blue-heading: #3B7DD8;
   --blue-dark: #001F66;
   --cream: #F4EDE0;
   --ink: #05070E;
@@ -13,6 +14,7 @@
 
 @theme inline {
   --color-blue: var(--blue);
+  --color-blue-heading: var(--blue-heading);
   --color-blue-dark: var(--blue-dark);
   --color-cream: var(--cream);
   --color-ink: var(--ink);

@@ -43,7 +43,7 @@ function CoachModal({ coach, onClose }: { coach: Coach; onClose: () => void }) {
               <Image src={coach.image} alt={coach.name} fill className="object-cover" />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="font-display text-[80px] text-blue/30">U30</div>
+                <div className="font-display text-[80px] text-blue/30" aria-hidden="true">U30</div>
               </div>
             )}
           </div>
@@ -130,7 +130,7 @@ export default function U30Staff({ staff }: { staff: StaffDoc[] }) {
                   <Image src={coach.image} alt={coach.name} fill className="object-cover relative z-10" />
                 ) : (
                   <div className="absolute inset-0 bg-[#001033] flex items-center justify-center z-10">
-                    <div className="font-display text-[100px] text-blue/20">{coach.num}</div>
+                    <div className="font-display text-[100px] text-blue/20" aria-hidden="true">{coach.num}</div>
                   </div>
                 )}
                 {/* Hover overlay */}
@@ -153,7 +153,7 @@ export default function U30Staff({ staff }: { staff: StaffDoc[] }) {
 
                 {coach.quote && (
                   <blockquote className="mt-6 pl-4 border-l-2 border-flag">
-                    <p className="text-sm text-cream/60 leading-[1.6] italic">&ldquo;{coach.quote}&rdquo;</p>
+                    <p className="text-sm text-cream/80 leading-[1.6] italic">&ldquo;{coach.quote}&rdquo;</p>
                   </blockquote>
                 )}
 

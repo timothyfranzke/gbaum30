@@ -146,7 +146,7 @@ export default function U30Announcement({ announcement }: Props) {
     <>
       {/* ─── Banner ─── */}
       {showBanner && (
-        <div className={`relative z-50 ${ACCENT_BG[announcement.headlineAccent] || 'bg-flag text-ink'}`}>
+        <div role="region" aria-label="Announcement" className={`relative z-50 ${ACCENT_BG[announcement.headlineAccent] || 'bg-flag text-ink'}`}>
           <div className="max-w-[1400px] mx-auto px-4 py-2.5 flex items-center justify-center gap-4 text-center">
             <div className="flex items-center gap-3 flex-wrap justify-center">
               {announcement.headline && (
@@ -197,6 +197,7 @@ export default function U30Announcement({ announcement }: Props) {
           className="fixed inset-0 z-50 outline-none"
           role="dialog"
           aria-modal="true"
+          aria-label={announcement.headline || 'Announcement'}
         >
           {/* Backdrop */}
           <div
