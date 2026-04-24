@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { label: 'Plans', href: '/admin/plans' },
   { label: 'Gallery', href: '/admin/gallery' },
   { label: 'Announcements', href: '/admin/announcements' },
+  { label: 'Contacts', href: '/admin/contacts' },
 ];
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {

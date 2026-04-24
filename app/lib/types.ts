@@ -55,6 +55,19 @@ export interface AnnouncementDoc {
   enabled: boolean;
 }
 
+export interface ContactDoc {
+  id: string;
+  parent: string;
+  email: string;
+  player: string;
+  age: string;
+  program: string;
+  exp: string;
+  notes: string;
+  createdAt: string;
+  read: boolean;
+}
+
 export interface GalleryDoc {
   id: string;
   fileUrl: string;

@@ -11,12 +11,27 @@ export default function U30Booking() {
     age: '',
     exp: '1-2 YRS',
     notes: '',
-    submitted: false,
   });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setForm({ ...form, submitted: true });
+    setStatus('sending');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus('sent');
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
   };
 
   const Chip = ({ active, children, onClick }: { active: boolean; children: string; onClick: () => void }) => (
@@ -139,13 +154,19 @@ export default function U30Booking() {
           <div className="mt-10 flex items-center gap-6">
             <button
               type="submit"
-              className="bg-flag text-ink px-9 py-5 font-display text-xl tracking-[2px] cursor-pointer hover:bg-cream transition-colors"
+              disabled={status === 'sending' || status === 'sent'}
+              className="bg-flag text-ink px-9 py-5 font-display text-xl tracking-[2px] cursor-pointer hover:bg-cream transition-colors disabled:opacity-50"
             >
-              SEND IT &rarr;
+              {status === 'sending' ? 'SENDING...' : 'SEND IT'} &rarr;
             </button>
-            {form.submitted && (
+            {status === 'sent' && (
               <div className="font-mono text-[11px] text-flag tracking-wider">
                 &#10003; RECEIVED. ANDY REPLIES WITHIN 24H.
+              </div>
+            )}
+            {status === 'error' && (
+              <div className="font-mono text-[11px] text-red-400 tracking-wider">
+                &#10007; SOMETHING WENT WRONG. TRY AGAIN.
               </div>
             )}
           </div>
