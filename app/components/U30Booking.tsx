@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 export default function U30Booking() {
   const [form, setForm] = useState({
-    program: 'CLINIC',
     parent: '',
     email: '',
     player: '',
@@ -99,13 +98,6 @@ export default function U30Booking() {
               onChange={e => setForm({ ...form, website: e.target.value })}
             />
           </div>
-          <label className="block font-mono text-[10px] tracking-[1.5px] uppercase text-muted mb-2 font-bold">Program</label>
-          <div className="flex gap-2 flex-wrap mb-8">
-            {['PRIVATE', 'CLINIC', 'CAMP'].map(p => (
-              <Chip key={p} active={form.program === p} onClick={() => setForm({ ...form, program: p })}>{p}</Chip>
-            ))}
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
             <div>
               <label className="block font-mono text-[10px] tracking-[1.5px] uppercase text-muted mb-2 font-bold">Parent</label>

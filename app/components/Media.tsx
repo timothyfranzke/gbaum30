@@ -20,7 +20,7 @@ const mediaData: MediaItem[] = [
     header: 'GOALKEEPER TRAINING HIGHLIGHTS',
     text: 'Watch our elite goalkeeper training sessions in action. Our specialized training methods focus on developing quick reflexes, proper positioning, and game awareness.',
     type: 'video',
-    url: '/media/U30highlights.mov',
+    url: '/media/U30highlights.mp4',
     size: 'large'
   },
   {
@@ -36,7 +36,7 @@ const mediaData: MediaItem[] = [
     header: 'SPECTACULAR SAVES',
     text: 'Our goalkeepers demonstrate exceptional reaction time and diving technique in these highlight saves from recent training sessions.',
     type: 'video',
-    url: '/media/SAVES-1.mov',
+    url: '/media/SAVES-1.mp4',
     size: 'small'
   },
   {
@@ -52,7 +52,7 @@ const mediaData: MediaItem[] = [
     header: 'FACILITY BUILDOUT',
     text: 'Take a look at our training facility development. We\'ve designed specialized areas for goalkeeper-specific drills and comprehensive training programs.',
     type: 'video',
-    url: '/media/BUILDOUT-1.mov',
+    url: '/media/BUILDOUT-1.mp4',
     size: 'large'
   }
 ];

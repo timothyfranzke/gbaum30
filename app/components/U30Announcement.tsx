@@ -227,10 +227,10 @@ export default function U30Announcement({ announcement }: Props) {
                 </span>
                 <button
                   onClick={closeModal}
-                  className="font-mono text-[11px] tracking-[1.5px] text-cream/50 hover:text-cream transition-colors cursor-pointer"
+                  className="px-4 py-2 border border-cream/20 font-mono text-[11px] tracking-[1.5px] text-cream hover:bg-cream hover:text-ink transition-colors cursor-pointer font-bold"
                   aria-label="Close announcement"
                 >
-                  &#10005;
+                  &#10005; CLOSE
                 </button>
               </div>
 

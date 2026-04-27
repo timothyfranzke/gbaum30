@@ -91,6 +91,7 @@ export default function U30VideoPlayer({ thumbnail, video, alt = 'Play video', p
             loop
             playsInline
             autoPlay
+            preload="metadata"
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
