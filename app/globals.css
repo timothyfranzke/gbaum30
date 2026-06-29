@@ -24,7 +24,7 @@
   --color-muted: var(--muted);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-jetbrains);
-  --font-display: var(--font-bebas), "Bebas Neue", "Impact", sans-serif;
+  --font-display: "Bebas Neue", "Impact", sans-serif;
 }
 
 html, body {
