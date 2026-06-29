@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Bebas_Neue } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { ConsentProvider } from "./lib/consent";
 import ConsentBanner from "./components/ConsentBanner";
@@ -14,10 +15,12 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
-const bebasNeue = Bebas_Neue({
+// Self-hosted from app/fonts so there is no build-time fetch from Google.
+const bebasNeue = localFont({
+  src: "./fonts/BebasNeue-Regular.ttf",
   variable: "--font-bebas",
   weight: "400",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
