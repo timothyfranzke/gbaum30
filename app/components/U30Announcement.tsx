@@ -8,11 +8,19 @@ interface Props {
   announcement: AnnouncementDoc | null;
 }
 
-function toEmbedUrl(url: string): string {
+// Builds the embed src. Uses youtube-nocookie + Vimeo dnt=1 to reduce passive
+// tracking before playback (it does not eliminate all tracking once played).
+function toEmbedUrl(url: string, autoplay = false): string {
   const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
-  if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
+  if (ytMatch) {
+    const qs = autoplay ? '?autoplay=1&mute=1' : '';
+    return `https://www.youtube-nocookie.com/embed/${ytMatch[1]}${qs}`;
+  }
   const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
-  if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+  if (vimeoMatch) {
+    const qs = autoplay ? '?dnt=1&autoplay=1&muted=1' : '?dnt=1';
+    return `https://player.vimeo.com/video/${vimeoMatch[1]}${qs}`;
+  }
   return url;
 }
 
@@ -266,7 +274,7 @@ export default function U30Announcement({ announcement }: Props) {
                 {announcement.mediaUrl && announcement.mediaType === 'video-embed' && (
                   <div className="aspect-video">
                     <iframe
-                      src={toEmbedUrl(announcement.mediaUrl) + (announcement.videoAutoplay ? '?autoplay=1&muted=1' : '')}
+                      src={toEmbedUrl(announcement.mediaUrl, announcement.videoAutoplay)}
                       className="w-full h-full"
                       allowFullScreen
                       allow="autoplay; encrypted-media"

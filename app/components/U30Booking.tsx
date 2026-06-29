@@ -1,6 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import Link from 'next/link';
+import Turnstile from './Turnstile';
+
+const CONSENT_TEXT =
+  'I certify that I am the parent or legal guardian of the player named above, and I consent to Union 30 collecting this information to respond to my inquiry. I have read the Privacy Policy.';
 
 export default function U30Booking() {
   const [form, setForm] = useState({
@@ -12,16 +17,26 @@ export default function U30Booking() {
     notes: '',
     website: '',
   });
+  const [consent, setConsent] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+
+  const handleToken = useCallback((token: string) => setTurnstileToken(token), []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!consent) return;
     setStatus('sending');
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          consent,
+          consentText: CONSENT_TEXT,
+          turnstileToken,
+        }),
       });
       const data = await res.json();
       if (data.success) {
@@ -156,11 +171,35 @@ export default function U30Booking() {
             />
           </div>
 
+          <p className="mt-10 font-mono text-[10px] tracking-[1.5px] uppercase text-muted">
+            This form must be completed by a parent or legal guardian.
+          </p>
+
+          <label className="mt-3 flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={e => setConsent(e.target.checked)}
+              required
+              className="mt-1 h-4 w-4 shrink-0 accent-flag cursor-pointer"
+            />
+            <span className="text-xs leading-[1.5] opacity-80">
+              I certify that I am the parent or legal guardian of the player named above, and I consent to
+              Union 30 collecting this information to respond to my inquiry. I have read the{' '}
+              <Link href="/privacy" target="_blank" className="underline text-flag hover:text-cream">
+                Privacy Policy
+              </Link>
+              .
+            </span>
+          </label>
+
+          <Turnstile onToken={handleToken} />
+
           <div className="mt-10 flex items-center gap-6">
             <button
               type="submit"
-              disabled={status === 'sending' || status === 'sent'}
-              className="bg-flag text-ink px-9 py-5 font-display text-xl tracking-[2px] cursor-pointer hover:bg-cream transition-colors disabled:opacity-50"
+              disabled={!consent || status === 'sending' || status === 'sent'}
+              className="bg-flag text-ink px-9 py-5 font-display text-xl tracking-[2px] cursor-pointer hover:bg-cream transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {status === 'sending' ? 'SENDING...' : 'SEND IT'} &rarr;
             </button>
