@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: import.meta.dirname,
   },
+  async rewrites() {
+    // Clean shareable URL for the roster-app concept demo in public/demo.
+    return [{ source: '/demo/roster', destination: '/demo/roster.dc.html' }];
+  },
   images: {
     remotePatterns: [
       {

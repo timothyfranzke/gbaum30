@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Union 30 · Daily Roster Concept</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#05070E; color:#F4EDE0; font-family:'Inter',system-ui,sans-serif; }
+  a { color:#FEDD00; text-decoration:none; }
+  a:hover { color:#E4FF85; }
+  *::-webkit-scrollbar { width:0; height:0; }
+</style>
+</helmet>
+
+<section style="padding:56px 56px 96px; display:flex; flex-direction:column; gap:40px">
+  <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:32px; flex-wrap:wrap">
+    <div style="display:flex; flex-direction:column; gap:10px">
+      <div style="display:flex; align-items:center; gap:12px">
+        <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:13px; letter-spacing:.18em; color:#FEDD00">1A</span>
+        <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:13px; letter-spacing:.18em; color:#7A8090">UNION 30 · DAILY ROSTER PWA</span>
+      </div>
+      <h1 style="margin:0; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:52px; line-height:.95; letter-spacing:-.01em; text-transform:uppercase">Open app → see today → tap a kid → done</h1>
+      <p style="margin:0; max-width:720px; font-size:17px; line-height:1.5; color:#9EA3AC; text-wrap:pretty">Frame 1 is live — switch days, tap the check to confirm, tap again for no-show, write a note, open a profile, run a sync. The frames to the right are pinned states.</p>
+    </div>
+    <div style="display:flex; gap:10px; align-items:center">
+      <div style="padding:10px 14px; border:2px solid #2A3042; border-radius:0; font-family:'Bebas Neue',Impact,sans-serif; font-size:14px; letter-spacing:.12em; color:#9EA3AC">DARK · PRIMARY THEME</div>
+      <div style="padding:10px 14px; border:2px solid #2A3042; border-radius:0; font-family:'Bebas Neue',Impact,sans-serif; font-size:14px; letter-spacing:.12em; color:#9EA3AC">390 × 844</div>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start; flex-wrap:wrap">
+
+    <!-- ============ INTERACTIVE FRAME ============ -->
+    <div style="display:flex; flex-direction:column; gap:14px">
+      <div style="display:flex; align-items:center; gap:10px">
+        <span style="width:8px; height:8px; border-radius:50%; background:#FEDD00"></span>
+        <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; color:#F4EDE0">LIVE PROTOTYPE — THE DAILY LOOP</span>
+      </div>
+      <div data-screen-label="01 Live prototype" style="position:relative; width:390px; height:844px; border-radius:46px; border:10px solid #000; background:#05070E; overflow:hidden; box-shadow:0 40px 90px rgba(0,0,0,.65); display:flex; flex-direction:column">
+
+        <!-- status bar -->
+        <div style="height:44px; flex:0 0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 26px; font-size:13px; font-weight:700; color:#F4EDE0">
+          <span>9:41</span>
+          <span style="display:flex; gap:6px; align-items:center; font-size:11px; letter-spacing:.08em; color:#7A8090">LTE ▮▮▯</span>
+        </div>
+
+        <!-- ---------- TODAY ---------- -->
+        <sc-if value="{{ isToday }}" hint-placeholder-val="{{ true }}">
+          <div style="flex:1 1 auto; display:flex; flex-direction:column; min-height:0">
+            <div style="flex:0 0 auto; padding:4px 18px 12px; border-bottom:2px solid #1B1F2A">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px">
+                <div style="display:flex; align-items:center; gap:10px">
+                  <div style="width:38px; height:38px; background:#0033A0; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',Impact,sans-serif; font-size:20px; color:#F4EDE0">U30</div>
+                  <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:26px; letter-spacing:.02em; text-transform:uppercase">Today</div>
+                </div>
+                <button onClick="{{ runSync }}" style="min-width:48px; height:48px; padding:0 14px; border:2px solid #2A3042; background:#12151E; color:#F4EDE0; border-radius:0; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:15px; letter-spacing:.1em; cursor:pointer">REFRESH</button>
+              </div>
+              <div style="display:flex; gap:8px">
+                <button onClick="{{ prevDay }}" style="{{ prevStyle }}">{{ prevLabel }}</button>
+                <div style="flex:1.3 1 0; height:52px; border-radius:0; background:#FEDD00; color:#05070E; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; letter-spacing:.06em">
+                  <span style="font-size:11px; letter-spacing:.2em; opacity:.7">{{ dayCaption }}</span>
+                  <span style="font-size:19px; line-height:1">{{ dayLabel }}</span>
+                </div>
+                <button onClick="{{ nextDay }}" style="{{ nextStyle }}">{{ nextLabel }}</button>
+              </div>
+            </div>
+
+            <div style="flex:1 1 auto; overflow:auto; padding:14px 18px 24px">
+              <div style="display:flex; gap:8px; margin-bottom:16px">
+                <div style="flex:1 1 0; padding:9px 10px; border-radius:0; background:#0A0D14; border:2px solid #1B1F2A; display:flex; flex-direction:column; gap:3px">
+                  <span style="font-family:'JetBrains Mono',ui-monospace,monospace; font-weight:700; font-size:10px; letter-spacing:.14em; color:#9EA3AC">KC ATHLETICS</span>
+                  <span style="font-size:13px; font-weight:600; color:#FEDD00">{{ syncKC }}</span>
+                </div>
+                <div style="flex:1 1 0; padding:9px 10px; border-radius:0; background:#0A0D14; border:2px solid #1B1F2A; display:flex; flex-direction:column; gap:3px">
+                  <span style="font-family:'JetBrains Mono',ui-monospace,monospace; font-weight:700; font-size:10px; letter-spacing:.14em; color:#9EA3AC">TOCA FUSION</span>
+                  <span style="font-size:13px; font-weight:600; color:#FEDD00">{{ syncToca }}</span>
+                </div>
+                <div style="flex:1 1 0; padding:9px 10px; border-radius:0; background:#0A0D14; border:2px solid #1B1F2A; display:flex; flex-direction:column; gap:3px">
+                  <span style="font-family:'JetBrains Mono',ui-monospace,monospace; font-weight:700; font-size:10px; letter-spacing:.14em; color:#9EA3AC">PUSHPRESS</span>
+                  <span style="font-size:13px; font-weight:600; color:#FEDD00">{{ syncPP }}</span>
+                </div>
+              </div>
+
+              <sc-for list="{{ sessions }}" as="s" hint-placeholder-count="3">
+                <div onClick="{{ s.open }}" style="margin-bottom:12px; padding:16px; border-radius:0; background:#12151E; border:2px solid #232838; cursor:pointer; display:flex; flex-direction:column; gap:12px">
+                  <div style="display:flex; align-items:baseline; justify-content:space-between; gap:10px">
+                    <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:30px; line-height:1; letter-spacing:.01em">{{ s.time }}</div>
+                    <div style="{{ s.badgeStyle }}">{{ s.source }}</div>
+                  </div>
+                  <div style="display:flex; flex-direction:column; gap:3px">
+                    <div style="font-size:18px; font-weight:600; letter-spacing:-.005em">{{ s.title }}</div>
+                    <div style="font-size:15px; color:#9EA3AC">{{ s.place }}</div>
+                  </div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding-top:12px; border-top:2px solid #232838">
+                    <div style="display:flex; align-items:baseline; gap:6px">
+                      <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:24px; line-height:1; color:#F4EDE0">{{ s.confirmed }}</span>
+                      <span style="font-family:'Bebas Neue',Impact,sans-serif; font-size:19px; color:#7A8090">/ {{ s.expected }}</span>
+                      <span style="font-size:13px; color:#9EA3AC; margin-left:4px">confirmed</span>
+                    </div>
+                    <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:15px; letter-spacing:.1em; color:#FEDD00">OPEN →</span>
+                  </div>
+                </div>
+              </sc-for>
+              <sc-if value="{{ noSessions }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:26px; padding:34px 20px; border-radius:0; border:1.5px dashed #2A3042; display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center">
+                  <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:28px; text-transform:uppercase; line-height:1.05">No sessions<br>{{ dayLabel }}</div>
+                  <div style="font-size:16px; color:#9EA3AC; line-height:1.45; max-width:250px; text-wrap:pretty">Rest day. Nothing scheduled from any source — all three synced clean.</div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ---------- SESSION DETAIL ---------- -->
+        <sc-if value="{{ isSession }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1 1 auto; display:flex; flex-direction:column; min-height:0">
+            <div style="flex:0 0 auto; padding:2px 18px 12px; border-bottom:2px solid #1B1F2A">
+              <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px">
+                <button onClick="{{ goToday }}" style="width:48px; height:48px; margin-left:-10px; border:none; background:transparent; color:#F4EDE0; font-size:24px; cursor:pointer">←</button>
+                <div style="flex:1 1 auto; min-width:0">
+                  <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:24px; line-height:1.05; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">GK Academy</div>
+                  <div style="font-size:14px; color:#9EA3AC">8:00 AM · Swope Soccer Village</div>
+                </div>
+                <div style="padding:5px 9px; border-radius:0; background:#0033A0; color:#F4EDE0; font-family:'JetBrains Mono',ui-monospace,monospace; font-weight:700; font-size:10px; letter-spacing:.14em">KC ATH</div>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px">
+                <div style="flex:1 1 auto; height:8px; border-radius:0; background:#1B1F2A; overflow:hidden">
+                  <div style="{{ progressStyle }}"></div>
+                </div>
+                <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:17px; letter-spacing:.04em">{{ confirmedCount }}/{{ rosterCount }}</span>
+              </div>
+            </div>
+
+            <div style="flex:1 1 auto; overflow:auto; padding:6px 12px 20px">
+              <sc-for list="{{ roster }}" as="p" hint-placeholder-count="8">
+                <div style="{{ p.rowStyle }}">
+                  <button onClick="{{ p.cycle }}" style="{{ p.checkStyle }}">{{ p.checkGlyph }}</button>
+                  <div style="flex:1 1 auto; min-width:0; padding:12px 4px 12px 0; display:flex; flex-direction:column; gap:4px">
+                    <div style="display:flex; align-items:center; gap:7px">
+                      <span style="font-size:18px; font-weight:600; letter-spacing:-.005em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ p.name }}</span>
+                      <sc-if value="{{ p.tag }}" hint-placeholder-val="{{ false }}">
+                        <span style="{{ p.tagStyle }}">{{ p.tag }}</span>
+                      </sc-if>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px">
+                      <span style="font-family:'Bebas Neue',Impact,sans-serif; font-size:14px; letter-spacing:.1em; color:#7A8090">{{ p.age }}</span>
+                      <span style="{{ p.statusStyle }}">{{ p.statusLabel }}</span>
+                      <sc-if value="{{ p.pending }}" hint-placeholder-val="{{ false }}">
+                        <span style="padding:2px 6px; border-radius:0; background:#2E1305; color:#FF7A2F; font-family:'JetBrains Mono',ui-monospace,monospace; font-weight:700; font-size:10px; letter-spacing:.14em">PENDING</span>
+                      </sc-if>
+                    </div>
+                  </div>
+                  <button onClick="{{ p.note }}" style="{{ p.noteStyle }}">{{ p.noteGlyph }}</button>
+                  <button onClick="{{ p.profile }}" style="flex:0 0 auto; width:40px; border:none; border-left:1px solid #232838; background:transparent; color:#5A6070; cursor:pointer; font-size:18px">›</button>
+                </div>
+              </sc-for>
+
+              <button onClick="{{ addPlayer }}" style="width:100%; margin-top:10px; height:56px; border-radius:0; border:1.5px dashed #3A4152; background:transparent; color:#9EA3AC; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:17px; letter-spacing:.12em; cursor:pointer">+ ADD WALK-UP</button>
+            </div>
+
+            <div style="flex:0 0 auto; padding:12px 16px 22px; border-top:2px solid #1B1F2A; background:#0A0D14">
+              <button onClick="{{ confirmAll }}" style="width:100%; height:60px; border-radius:0; border:none; background:#FEDD00; color:#05070E; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:21px; letter-spacing:.1em; cursor:pointer">CONFIRM ALL REMAINING ({{ remainingCount }})</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ---------- PLAYER PROFILE ---------- -->
+        <sc-if value="{{ isProfile }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1 1 auto; display:flex; flex-direction:column; min-height:0">
+            <div style="flex:0 0 auto; padding:2px 18px 16px; border-bottom:2px solid #1B1F2A">
+              <button onClick="{{ backToSession }}" style="width:48px; height:48px; margin-left:-10px; border:none; background:transparent; color:#F4EDE0; font-size:24px; cursor:pointer">←</button>
+              <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:36px; line-height:1; text-transform:uppercase">{{ profileName }}</div>
+              <div style="display:flex; gap:6px; margin-top:10px; flex-wrap:wrap">
+                <span style="padding:5px 9px; border-radius:0; background:#1B1F2A; color:#CFC8BA; font-family:'JetBrains Mono',ui-monospace,monospace; font-weight:700; font-size:10px; letter-spacing:.14em">U15 · GK</span>
+                <span style="padding:5px 9px; border-radius:0; background:#0033A0; color:#F4EDE0; font-family:'JetBrains Mono',ui-monospace,monospace; font-weight:700; font-size:10px; letter-spacing:.14em">KC ATHLETICS</span>
+                <span style="padding:5px 9px; border-radius:0; background:#232838; color:#F4EDE0; font-family:'JetBrains Mono',ui-monospace,monospace; font-weight:700; font-size:10px; letter-spacing:.14em">PUSHPRESS</span>
+              </div>
+            </div>
+            <div style="flex:1 1 auto; overflow:auto; padding:16px 18px 28px">
+              <div style="display:flex; gap:8px; margin-bottom:20px">
+                <div style="flex:1 1 0; padding:12px; border-radius:0; background:#12151E; border:2px solid #232838">
+                  <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:30px; line-height:1">31</div>
+                  <div style="font-family:'Bebas Neue',Impact,sans-serif; font-size:13px; letter-spacing:.12em; color:#9EA3AC">SESSIONS</div>
+                </div>
+                <div style="flex:1 1 0; padding:12px; border-radius:0; background:#12151E; border:2px solid #232838">
+                  <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:30px; line-height:1">2</div>
+                  <div style="font-family:'Bebas Neue',Impact,sans-serif; font-size:13px; letter-spacing:.12em; color:#9EA3AC">NO-SHOWS</div>
+                </div>
+                <div style="flex:1 1 0; padding:12px; border-radius:0; background:#12151E; border:2px solid #232838">
+                  <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:30px; line-height:1">TODAY</div>
+                  <div style="font-family:'Bebas Neue',Impact,sans-serif; font-size:13px; letter-spacing:.12em; color:#9EA3AC">LAST SEEN</div>
+                </div>
+              </div>
+              <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:15px; letter-spacing:.16em; color:#7A8090; margin-bottom:10px">NOTE HISTORY</div>
+              <sc-for list="{{ history }}" as="h" hint-placeholder-count="4">
+                <div style="margin-bottom:10px; padding:14px; border-radius:0; background:#12151E; border:2px solid #232838; display:flex; flex-direction:column; gap:9px">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:8px">
+                    <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:16px; letter-spacing:.1em; color:#FEDD00">{{ h.date }}</span>
+                    <span style="font-size:13px; color:#9EA3AC">{{ h.coach }}</span>
+                  </div>
+                  <div style="font-size:16px; line-height:1.45; color:#E6DFD0; text-wrap:pretty">{{ h.text }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ---------- ADMIN ---------- -->
+        <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1 1 auto; display:flex; flex-direction:column; min-height:0">
+            <div style="flex:0 0 auto; padding:4px 18px 12px">
+              <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:26px; text-transform:uppercase">Admin</div>
+              <div style="display:flex; gap:8px; margin-top:12px">
+                <button onClick="{{ adminSyncTab }}" style="{{ tabSyncStyle }}">SYNC HEALTH</button>
+                <button onClick="{{ adminMergeTab }}" style="{{ tabMergeStyle }}">MERGE · {{ mergeCount }}</button>
+              </div>
+            </div>
+            <div style="flex:1 1 auto; overflow:auto; padding:8px 18px 28px">
+              <sc-if value="{{ adminSync }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex; flex-direction:column; gap:10px">
+                  <sc-for list="{{ sources }}" as="src" hint-placeholder-count="3">
+                    <div style="{{ src.cardStyle }}">
+                      <div style="display:flex; align-items:center; justify-content:space-between; gap:8px">
+                        <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:20px; letter-spacing:.06em; text-transform:uppercase">{{ src.name }}</span>
+                        <span style="{{ src.pillStyle }}">{{ src.state }}</span>
+                      </div>
+                      <div style="display:flex; flex-direction:column; gap:3px; font-size:15px; color:#9EA3AC">
+                        <div>Last success · <span style="color:#F4EDE0; font-weight:600">{{ src.success }}</span></div>
+                        <div>Last attempt · <span style="color:#F4EDE0; font-weight:600">{{ src.attempt }}</span></div>
+                      </div>
+                      <sc-if value="{{ src.error }}" hint-placeholder-val="{{ false }}">
+                        <div style="padding:10px; border-radius:0; background:#2E1305; color:#FFB98F; font-size:14px; line-height:1.4; font-family:'Inter',system-ui,sans-serif">{{ src.error }}</div>
+                      </sc-if>
+                      <button onClick="{{ runSync }}" style="height:50px; border-radius:0; border:2px solid #3A4152; background:#0A0D14; color:#F4EDE0; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:16px; letter-spacing:.12em; cursor:pointer">RUN NOW</button>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ adminMerge }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; flex-direction:column; gap:12px">
+                  <sc-for list="{{ merges }}" as="m" hint-placeholder-count="2">
+                    <div style="padding:14px; border-radius:0; background:#12151E; border:2px solid #232838; display:flex; flex-direction:column; gap:12px">
+                      <div style="font-family:'Bebas Neue',Impact,sans-serif; font-size:14px; letter-spacing:.14em; color:#FF7A2F">{{ m.score }} MATCH</div>
+                      <div style="display:flex; gap:10px; align-items:stretch">
+                        <div style="flex:1 1 0; min-width:0; padding:11px; border-radius:0; background:#0A0D14; border:2px solid #232838">
+                          <div style="font-size:17px; font-weight:600; margin-bottom:5px">{{ m.aName }}</div>
+                          <div style="font-family:'Bebas Neue',Impact,sans-serif; font-size:13px; letter-spacing:.1em; color:#93B4E8">{{ m.aSrc }}</div>
+                          <div style="font-size:14px; color:#9EA3AC; margin-top:6px">{{ m.aMeta }}</div>
+                        </div>
+                        <div style="flex:1 1 0; min-width:0; padding:11px; border-radius:0; background:#0A0D14; border:2px solid #232838">
+                          <div style="font-size:17px; font-weight:600; margin-bottom:5px">{{ m.bName }}</div>
+                          <div style="font-family:'Bebas Neue',Impact,sans-serif; font-size:13px; letter-spacing:.1em; color:#F4EDE0">{{ m.bSrc }}</div>
+                          <div style="font-size:14px; color:#9EA3AC; margin-top:6px">{{ m.bMeta }}</div>
+                        </div>
+                      </div>
+                      <div style="display:flex; gap:8px">
+                        <button onClick="{{ m.notSame }}" style="flex:1 1 0; height:52px; border-radius:0; border:2px solid #3A4152; background:transparent; color:#CFC8BA; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:16px; letter-spacing:.1em; cursor:pointer">NOT THE SAME</button>
+                        <button onClick="{{ m.merge }}" style="flex:1 1 0; height:52px; border-radius:0; border:none; background:#FEDD00; color:#05070E; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:16px; letter-spacing:.1em; cursor:pointer">MERGE</button>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ---------- TAB BAR ---------- -->
+        <div style="flex:0 0 auto; display:flex; align-items:stretch; border-top:2px solid #1B1F2A; background:#0A0D14; padding-bottom:18px">
+          <button onClick="{{ goToday }}" style="{{ navTodayStyle }}">TODAY</button>
+          <button onClick="{{ goProfile }}" style="{{ navPlayersStyle }}">PLAYERS</button>
+          <button onClick="{{ goAdmin }}" style="{{ navAdminStyle }}">ADMIN</button>
+        </div>
+
+        <!-- ---------- NOTE SHEET ---------- -->
+        <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ closeSheet }}" style="position:absolute; inset:0; background:rgba(4,5,6,.7)"></div>
+        </sc-if>
+        <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; left:0; right:0; bottom:0; background:#12151E; border-top:2px solid #2A3042; border-radius:0; padding:14px 18px 24px; display:flex; flex-direction:column; gap:14px; max-height:74%">
+            <div style="width:44px; height:5px; border-radius:0; background:#3A4152; margin:0 auto"></div>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px">
+              <div>
+                <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:26px; line-height:1; text-transform:uppercase">{{ sheetName }}</div>
+                <div style="font-size:14px; color:#9EA3AC">GK Academy · Sat Aug 29</div>
+              </div>
+              <span style="padding:6px 10px; border-radius:0; background:#2E2800; color:#FEDD00; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:13px; letter-spacing:.1em">{{ saveState }}</span>
+            </div>
+            <div style="overflow:auto; display:flex; flex-direction:column; gap:14px">
+              <textarea onChange="{{ setText }}" value="{{ noteText }}" placeholder="Hands quiet on low drives. Reset speed after first save." style="width:100%; box-sizing:border-box; min-height:200px; resize:none; padding:15px; border-radius:0; background:#0A0D14; border:2px solid #2A3042; color:#F4EDE0; font-family:'Inter',system-ui,sans-serif; font-size:18px; line-height:1.45"></textarea>
+            </div>
+            <button onClick="{{ closeSheet }}" style="height:58px; flex:0 0 auto; border-radius:0; border:none; background:#FEDD00; color:#05070E; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:20px; letter-spacing:.1em; cursor:pointer">DONE</button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- ============ STATE FRAMES ============ -->
+    <div style="display:flex; flex-direction:column; gap:14px">
+      <div style="display:flex; align-items:center; gap:10px">
+        <span style="width:8px; height:8px; border-radius:50%; background:#FF7A2F"></span>
+        <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; color:#F4EDE0">STALE SOURCE + OFFLINE QUEUE</span>
+      </div>
+      <div data-screen-label="02 Stale and offline" style="position:relative; width:390px; height:844px; border-radius:46px; border:10px solid #000; background:#05070E; overflow:hidden; box-shadow:0 40px 90px rgba(0,0,0,.65); display:flex; flex-direction:column">
+        <div style="height:44px; flex:0 0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 26px; font-size:13px; font-weight:700">
+          <span>9:41</span><span style="font-size:11px; letter-spacing:.08em; color:#FF7A2F">OFFLINE ▮▯▯</span>
+        </div>
+        <div style="flex:0 0 auto; padding:6px 16px 12px; display:flex; flex-direction:column; gap:10px">
+          <div style="display:flex; align-items:center; gap:10px">
+            <div style="width:38px; height:38px; background:#0033A0; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',Impact,sans-serif; font-size:20px; color:#F4EDE0">U30</div>
+            <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:26px; text-transform:uppercase">Today · Sat 29</div>
+          </div>
+          <div style="padding:14px; border-radius:0; background:#2E1305; border:2px solid #FF7A2F; display:flex; gap:12px; align-items:flex-start">
+            <span style="font-size:22px; line-height:1">▲</span>
+            <div style="display:flex; flex-direction:column; gap:4px">
+              <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:19px; letter-spacing:.06em; color:#FFD3B8">KC ATHLETICS — STALE</div>
+              <div style="font-size:15px; line-height:1.4; color:#FFB98F">Last successful sync 6:05 AM. Retrying every 5 min. Rosters below may be incomplete.</div>
+            </div>
+          </div>
+          <div style="padding:12px 14px; border-radius:0; background:#071634; border:2px solid #17306B; display:flex; gap:10px; align-items:center">
+            <span style="width:9px; height:9px; border-radius:50%; background:#93B4E8; flex:0 0 auto"></span>
+            <div style="font-size:15px; color:#B9C9E8; line-height:1.35">You're offline. <strong style="color:#EDF2FB">3 confirmations · 1 note</strong> queued — they'll sync automatically.</div>
+          </div>
+        </div>
+        <div style="flex:1 1 auto; overflow:hidden; padding:2px 16px 16px; display:flex; flex-direction:column; gap:11px">
+          <div style="padding:16px; border-radius:0; background:#12151E; border:2px solid #FF7A2F; display:flex; flex-direction:column; gap:11px">
+            <div style="display:flex; align-items:baseline; justify-content:space-between">
+              <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:30px; line-height:1">8:00A</span>
+              <span style="padding:5px 9px; border-radius:0; background:#2E1305; color:#FF7A2F; font-family:'JetBrains Mono',ui-monospace,monospace; font-weight:700; font-size:10px; letter-spacing:.14em">KC ATH · STALE</span>
+            </div>
+            <div style="font-size:18px; font-weight:600">GK Academy</div>
+            <div style="font-size:15px; color:#9EA3AC">Swope Soccer Village</div>
+            <div style="display:flex; align-items:baseline; gap:6px; padding-top:11px; border-top:2px solid #232838">
+              <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:24px; line-height:1">9</span>
+              <span style="font-family:'Bebas Neue',Impact,sans-serif; font-size:19px; color:#7A8090">/ 11</span>
+              <span style="font-size:13px; color:#9EA3AC; margin-left:4px">confirmed · 3 pending upload</span>
+            </div>
+          </div>
+          <div style="padding:16px; border-radius:0; background:#12151E; border:2px solid #232838; display:flex; flex-direction:column; gap:11px">
+            <div style="display:flex; align-items:baseline; justify-content:space-between">
+              <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:30px; line-height:1">10:30A</span>
+              <span style="padding:5px 9px; border-radius:0; background:#232838; color:#F4EDE0; font-family:'JetBrains Mono',ui-monospace,monospace; font-weight:700; font-size:10px; letter-spacing:.14em">TOCA FUSION</span>
+            </div>
+            <div style="font-size:18px; font-weight:600">Toca GK Group</div>
+            <div style="font-size:15px; color:#9EA3AC">Toca Complex · Overland Park</div>
+            <div style="display:flex; align-items:baseline; gap:6px; padding-top:11px; border-top:2px solid #232838">
+              <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:24px; line-height:1">0</span>
+              <span style="font-family:'Bebas Neue',Impact,sans-serif; font-size:19px; color:#7A8090">/ 6</span>
+              <span style="font-size:13px; color:#9EA3AC; margin-left:4px">confirmed · cached 7:42 AM</span>
+            </div>
+          </div>
+          <div style="margin-top:auto; padding:14px; border-radius:0; border:1.5px dashed #2A3042; text-align:center">
+            <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:17px; letter-spacing:.1em; color:#7A8090">SUN 30 · NO SESSIONS</div>
+            <div style="font-size:14px; color:#6B7280; margin-top:3px">Rest day. Nothing scheduled from any source.</div>
+          </div>
+        </div>
+        <div style="flex:0 0 auto; display:flex; border-top:2px solid #1B1F2A; background:#0A0D14; padding-bottom:18px">
+          <div style="flex:1 1 0; height:58px; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:16px; letter-spacing:.12em; color:#FEDD00">TODAY</div>
+          <div style="flex:1 1 0; height:58px; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:16px; letter-spacing:.12em; color:#6B7280">PLAYERS</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:14px">
+      <div style="display:flex; align-items:center; gap:10px">
+        <span style="width:8px; height:8px; border-radius:50%; background:#7A8090"></span>
+        <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; color:#F4EDE0">SIGN-IN + EMPTY ROSTER</span>
+      </div>
+      <div data-screen-label="03 Auth and empty" style="display:flex; gap:28px">
+        <div style="position:relative; width:390px; height:844px; border-radius:46px; border:10px solid #000; background:#05070E; overflow:hidden; box-shadow:0 40px 90px rgba(0,0,0,.65); display:flex; flex-direction:column; padding:0">
+          <div style="height:44px; flex:0 0 auto; display:flex; align-items:center; padding:0 26px; font-size:13px; font-weight:700">9:41</div>
+          <div style="flex:1 1 auto; padding:40px 26px; display:flex; flex-direction:column">
+            <div style="width:76px; height:76px; background:#0033A0; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',Impact,sans-serif; font-size:40px; color:#F4EDE0">U30</div>
+            <div style="margin-top:26px; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:46px; line-height:.95; text-transform:uppercase">Union 30<br>Roster</div>
+            <div style="margin-top:10px; font-size:17px; color:#9EA3AC">Coach sign-in. Sessions and rosters arrive on their own.</div>
+            <div style="margin-top:32px; display:flex; flex-direction:column; gap:12px">
+              <div style="height:60px; border-radius:0; background:#0A0D14; border:2px solid #2A3042; display:flex; align-items:center; padding:0 16px; font-size:18px; color:#F4EDE0">andy@union30gk.com</div>
+              <div style="height:60px; border-radius:0; background:#0A0D14; border:2px solid #2A3042; display:flex; align-items:center; padding:0 16px; font-size:18px; color:#6B7280">Password</div>
+              <button style="height:64px; border-radius:0; border:none; background:#FEDD00; color:#05070E; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:22px; letter-spacing:.12em; cursor:pointer">SIGN IN</button>
+              <div style="font-size:15px; color:#7A8090; text-align:center; margin-top:4px">Email a sign-in link instead</div>
+            </div>
+            <div style="margin-top:auto; padding:13px; border-radius:0; background:#0A0D14; border:2px solid #1B1F2A; font-size:14px; color:#9EA3AC; line-height:1.4">Coaches see Today and Players. Andy also sees Admin.</div>
+          </div>
+        </div>
+
+        <div style="position:relative; width:390px; height:844px; border-radius:46px; border:10px solid #000; background:#05070E; overflow:hidden; box-shadow:0 40px 90px rgba(0,0,0,.65); display:flex; flex-direction:column">
+          <div style="height:44px; flex:0 0 auto; display:flex; align-items:center; padding:0 26px; font-size:13px; font-weight:700">9:41</div>
+          <div style="flex:0 0 auto; padding:2px 18px 14px; border-bottom:2px solid #1B1F2A">
+            <div style="display:flex; align-items:center; gap:10px">
+              <div style="width:48px; height:48px; margin-left:-10px; display:flex; align-items:center; justify-content:center; font-size:24px">←</div>
+              <div>
+                <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:24px; line-height:1.05; text-transform:uppercase">U30 Keeper Lab</div>
+                <div style="font-size:14px; color:#9EA3AC">5:30 PM · Blue Valley West</div>
+              </div>
+            </div>
+          </div>
+          <div style="flex:1 1 auto; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:30px">
+            <div style="width:64px; height:64px; border-radius:0; border:1.5px dashed #3A4152; display:flex; align-items:center; justify-content:center; font-size:26px; color:#5A6070">⌀</div>
+            <div style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:28px; text-align:center; text-transform:uppercase; line-height:1.05">No players<br>expected yet</div>
+            <div style="font-size:16px; color:#9EA3AC; text-align:center; line-height:1.45; max-width:270px; text-wrap:pretty">Union 30 registrations for this session synced clean at 7:42 AM and came back empty. Add walk-ups as they show.</div>
+            <button style="width:100%; max-width:300px; height:60px; border-radius:0; border:none; background:#FEDD00; color:#05070E; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:20px; letter-spacing:.1em; cursor:pointer">+ ADD WALK-UP</button>
+          </div>
+          <div style="flex:0 0 auto; display:flex; border-top:2px solid #1B1F2A; background:#0A0D14; padding-bottom:18px">
+            <div style="flex:1 1 0; height:58px; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:16px; letter-spacing:.12em; color:#FEDD00">TODAY</div>
+            <div style="flex:1 1 0; height:58px; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:16px; letter-spacing:.12em; color:#6B7280">PLAYERS</div>
+            <div style="flex:1 1 0; height:58px; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:16px; letter-spacing:.12em; color:#6B7280">ADMIN</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1420,&quot;height&quot;:1060}}">
+const ACCENT = "#FEDD00", AMBER = "#FF7A2F", RED = "#FF4438";
+
+const TAGS = ["Handling","Footwork","Distribution","Shot Stopping","Positioning","1v1","Communication","Attitude/Effort"];
+
+class Component extends DCLogic {
+  state = {
+    screen: "today",
+    day: 1,
+    adminTab: "sync",
+    sheetFor: null,
+    noteText: "",
+    tags: [],
+    rate: {},
+    saved: "SAVED",
+    pending: {},
+    merges: [
+      { id:"m1", score:"92%", aName:"Jaxon Smith", aSrc:"TOCA FUSION", aMeta:"b. 2011 · U15 · joined Mar 2025",
+        bName:"Jackson Smith", bSrc:"PUSHPRESS", bMeta:"b. 2011 · U15 · joined Jun 2025" },
+      { id:"m2", score:"78%", aName:"Ellis Barnett", aSrc:"KC ATHLETICS", aMeta:"b. 2010 · U16 · same guardian email",
+        bName:"E. Barnett-Reyes", bSrc:"PUSHPRESS", bMeta:"b. 2010 · U16 · same guardian email" }
+    ],
+    roster: [
+      { id:1, name:"Owen Delacroix", age:"U14", status:"confirmed", note:true },
+      { id:2, name:"Maya Rutherford", age:"U13", status:"confirmed", note:false },
+      { id:3, name:"Jaxon Smith", age:"U15", status:"expected", note:true },
+      { id:4, name:"Liam Okafor", age:"U12", status:"expected", note:false },
+      { id:5, name:"Sofia Vance", age:"U14", status:"noshow", note:false },
+      { id:6, name:"Grady Nolan", age:"U16", status:"expected", note:false },
+      { id:7, name:"Theo Marchetti", age:"U13", status:"lateadd", note:false },
+      { id:8, name:"Ruby Chen", age:"U12", status:"expected", note:false },
+      { id:9, name:"Ellis Barnett", age:"U15", status:"removed", note:true },
+      { id:10, name:"Nash Whitaker", age:"U14", status:"expected", note:false },
+      { id:11, name:"Ivy Solomon", age:"U16", status:"expected", note:false }
+    ]
+  };
+
+  setStatus(id, next) {
+    this.setState(s => ({
+      roster: s.roster.map(p => p.id === id ? { ...p, status: next } : p),
+      pending: { ...s.pending, [id]: true }
+    }));
+  }
+
+  cycle(p) {
+    const next = p.status === "confirmed" ? "noshow" : "confirmed";
+    this.setStatus(p.id, next);
+  }
+
+  renderVals() {
+    const st = this.state;
+    const days = ["FRI 28","SAT 29","SUN 30"];
+    const COND = "'Bebas Neue',Impact,sans-serif", MONO = "'JetBrains Mono',ui-monospace,monospace";
+    const pillBase = { padding:"5px 9px", borderRadius:"0", fontFamily:MONO, fontWeight:700, fontSize:"10px", letterSpacing:".14em" };
+    const rowBase = { display:"flex", alignItems:"stretch", gap:"8px", margin:"6px 0", borderRadius:"0", border:"2px solid #232838", background:"#12151E", overflow:"hidden" };
+    const checkBase = { flex:"0 0 auto", width:"60px", border:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"26px", fontWeight:700 };
+    const tagBase = { flex:"0 0 auto", padding:"4px 7px", borderRadius:"0", fontFamily:MONO, fontWeight:700, fontSize:"10px", letterSpacing:".12em" };
+    const statusBase = { fontFamily:MONO, fontWeight:700, fontSize:"11px", letterSpacing:".1em" };
+    const noteBase = { flex:"0 0 auto", width:"56px", border:"none", borderLeft:"2px solid #232838", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"21px" };
+    const tabBase = { flex:"1 1 0", height:"46px", borderRadius:"0", cursor:"pointer", fontFamily:COND, fontWeight:700, fontSize:"16px", letterSpacing:".1em" };
+    const navBase = { flex:"1 1 0", height:"58px", border:"none", background:"transparent", cursor:"pointer", fontFamily:COND, fontWeight:700, fontSize:"16px", letterSpacing:".12em" };
+    const chipBase = { minHeight:"48px", padding:"0 15px", borderRadius:"0", cursor:"pointer", fontSize:"16px", fontWeight:600 };
+    const dotBase = { width:"34px", height:"34px", borderRadius:"50%", cursor:"pointer", border:"1.5px solid #3A4152" };
+    const srcCardBase = { padding:"15px", borderRadius:"0", background:"#12151E", border:"2px solid #232838", display:"flex", flexDirection:"column", gap:"10px" };
+    const nav = (on) => ({ ...navBase, color: on ? ACCENT : "#6B7280" });
+    const dayBtn = (on) => ({ flex:"1 1 0", height:"52px", borderRadius:"0", border:"2px solid #232838", background:"#0A0D14", color: on ? "#9EA3AC" : "#5A6070", fontFamily:COND, fontWeight:700, fontSize:"16px", letterSpacing:".08em", cursor: on ? "pointer" : "default" });
+
+    const statusMeta = {
+      expected:  { label:"EXPECTED",  color:"#9EA3AC", glyph:"○", check:{ background:"#0A0D14", color:"#6B7280" }, row:{} },
+      confirmed: { label:"CONFIRMED", color:ACCENT,   glyph:"✓", check:{ background:ACCENT, color:"#05070E" }, row:{ borderColor:"#6B5E00", background:"#14130A" } },
+      noshow:    { label:"NO-SHOW",   color:RED,      glyph:"✕", check:{ background:"#2B0F0C", color:RED }, row:{ borderColor:"#5A1C17", background:"#170C0B", opacity:.85 } },
+      lateadd:   { label:"CONFIRMED", color:ACCENT,   glyph:"✓", check:{ background:ACCENT, color:"#05070E" }, row:{ borderColor:"#6B5E00", background:"#14130A" } },
+      removed:   { label:"WAS EXPECTED", color:AMBER, glyph:"✓", check:{ background:ACCENT, color:"#05070E" }, row:{ borderColor:"#6B4A12", background:"#1A150C" } }
+    };
+    const tagMeta = {
+      lateadd: { label:"LATE ADD", style:{ background:"#2E2800", color:ACCENT } },
+      removed: { label:"DROPPED UPSTREAM", style:{ background:"#2E1305", color:AMBER } }
+    };
+
+    const roster = st.roster.map(p => {
+      const m = statusMeta[p.status];
+      const t = tagMeta[p.status];
+      return {
+        ...p,
+        statusLabel: m.label,
+        statusStyle: { ...statusBase, color: m.color },
+        checkGlyph: m.glyph,
+        checkStyle: { ...checkBase, ...m.check },
+        rowStyle: { ...rowBase, ...m.row },
+        tag: t ? t.label : false,
+        tagStyle: t ? { ...tagBase, ...t.style } : tagBase,
+        pending: !!st.pending[p.id],
+        noteGlyph: p.note ? "✎" : "✎",
+        noteStyle: { ...noteBase, color: p.note ? ACCENT : "#5A6070", background: p.note ? "#1A1705" : "transparent" },
+        cycle: () => this.cycle(p),
+        note: () => this.setState({ sheetFor: p, noteText: p.note ? "Quiet hands on low drives — reset speed after the first save is the thing to keep pushing." : "" }),
+        profile: () => this.setState({ screen:"profile", profileName: p.name })
+      };
+    });
+
+    const confirmedCount = st.roster.filter(p => p.status !== "expected" && p.status !== "noshow").length;
+    const KC = { background:"#0033A0", color:"#F4EDE0" }, TOCA = { background:"#232838", color:"#F4EDE0" }, U30 = { background:"#2E2800", color:ACCENT };
+    const remaining = st.roster.filter(p => p.status === "expected");
+
+    const mkSession = (time, title, place, source, badge, confirmed, expected) => ({
+      time, title, place, source, confirmed, expected,
+      badgeStyle: { ...pillBase, ...badge },
+      open: () => this.setState({ screen: "session" })
+    });
+
+    const byDay = [
+      [
+        mkSession("9:00A","Keeper Lab — Fri","Blue Valley West","U30", U30, 10, 10),
+        mkSession("4:30P","Toca GK Group","Toca Complex · Overland Park","TOCA", TOCA, 5, 6)
+      ],
+      [
+        mkSession("8:00A","GK Academy","Swope Soccer Village","KC ATH", KC, confirmedCount, 11),
+        mkSession("10:30A","Toca GK Group","Toca Complex · Overland Park","TOCA", TOCA, 6, 6),
+        mkSession("4:15P","Private — M. Wallace","Blue Valley West","U30", U30, 1, 1),
+        mkSession("5:30P","U30 Keeper Lab","Blue Valley West","U30", U30, 12, 14)
+      ],
+      []
+    ];
+
+    return {
+      isToday: st.screen === "today",
+      isSession: st.screen === "session",
+      isProfile: st.screen === "profile",
+      isAdmin: st.screen === "admin",
+      dayLabel: days[st.day],
+      dayCaption: ["YESTERDAY","TODAY","TOMORROW"][st.day],
+      prevLabel: st.day > 0 ? days[st.day - 1] : "THU 27",
+      nextLabel: st.day < 2 ? days[st.day + 1] : "MON 31",
+      prevStyle: dayBtn(st.day > 0),
+      nextStyle: dayBtn(st.day < 2),
+      prevDay: () => this.setState(s => ({ day: Math.max(0, s.day - 1) })),
+      nextDay: () => this.setState(s => ({ day: Math.min(2, s.day + 1) })),
+      goToday: () => this.setState({ screen:"today" }),
+      goProfile: () => this.setState({ screen:"profile", profileName: this.state.profileName || "Jaxon Smith" }),
+      goAdmin: () => this.setState({ screen:"admin" }),
+      backToSession: () => this.setState({ screen:"session" }),
+      runSync: () => this.setState({ pending: {} }),
+      syncKC: "7:42 AM", syncToca: "7:42 AM", syncPP: "7:40 AM",
+
+      sessions: byDay[st.day],
+      noSessions: byDay[st.day].length === 0,
+
+      roster,
+      rosterCount: st.roster.length,
+      confirmedCount,
+      remainingCount: remaining.length,
+      progressStyle: { height:"100%", background:ACCENT, borderRadius:"0", width: Math.round((confirmedCount / st.roster.length) * 100) + "%" },
+      navTodayStyle: nav(st.screen === "today"),
+      navPlayersStyle: nav(st.screen === "profile"),
+      navAdminStyle: nav(st.screen === "admin"),
+      confirmAll: () => this.setState(s => ({
+        roster: s.roster.map(p => p.status === "expected" ? { ...p, status:"confirmed" } : p),
+        pending: s.roster.reduce((a,p) => (p.status === "expected" ? { ...a, [p.id]: true } : a), s.pending)
+      })),
+      addPlayer: () => this.setState(s => ({
+        roster: [...s.roster, { id: 100 + s.roster.length, name:"Walk-up keeper", age:"U13", status:"lateadd", note:false }]
+      })),
+
+      sheetOpen: !!st.sheetFor,
+      sheetName: st.sheetFor ? st.sheetFor.name : "",
+      closeSheet: () => this.setState({ sheetFor: null }),
+      saveState: st.saved,
+      noteText: st.noteText,
+      setText: (e) => this.setState({ noteText: e.target.value, saved:"WILL SYNC" }),
+
+      profileName: st.profileName || "Jaxon Smith",
+      history: [
+        { date:"SAT AUG 29", coach:"Andy G.", text:"Strong on the low drive today. Still stepping across instead of through on 1v1 — cue: attack the ball, not the space." },
+        { date:"WED AUG 26", coach:"Marcus T.", text:"Left-foot clip is landing. Under pressure he rushes the second touch." },
+        { date:"SAT AUG 22", coach:"Andy G.", text:"Best session in a month. Set feet earlier on crosses. Led the warmup unprompted." },
+        { date:"WED AUG 19", coach:"Andy G.", text:"Depth on back-pass coverage improving. Wants more work on near-post angles." }
+      ],
+
+      adminSync: st.adminTab === "sync",
+      adminMerge: st.adminTab === "merge",
+      adminSyncTab: () => this.setState({ adminTab:"sync" }),
+      adminMergeTab: () => this.setState({ adminTab:"merge" }),
+      tabSyncStyle: st.adminTab === "sync"
+        ? { ...tabBase, background:ACCENT, color:"#05070E", border:"none" }
+        : { ...tabBase, background:"#0A0D14", color:"#9EA3AC", border:"2px solid #2A3042" },
+      tabMergeStyle: st.adminTab === "merge"
+        ? { ...tabBase, background:ACCENT, color:"#05070E", border:"none" }
+        : { ...tabBase, background:"#0A0D14", color:"#9EA3AC", border:"2px solid #2A3042" },
+      mergeCount: st.merges.length,
+      sources: [
+        { name:"KC Athletics", state:"STALE", success:"6:05 AM", attempt:"7:42 AM · failed",
+          error:"PlayMetrics returned 401 on roster fetch. Token refresh queued — retrying every 5 min.",
+          cardStyle:{ ...srcCardBase, border:"2px solid #FF7A2F" }, pillStyle:{ ...pillBase, background:"#2E1305", color:AMBER } },
+        { name:"Toca Fusion", state:"HEALTHY", success:"7:42 AM", attempt:"7:42 AM · ok", error:false,
+          cardStyle:srcCardBase, pillStyle:{ ...pillBase, background:"#2E2800", color:ACCENT } },
+        { name:"PushPress", state:"HEALTHY", success:"7:40 AM", attempt:"7:40 AM · ok", error:false,
+          cardStyle:srcCardBase, pillStyle:{ ...pillBase, background:"#2E2800", color:ACCENT } }
+      ],
+      merges: st.merges.map(m => ({
+        ...m,
+        merge: () => this.setState(s => ({ merges: s.merges.filter(x => x.id !== m.id) })),
+        notSame: () => this.setState(s => ({ merges: s.merges.filter(x => x.id !== m.id) }))
+      }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>
