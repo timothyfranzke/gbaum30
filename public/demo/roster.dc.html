@@ -22,22 +22,7 @@
 </style>
 </helmet>
 
-<section style="padding:56px 56px 96px; display:flex; flex-direction:column; gap:40px">
-  <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:32px; flex-wrap:wrap">
-    <div style="display:flex; flex-direction:column; gap:10px">
-      <div style="display:flex; align-items:center; gap:12px">
-        <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:13px; letter-spacing:.18em; color:#FEDD00">1A</span>
-        <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:13px; letter-spacing:.18em; color:#7A8090">UNION 30 · DAILY ROSTER PWA</span>
-      </div>
-      <h1 style="margin:0; font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:52px; line-height:.95; letter-spacing:-.01em; text-transform:uppercase">Open app → see today → tap a kid → done</h1>
-      <p style="margin:0; max-width:720px; font-size:17px; line-height:1.5; color:#9EA3AC; text-wrap:pretty">Screen 1 is live — switch days, tap the check to confirm, tap again for no-show, write a note, open a profile, run a sync. Use PREV / NEXT to step through the pinned states.</p>
-    </div>
-    <div style="display:flex; gap:10px; align-items:center">
-      <div style="padding:10px 14px; border:2px solid #2A3042; border-radius:0; font-family:'Bebas Neue',Impact,sans-serif; font-size:14px; letter-spacing:.12em; color:#9EA3AC">DARK · PRIMARY THEME</div>
-      <div style="padding:10px 14px; border:2px solid #2A3042; border-radius:0; font-family:'Bebas Neue',Impact,sans-serif; font-size:14px; letter-spacing:.12em; color:#9EA3AC">390 × 844</div>
-    </div>
-  </div>
-
+<section style="padding:32px 24px 64px; display:flex; flex-direction:column; gap:40px">
   <div style="display:flex; flex-direction:column; align-items:center; gap:20px">
 
     <div style="width:390px; max-width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px">
@@ -49,10 +34,6 @@
     <!-- ============ INTERACTIVE FRAME ============ -->
     <sc-if value="{{ flowIs1 }}" hint-placeholder-val="{{ true }}">
     <div style="display:flex; flex-direction:column; gap:14px">
-      <div style="display:flex; align-items:center; gap:10px">
-        <span style="width:8px; height:8px; border-radius:50%; background:#FEDD00"></span>
-        <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; color:#F4EDE0">LIVE PROTOTYPE — THE DAILY LOOP</span>
-      </div>
       <div data-screen-label="01 Live prototype" style="position:relative; width:390px; height:844px; border-radius:46px; border:10px solid #000; background:#05070E; overflow:hidden; box-shadow:0 40px 90px rgba(0,0,0,.65); display:flex; flex-direction:column">
 
         <!-- status bar -->
@@ -316,10 +297,6 @@
     <!-- ============ STATE FRAMES ============ -->
     <sc-if value="{{ flowIs2 }}" hint-placeholder-val="{{ false }}">
     <div style="display:flex; flex-direction:column; gap:14px">
-      <div style="display:flex; align-items:center; gap:10px">
-        <span style="width:8px; height:8px; border-radius:50%; background:#FF7A2F"></span>
-        <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; color:#F4EDE0">STALE SOURCE + OFFLINE QUEUE</span>
-      </div>
       <div data-screen-label="02 Stale and offline" style="position:relative; width:390px; height:844px; border-radius:46px; border:10px solid #000; background:#05070E; overflow:hidden; box-shadow:0 40px 90px rgba(0,0,0,.65); display:flex; flex-direction:column">
         <div style="height:44px; flex:0 0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 26px; font-size:13px; font-weight:700">
           <span>9:41</span><span style="font-size:11px; letter-spacing:.08em; color:#FF7A2F">OFFLINE ▮▯▯</span>
@@ -383,10 +360,6 @@
 
     <sc-if value="{{ flowIs3 }}" hint-placeholder-val="{{ false }}">
     <div style="display:flex; flex-direction:column; gap:14px">
-      <div style="display:flex; align-items:center; gap:10px">
-        <span style="width:8px; height:8px; border-radius:50%; background:#7A8090"></span>
-        <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; color:#F4EDE0">COACH SIGN-IN</span>
-      </div>
         <div style="position:relative; width:390px; height:844px; border-radius:46px; border:10px solid #000; background:#05070E; overflow:hidden; box-shadow:0 40px 90px rgba(0,0,0,.65); display:flex; flex-direction:column; padding:0">
           <div style="height:44px; flex:0 0 auto; display:flex; align-items:center; padding:0 26px; font-size:13px; font-weight:700">9:41</div>
           <div style="flex:1 1 auto; padding:40px 26px; display:flex; flex-direction:column">
@@ -407,10 +380,6 @@
 
     <sc-if value="{{ flowIs4 }}" hint-placeholder-val="{{ false }}">
     <div style="display:flex; flex-direction:column; gap:14px">
-      <div style="display:flex; align-items:center; gap:10px">
-        <span style="width:8px; height:8px; border-radius:50%; background:#7A8090"></span>
-        <span style="font-family:'Bebas Neue',Impact,sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; color:#F4EDE0">EMPTY ROSTER</span>
-      </div>
         <div style="position:relative; width:390px; height:844px; border-radius:46px; border:10px solid #000; background:#05070E; overflow:hidden; box-shadow:0 40px 90px rgba(0,0,0,.65); display:flex; flex-direction:column">
           <div style="height:44px; flex:0 0 auto; display:flex; align-items:center; padding:0 26px; font-size:13px; font-weight:700">9:41</div>
           <div style="flex:0 0 auto; padding:2px 18px 14px; border-bottom:2px solid #1B1F2A">
